@@ -1,0 +1,1117 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2870
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fnil\fcharset0 Menlo-Regular;}
+{\colortbl;\red255\green255\blue255;\red224\green224\blue224;\red25\green29\blue39;\red107\green192\blue194;
+\red91\green157\blue93;\red163\green65\blue56;}
+{\*\expandedcolortbl;;\csgenericrgb\c87761\c87761\c87761;\csgenericrgb\c9839\c11388\c15260\c95000;\cssrgb\c48472\c79501\c80571;
+\cssrgb\c42416\c66728\c44152;\cssrgb\c70509\c33572\c28115;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf2 \cb3 \CocoaLigature0 victorchironachi@Victors-MacBook-Pro ~ % $(brew --prefix llvm)/bin/llvm-objdump -d -C ~/Desktop/jibo-nlu-service --start-address=0xa307c --stop-address=0xa3d0c\
+\
+/Users/victorchironachi/Desktop/jibo-nlu-service:	file format elf32-littlearm\
+\
+Disassembly of section .text:\
+\
+000a307c <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)>:\
+   a307c: e96d 4508    	strd	\cf4 r4\cf2 , \cf4 r5\cf2 , \cf5 [\cf4 sp\cf5 , \cf6 #-32\cf5 ]\cf2 !\
+   a3080: 460c         	mov	\cf4 r4\cf2 , \cf4 r1\cf2 \
+   a3082: e9cd 6702    	strd	\cf4 r6\cf2 , \cf4 r7\cf2 , \cf5 [\cf4 sp\cf5 , \cf6 #8\cf5 ]\cf2 \
+   a3086: 4607         	mov	\cf4 r7\cf2 , \cf4 r0\cf2 \
+   a3088: 4608         	mov	\cf4 r0\cf2 , \cf4 r1\cf2 \
+   a308a: e9cd ae06    	strd	\cf4 r10\cf2 , \cf4 lr\cf2 , \cf5 [\cf4 sp\cf5 , \cf6 #24\cf5 ]\cf2 \
+   a308e: e9cd 8904    	strd	\cf4 r8\cf2 , \cf4 r9\cf2 , \cf5 [\cf4 sp\cf5 , \cf6 #16\cf5 ]\cf2 \
+   a3092: b09e         	sub	\cf4 sp\cf2 , \cf6 #0x78\cf2 \
+   a3094: f7f7 fd6e    	bl	0x9ab74 <nlu_request_executor::init(Poco::Util::Application&)> @ imm = #-0x8524\
+   a3098: f24e 6198    	movw	\cf4 r1\cf2 , \cf6 #0xe698\cf2 \
+   a309c: aa13         	add	\cf4 r2\cf2 , \cf4 sp\cf2 , \cf6 #0x4c\cf2 \
+   a309e: 68a5         	ldr	\cf4 r5\cf2 , \cf5 [\cf4 r4\cf5 , \cf6 #0x8\cf5 ]\cf2 \
+   a30a0: f2c0 0116    	movt	\cf4 r1\cf2 , \cf6 #0x16\cf2 \
+   a30a4: a816         	add	\cf4 r0\cf2 , \cf4 sp\cf2 , \cf6 #0x58\cf2 \
+   a30a6: f7f5 ee48    	blx	0x98d38 <_ZNSsC1EPKcRKSaIcE@plt> @ imm = #-0xa370\
+   a30aa: f24e 61a0    	movw	\cf4 r1\cf2 , \cf6 #0xe6a0\cf2 \
+   a30ae: a817         	add	\cf4 r0\cf2 , \cf4 sp\cf2 , \cf6 #0x5c\cf2 \
+   a30b0: aa14         	add	\cf4 r2\cf2 , \cf4 sp\cf2 , \cf6 #0x50\cf2 \
+   a30b2: f2c0 0116    	movt	\cf4 r1\cf2 , \cf6 #0x16\cf2 \
+   a30b6: f7f5 ee40    	blx	0x98d38 <_ZNSsC1EPKcRKSaIcE@plt> @ imm = #-0xa380\
+   a30ba: f10d 0860    	add.w	\cf4 r8\cf2 , \cf4 sp\cf2 , \cf6 #0x60\cf2 \
+   a30be: 4629         	mov	\cf4 r1\cf2 , \cf4 r5\cf2 \
+   a30c0: 4640         	mov	\cf4 r0\cf2 , \cf4 r8\cf2 \
+   a30c2: aa16         	add	\cf4 r2\cf2 , \cf4 sp\cf2 , \cf6 #0x58\cf2 \
+   a30c4: ab17         	add	\cf4 r3\cf2 , \cf4 sp\cf2 , \cf6 #0x5c\cf2 \
+   a30c6: f7f5 e8d6    	blx	0x98274 <_ZNK4Poco4Util21AbstractConfiguration9getStringERKSsS3_@plt> @ imm = #-0xae54\
+   a30ca: 4638         	mov	\cf4 r0\cf2 , \cf4 r7\cf2 \
+   a30cc: 4641         	mov	\cf4 r1\cf2 , \cf4 r8\cf2 \
+   a30ce: f507 7220    	add.w	\cf4 r2\cf2 , \cf4 r7\cf2 , \cf6 #0x280\cf2 \
+   a30d2: f7f5 eaec    	blx	0x986ac <_ZN4jibo11ServiceCore15registerHandlerERKSsPNS_18HTTPRequestHandlerE@plt> @ imm = #-0xaa28\
+   a30d6: 9b18         	ldr	\cf4 r3\cf2 , \cf5 [\cf4 sp\cf5 , \cf6 #0x60\cf5 ]\cf2 \
+   a30d8: f248 2520    	movw	\cf4 r5\cf2 , \cf6 #0x8220\cf2 \
+   a30dc: f2c0 0519    	movt	\cf4 r5\cf2 , \cf6 #0x19\cf2 \
+   a30e0: f1a3 000c    	sub.w	\cf4 r0\cf2 , \cf4 r3\cf2 , \cf6 #0xc\cf2 \
+   a30e4: 42a8         	cmp	\cf4 r0\cf2 , \cf4 r5\cf2 \
+   a30e6: f040 847b    	bne.w	0xa39e0 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x964> @ imm = #0x8f6\
+   a30ea: 9b17         	ldr	\cf4 r3\cf2 , \cf5 [\cf4 sp\cf5 , \cf6 #0x5c\cf5 ]\cf2 \
+   a30ec: f1a3 000c    	sub.w	\cf4 r0\cf2 , \cf4 r3\cf2 , \cf6 #0xc\cf2 \
+   a30f0: 42a8         	cmp	\cf4 r0\cf2 , \cf4 r5\cf2 \
+   a30f2: f040 848f    	bne.w	0xa3a14 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x998> @ imm = #0x91e\
+   a30f6: 9b16         	ldr	\cf4 r3\cf2 , \cf5 [\cf4 sp\cf5 , \cf6 #0x58\cf5 ]\cf2 \
+   a30f8: f1a3 000c    	sub.w	\cf4 r0\cf2 , \cf4 r3\cf2 , \cf6 #0xc\cf2 \
+   a30fc: 42a8         	cmp	\cf4 r0\cf2 , \cf4 r5\cf2 \
+   a30fe: f040 83a0    	bne.w	0xa3842 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x7c6> @ imm = #0x740\
+   a3102: f24e 61b0    	movw	\cf4 r1\cf2 , \cf6 #0xe6b0\cf2 \
+   a3106: aa16         	add	\cf4 r2\cf2 , \cf4 sp\cf2 , \cf6 #0x58\cf2 \
+   a3108: f2c0 0116    	movt	\cf4 r1\cf2 , \cf6 #0x16\cf2 \
+   a310c: 4640         	mov	\cf4 r0\cf2 , \cf4 r8\cf2 \
+   a310e: f7f5 ee14    	blx	0x98d38 <_ZNSsC1EPKcRKSaIcE@plt> @ imm = #-0xa3d8\
+   a3112: 4638         	mov	\cf4 r0\cf2 , \cf4 r7\cf2 \
+   a3114: 4641         	mov	\cf4 r1\cf2 , \cf4 r8\cf2 \
+   a3116: f507 72f4    	add.w	\cf4 r2\cf2 , \cf4 r7\cf2 , \cf6 #0x1e8\cf2 \
+   a311a: f7f5 e926    	blx	0x98368 <_ZN4jibo11ServiceCore12registerPortERKSsPNS_4PortE@plt> @ imm = #-0xadb4\
+   a311e: 9b18         	ldr	\cf4 r3\cf2 , \cf5 [\cf4 sp\cf5 , \cf6 #0x60\cf5 ]\cf2 \
+   a3120: f1a3 000c    	sub.w	\cf4 r0\cf2 , \cf4 r3\cf2 , \cf6 #0xc\cf2 \
+   a3124: 42a8         	cmp	\cf4 r0\cf2 , \cf4 r5\cf2 \
+   a3126: f040 8441    	bne.w	0xa39ac <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x930> @ imm = #0x882\
+   a312a: f507 703a    	add.w	\cf4 r0\cf2 , \cf4 r7\cf2 , \cf6 #0x2e8\cf2 \
+   a312e: 4621         	mov	\cf4 r1\cf2 , \cf4 r4\cf2 \
+   a3130: f507 7238    	add.w	\cf4 r2\cf2 , \cf4 r7\cf2 , \cf6 #0x2e0\cf2 \
+   a3134: f002 fc60    	bl	0xa59f8 <nlu_logger::init(Poco::Util::Application&, jibo::ServiceRegistrationTask&)> @ imm = #0x28c0\
+   a3138: f24e 61b8    	movw	\cf4 r1\cf2 , \cf6 #0xe6b8\cf2 \
+   a313c: aa03         	add	\cf4 r2\cf2 , \cf4 sp\cf2 , \cf6 #0xc\cf2 \
+   a313e: 68a6         	ldr	\cf4 r6\cf2 , \cf5 [\cf4 r4\cf5 , \cf6 #0x8\cf5 ]\cf2 \
+   a3140: f2c0 0116    	movt	\cf4 r1\cf2 , \cf6 #0x16\cf2 \
+   a3144: a80e         	add	\cf4 r0\cf2 , \cf4 sp\cf2 , \cf6 #0x38\cf2 \
+   a3146: f7f5 edf8    	blx	0x98d38 <_ZNSsC1EPKcRKSaIcE@plt> @ imm = #-0xa410\
+   a314a: f24e 61c8    	movw	\cf4 r1\cf2 , \cf6 #0xe6c8\cf2 \
+   a314e: a80f         	add	\cf4 r0\cf2 , \cf4 sp\cf2 , \cf6 #0x3c\cf2 \
+   a3150: f2c0 0116    	movt	\cf4 r1\cf2 , \cf6 #0x16\cf2 \
+   a3154: aa04         	add	\cf4 r2\cf2 , \cf4 sp\cf2 , \cf6 #0x10\cf2 \
+   a3156: f7f5 edf0    	blx	0x98d38 <_ZNSsC1EPKcRKSaIcE@plt> @ imm = #-0xa420\
+   a315a: 4640         	mov	\cf4 r0\cf2 , \cf4 r8\cf2 \
+   a315c: 4631         	mov	\cf4 r1\cf2 , \cf4 r6\cf2 \
+   a315e: aa0e         	add	\cf4 r2\cf2 , \cf4 sp\cf2 , \cf6 #0x38\cf2 \
+   a3160: ab0f         	add	\cf4 r3\cf2 , \cf4 sp\cf2 , \cf6 #0x3c\cf2 \
+   a3162: f7f5 e888    	blx	0x98274 <_ZNK4Poco4Util21AbstractConfiguration9getStringERKSsS3_@plt> @ imm = #-0xaef0\
+   a3166: f24e 61cc    	movw	\cf4 r1\cf2 , \cf6 #0xe6cc\cf2 \
+   a316a: a810         	add	\cf4 r0\cf2 , \cf4 sp\cf2 , \cf6 #0x40\cf2 \
+   a316c: 68a6         	ldr	\cf4 r6\cf2 , \cf5 [\cf4 r4\cf5 , \cf6 #0x8\cf5 ]\cf2 \
+   a316e: f2c0 0116    	movt	\cf4 r1\cf2 , \cf6 #0x16\cf2 \
+   a3172: aa05         	add	\cf4 r2\cf2 , \cf4 sp\cf2 , \cf6 #0x14\cf2 \
+   a3174: f7f5 ede0    	blx	0x98d38 <_ZNSsC1EPKcRKSaIcE@plt> @ imm = #-0xa440\
+   a3178: f24e 61dc    	movw	\cf4 r1\cf2 , \cf6 #0xe6dc\cf2 \
+   a317c: a811         	add	\cf4 r0\cf2 , \cf4 sp\cf2 , \cf6 #0x44\cf2 \
+   a317e: f2c0 0116    	movt	\cf4 r1\cf2 , \cf6 #0x16\cf2 \
+   a3182: aa06         	add	\cf4 r2\cf2 , \cf4 sp\cf2 , \cf6 #0x18\cf2 \
+   a3184: f7f5 edd8    	blx	0x98d38 <_ZNSsC1EPKcRKSaIcE@plt> @ imm = #-0xa450\
+   a3188: 4631         	mov	\cf4 r1\cf2 , \cf4 r6\cf2 \
+   a318a: aa10         	add	\cf4 r2\cf2 , \cf4 sp\cf2 , \cf6 #0x40\cf2 \
+   a318c: ab11         	add	\cf4 r3\cf2 , \cf4 sp\cf2 , \cf6 #0x44\cf2 \
+   a318e: a819         	add	\cf4 r0\cf2 , \cf4 sp\cf2 , \cf6 #0x64\cf2 \
+   a3190: f7f5 e870    	blx	0x98274 <_ZNK4Poco4Util21AbstractConfiguration9getStringERKSsS3_@plt> @ imm = #-0xaf20\
+   a3194: f24e 61e8    	movw	\cf4 r1\cf2 , \cf6 #0xe6e8\cf2 \
+   a3198: a812         	add	\cf4 r0\cf2 , \cf4 sp\cf2 , \cf6 #0x48\cf2 \
+   a319a: 68a6         	ldr	\cf4 r6\cf2 , \cf5 [\cf4 r4\cf5 , \cf6 #0x8\cf5 ]\cf2 \
+   a319c: f2c0 0116    	movt	\cf4 r1\cf2 , \cf6 #0x16\cf2 \
+   a31a0: aa07         	add	\cf4 r2\cf2 , \cf4 sp\cf2 , \cf6 #0x1c\cf2 \
+   a31a2: f7f5 edca    	blx	0x98d38 <_ZNSsC1EPKcRKSaIcE@plt> @ imm = #-0xa46c\
+   a31a6: 4630         	mov	\cf4 r0\cf2 , \cf4 r6\cf2 \
+   a31a8: a912         	add	\cf4 r1\cf2 , \cf4 sp\cf2 , \cf6 #0x48\cf2 \
+   a31aa: f242 2253    	movw	\cf4 r2\cf2 , \cf6 #0x2253\cf2 \
+   a31ae: f7f5 ecac    	blx	0x98b08 <_ZNK4Poco4Util21AbstractConfiguration7getUIntERKSsj@plt> @ imm = #-0xa6a8\
+   a31b2: f24e 61f8    	movw	\cf4 r1\cf2 , \cf6 #0xe6f8\cf2 \
+   a31b6: 901a         	str	\cf4 r0\cf2 , \cf5 [\cf4 sp\cf5 , \cf6 #0x68\cf5 ]\cf2 \
+   a31b8: aa08         	add	\cf4 r2\cf2 , \cf4 sp\cf2 , \cf6 #0x20\cf2 \
+   a31ba: f2c0 0116    	movt	\cf4 r1\cf2 , \cf6 #0x16\cf2 \
+   a31be: a813         	add	\cf4 r0\cf2 , \cf4 sp\cf2 , \cf6 #0x4c\cf2 \
+   a31c0: 68a6         	ldr	\cf4 r6\cf2 , \cf5 [\cf4 r4\cf5 , \cf6 #0x8\cf5 ]\cf2 \
+   a31c2: f7f5 edba    	blx	0x98d38 <_ZNSsC1EPKcRKSaIcE@plt> @ imm = #-0xa48c\
+   a31c6: f64d 51c4    	movw	\cf4 r1\cf2 , \cf6 #0xddc4\cf2 \
+   a31ca: a814         	add	\cf4 r0\cf2 , \cf4 sp\cf2 , \cf6 #0x50\cf2 \
+   a31cc: aa09         	add	\cf4 r2\cf2 , \cf4 sp\cf2 , \cf6 #0x24\cf2 \
+   a31ce: f2c0 0116    	movt	\cf4 r1\cf2 , \cf6 #0x16\cf2 \
+   a31d2: f7f5 edb2    	blx	0x98d38 <_ZNSsC1EPKcRKSaIcE@plt> @ imm = #-0xa49c\
+   a31d6: 4631         	mov	\cf4 r1\cf2 , \cf4 r6\cf2 \
+   a31d8: aa13         	add	\cf4 r2\cf2 , \cf4 sp\cf2 , \cf6 #0x4c\cf2 \
+   a31da: ab14         	add	\cf4 r3\cf2 , \cf4 sp\cf2 , \cf6 #0x50\cf2 \
+   a31dc: a81b         	add	\cf4 r0\cf2 , \cf4 sp\cf2 , \cf6 #0x6c\cf2 \
+   a31de: f7f5 e84a    	blx	0x98274 <_ZNK4Poco4Util21AbstractConfiguration9getStringERKSsS3_@plt> @ imm = #-0xaf6c\
+   a31e2: f24e 7108    	movw	\cf4 r1\cf2 , \cf6 #0xe708\cf2 \
+   a31e6: a815         	add	\cf4 r0\cf2 , \cf4 sp\cf2 , \cf6 #0x54\cf2 \
+   a31e8: 68a6         	ldr	\cf4 r6\cf2 , \cf5 [\cf4 r4\cf5 , \cf6 #0x8\cf5 ]\cf2 \
+   a31ea: f2c0 0116    	movt	\cf4 r1\cf2 , \cf6 #0x16\cf2 \
+   a31ee: aa0a         	add	\cf4 r2\cf2 , \cf4 sp\cf2 , \cf6 #0x28\cf2 \
+   a31f0: f7f5 eda2    	blx	0x98d38 <_ZNSsC1EPKcRKSaIcE@plt> @ imm = #-0xa4bc\
+   a31f4: 4630         	mov	\cf4 r0\cf2 , \cf4 r6\cf2 \
+   a31f6: a915         	add	\cf4 r1\cf2 , \cf4 sp\cf2 , \cf6 #0x54\cf2 \
+   a31f8: f44f 7296    	mov.w	\cf4 r2\cf2 , \cf6 #0x12c\cf2 \
+   a31fc: f7f5 ec84    	blx	0x98b08 <_ZNK4Poco4Util21AbstractConfiguration7getUIntERKSsj@plt> @ imm = #-0xa6f8\
+   a3200: f24e 7114    	movw	\cf4 r1\cf2 , \cf6 #0xe714\cf2 \
+   a3204: 901c         	str	\cf4 r0\cf2 , \cf5 [\cf4 sp\cf5 , \cf6 #0x70\cf5 ]\cf2 \
+   a3206: aa0b         	add	\cf4 r2\cf2 , \cf4 sp\cf2 , \cf6 #0x2c\cf2 \
+   a3208: f2c0 0116    	movt	\cf4 r1\cf2 , \cf6 #0x16\cf2 \
+   a320c: a816         	add	\cf4 r0\cf2 , \cf4 sp\cf2 , \cf6 #0x58\cf2 \
+   a320e: 68a4         	ldr	\cf4 r4\cf2 , \cf5 [\cf4 r4\cf5 , \cf6 #0x8\cf5 ]\cf2 \
+   a3210: f7f5 ed92    	blx	0x98d38 <_ZNSsC1EPKcRKSaIcE@plt> @ imm = #-0xa4dc\
+   a3214: f24a 1110    	movw	\cf4 r1\cf2 , \cf6 #0xa110\cf2 \
+   a3218: a817         	add	\cf4 r0\cf2 , \cf4 sp\cf2 , \cf6 #0x5c\cf2 \
+   a321a: aa0c         	add	\cf4 r2\cf2 , \cf4 sp\cf2 , \cf6 #0x30\cf2 \
+   a321c: f2c0 0117    	movt	\cf4 r1\cf2 , \cf6 #0x17\cf2 \
+   a3220: f7f5 ed8a    	blx	0x98d38 <_ZNSsC1EPKcRKSaIcE@plt> @ imm = #-0xa4ec\
+   a3224: 4621         	mov	\cf4 r1\cf2 , \cf4 r4\cf2 \
+   a3226: aa16         	add	\cf4 r2\cf2 , \cf4 sp\cf2 , \cf6 #0x58\cf2 \
+   a3228: ab17         	add	\cf4 r3\cf2 , \cf4 sp\cf2 , \cf6 #0x5c\cf2 \
+   a322a: a81d         	add	\cf4 r0\cf2 , \cf4 sp\cf2 , \cf6 #0x74\cf2 \
+   a322c: f7f5 e822    	blx	0x98274 <_ZNK4Poco4Util21AbstractConfiguration9getStringERKSsS3_@plt> @ imm = #-0xafbc\
+   a3230: f8d7 457c    	ldr.w	\cf4 r4\cf2 , \cf5 [\cf4 r7\cf5 , \cf6 #0x57c\cf5 ]\cf2 \
+   a3234: f64a 22ab    	movw	\cf4 r2\cf2 , \cf6 #0xaaab\cf2 \
+   a3238: f8d7 3584    	ldr.w	\cf4 r3\cf2 , \cf5 [\cf4 r7\cf5 , \cf6 #0x584\cf5 ]\cf2 \
+   a323c: f6ca 22aa    	movt	\cf4 r2\cf2 , \cf6 #0xaaaa\cf2 \
+   a3240: 1b1b         	subs	\cf4 r3\cf2 , \cf4 r3\cf2 , \cf4 r4\cf2 \
+   a3242: 10db         	asrs	\cf4 r3\cf2 , \cf4 r3\cf2 , \cf6 #0x3\cf2 \
+   a3244: fb02 f303    	mul	\cf4 r3\cf2 , \cf4 r2\cf2 , \cf4 r3\cf2 \
+   a3248: 2b00         	cmp	\cf4 r3\cf2 , \cf6 #0x0\cf2 \
+   a324a: f000 8160    	beq.w	0xa350e <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x492> @ imm = #0x2c0\
+   a324e: f8d7 1580    	ldr.w	\cf4 r1\cf2 , \cf5 [\cf4 r7\cf5 , \cf6 #0x580\cf5 ]\cf2 \
+   a3252: 1b0e         	subs	\cf4 r6\cf2 , \cf4 r1\cf2 , \cf4 r4\cf2 \
+   a3254: 10f3         	asrs	\cf4 r3\cf2 , \cf4 r6\cf2 , \cf6 #0x3\cf2 \
+   a3256: fb02 f303    	mul	\cf4 r3\cf2 , \cf4 r2\cf2 , \cf4 r3\cf2 \
+   a325a: 2b00         	cmp	\cf4 r3\cf2 , \cf6 #0x0\cf2 \
+   a325c: d055         	beq	0xa330a <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x28e> @ imm = #0xaa\
+   a325e: 4620         	mov	\cf4 r0\cf2 , \cf4 r4\cf2 \
+   a3260: 4641         	mov	\cf4 r1\cf2 , \cf4 r8\cf2 \
+   a3262: f7f5 ea0c    	blx	0x9867c <_ZNSs6assignERKSs@plt> @ imm = #-0xabe8\
+   a3266: a919         	add	\cf4 r1\cf2 , \cf4 sp\cf2 , \cf6 #0x64\cf2 \
+   a3268: 1d20         	adds	\cf4 r0\cf2 , \cf4 r4\cf2 , \cf6 #0x4\cf2 \
+   a326a: f7f5 ea08    	blx	0x9867c <_ZNSs6assignERKSs@plt> @ imm = #-0xabf0\
+   a326e: 9b1a         	ldr	\cf4 r3\cf2 , \cf5 [\cf4 sp\cf5 , \cf6 #0x68\cf5 ]\cf2 \
+   a3270: a91b         	add	\cf4 r1\cf2 , \cf4 sp\cf2 , \cf6 #0x6c\cf2 \
+   a3272: f104 000c    	add.w	\cf4 r0\cf2 , \cf4 r4\cf2 , \cf6 #0xc\cf2 \
+   a3276: 60a3         	str	\cf4 r3\cf2 , \cf5 [\cf4 r4\cf5 , \cf6 #0x8\cf5 ]\cf2 \
+   a3278: f7f5 ea00    	blx	0x9867c <_ZNSs6assignERKSs@plt> @ imm = #-0xac00\
+   a327c: 9b1c         	ldr	\cf4 r3\cf2 , \cf5 [\cf4 sp\cf5 , \cf6 #0x70\cf5 ]\cf2 \
+   a327e: a91d         	add	\cf4 r1\cf2 , \cf4 sp\cf2 , \cf6 #0x74\cf2 \
+   a3280: f104 0014    	add.w	\cf4 r0\cf2 , \cf4 r4\cf2 , \cf6 #0x14\cf2 \
+   a3284: 6123         	str	\cf4 r3\cf2 , \cf5 [\cf4 r4\cf5 , \cf6 #0x10\cf5 ]\cf2 \
+   a3286: f7f5 e9fa    	blx	0x9867c <_ZNSs6assignERKSs@plt> @ imm = #-0xac0c\
+   a328a: f8d7 3580    	ldr.w	\cf4 r3\cf2 , \cf5 [\cf4 r7\cf5 , \cf6 #0x580\cf5 ]\cf2 \
+   a328e: 3418         	adds	\cf4 r4\cf2 , \cf6 #0x18\cf2 \
+   a3290: 429c         	cmp	\cf4 r4\cf2 , \cf4 r3\cf2 \
+   a3292: bf1e         	ittt	ne\
+   a3294: f248 69e8    	movwne	\cf4 r9\cf2 , \cf6 #0x86e8\cf2 \
+   a3298: 4626         	movne	\cf4 r6\cf2 , \cf4 r4\cf2 \
+   a329a: f2c0 0909    	movtne	\cf4 r9\cf2 , \cf6 #0x9\cf2 \
+   a329e: d115         	bne	0xa32cc <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x250> @ imm = #0x2a\
+   a32a0: e084         	b	0xa33ac <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x330> @ imm = #0x108\
+   a32a2: 68f2         	ldr	\cf4 r2\cf2 , \cf5 [\cf4 r6\cf5 , \cf6 #0xc\cf5 ]\cf2 \
+   a32a4: f1a2 000c    	sub.w	\cf4 r0\cf2 , \cf4 r2\cf2 , \cf6 #0xc\cf2 \
+   a32a8: 42a8         	cmp	\cf4 r0\cf2 , \cf4 r5\cf2 \
+   a32aa: f040 8115    	bne.w	0xa34d8 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x45c> @ imm = #0x22a\
+   a32ae: 6872         	ldr	\cf4 r2\cf2 , \cf5 [\cf4 r6\cf5 , \cf6 #0x4\cf5 ]\cf2 \
+   a32b0: f1a2 000c    	sub.w	\cf4 r0\cf2 , \cf4 r2\cf2 , \cf6 #0xc\cf2 \
+   a32b4: 42a8         	cmp	\cf4 r0\cf2 , \cf4 r5\cf2 \
+   a32b6: f040 80f4    	bne.w	0xa34a2 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x426> @ imm = #0x1e8\
+   a32ba: 6832         	ldr	\cf4 r2\cf2 , \cf5 [\cf4 r6\cf5 ]\cf2 \
+   a32bc: f1a2 000c    	sub.w	\cf4 r0\cf2 , \cf4 r2\cf2 , \cf6 #0xc\cf2 \
+   a32c0: 42a8         	cmp	\cf4 r0\cf2 , \cf4 r5\cf2 \
+   a32c2: f040 80d3    	bne.w	0xa346c <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x3f0> @ imm = #0x1a6\
+   a32c6: 3618         	adds	\cf4 r6\cf2 , \cf6 #0x18\cf2 \
+   a32c8: 42b3         	cmp	\cf4 r3\cf2 , \cf4 r6\cf2 \
+   a32ca: d06f         	beq	0xa33ac <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x330> @ imm = #0xde\
+   a32cc: 6972         	ldr	\cf4 r2\cf2 , \cf5 [\cf4 r6\cf5 , \cf6 #0x14\cf5 ]\cf2 \
+   a32ce: f1a2 000c    	sub.w	\cf4 r0\cf2 , \cf4 r2\cf2 , \cf6 #0xc\cf2 \
+   a32d2: 42a8         	cmp	\cf4 r0\cf2 , \cf4 r5\cf2 \
+   a32d4: d0e5         	beq	0xa32a2 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x226> @ imm = #-0x36\
+   a32d6: f1b9 0f00    	cmp.w	\cf4 r9\cf2 , \cf6 #0x0\cf2 \
+   a32da: f000 81f5    	beq.w	0xa36c8 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x64c> @ imm = #0x3ea\
+   a32de: 3a04         	subs	\cf4 r2\cf2 , \cf6 #0x4\cf2 \
+   a32e0: f3bf 8f5f    	dmb	sy\
+   a32e4: e852 1f00    	ldrex	\cf4 r1\cf2 , \cf5 [\cf4 r2\cf5 ]\cf2 \
+   a32e8: f101 3eff    	add.w	\cf4 lr\cf2 , \cf4 r1\cf2 , \cf6 #0xffffffff\cf2 \
+   a32ec: e842 ec00    	strex	\cf4 r12\cf2 , \cf4 lr\cf2 , \cf5 [\cf4 r2\cf5 ]\cf2 \
+   a32f0: f1bc 0f00    	cmp.w	\cf4 r12\cf2 , \cf6 #0x0\cf2 \
+   a32f4: d1f6         	bne	0xa32e4 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x268> @ imm = #-0x14\
+   a32f6: f3bf 8f5f    	dmb	sy\
+   a32fa: 2900         	cmp	\cf4 r1\cf2 , \cf6 #0x0\cf2 \
+   a32fc: dcd1         	bgt	0xa32a2 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x226> @ imm = #-0x5e\
+   a32fe: a90d         	add	\cf4 r1\cf2 , \cf4 sp\cf2 , \cf6 #0x34\cf2 \
+   a3300: 9301         	str	\cf4 r3\cf2 , \cf5 [\cf4 sp\cf5 , \cf6 #0x4\cf5 ]\cf2 \
+   a3302: f7f5 eb50    	blx	0x989a4 <_ZNSs4_Rep10_M_destroyERKSaIcE@plt> @ imm = #-0xa960\
+   a3306: 9b01         	ldr	\cf4 r3\cf2 , \cf5 [\cf4 sp\cf5 , \cf6 #0x4\cf5 ]\cf2 \
+   a3308: e7cb         	b	0xa32a2 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x226> @ imm = #-0x6a\
+   a330a: 4446         	add	\cf4 r6\cf2 , \cf4 r8\cf2 \
+   a330c: ebc8 0a06    	rsb	\cf4 r10\cf2 , \cf4 r8\cf2 , \cf4 r6\cf2 \
+   a3310: ea4f 03ea    	asr.w	\cf4 r3\cf2 , \cf4 r10\cf2 , \cf6 #0x3\cf2 \
+   a3314: fb02 f203    	mul	\cf4 r2\cf2 , \cf4 r2\cf2 , \cf4 r3\cf2 \
+   a3318: 2a00         	cmp	\cf4 r2\cf2 , \cf6 #0x0\cf2 \
+   a331a: f340 83ac    	ble.w	0xa3a76 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x9fa> @ imm = #0x758\
+   a331e: 44a2         	add	\cf4 r10\cf2 , \cf4 r4\cf2 \
+   a3320: 46c1         	mov	\cf4 r9\cf2 , \cf4 r8\cf2 \
+   a3322: 4620         	mov	\cf4 r0\cf2 , \cf4 r4\cf2 \
+   a3324: 4649         	mov	\cf4 r1\cf2 , \cf4 r9\cf2 \
+   a3326: f7f5 e9aa    	blx	0x9867c <_ZNSs6assignERKSs@plt> @ imm = #-0xacac\
+   a332a: 1d20         	adds	\cf4 r0\cf2 , \cf4 r4\cf2 , \cf6 #0x4\cf2 \
+   a332c: f109 0104    	add.w	\cf4 r1\cf2 , \cf4 r9\cf2 , \cf6 #0x4\cf2 \
+   a3330: f7f5 e9a4    	blx	0x9867c <_ZNSs6assignERKSs@plt> @ imm = #-0xacb8\
+   a3334: f8d9 3008    	ldr.w	\cf4 r3\cf2 , \cf5 [\cf4 r9\cf5 , \cf6 #0x8\cf5 ]\cf2 \
+   a3338: f104 000c    	add.w	\cf4 r0\cf2 , \cf4 r4\cf2 , \cf6 #0xc\cf2 \
+   a333c: f109 010c    	add.w	\cf4 r1\cf2 , \cf4 r9\cf2 , \cf6 #0xc\cf2 \
+   a3340: 60a3         	str	\cf4 r3\cf2 , \cf5 [\cf4 r4\cf5 , \cf6 #0x8\cf5 ]\cf2 \
+   a3342: f7f5 e99c    	blx	0x9867c <_ZNSs6assignERKSs@plt> @ imm = #-0xacc8\
+   a3346: f8d9 3010    	ldr.w	\cf4 r3\cf2 , \cf5 [\cf4 r9\cf5 , \cf6 #0x10\cf5 ]\cf2 \
+   a334a: f104 0014    	add.w	\cf4 r0\cf2 , \cf4 r4\cf2 , \cf6 #0x14\cf2 \
+   a334e: f109 0114    	add.w	\cf4 r1\cf2 , \cf4 r9\cf2 , \cf6 #0x14\cf2 \
+   a3352: 6123         	str	\cf4 r3\cf2 , \cf5 [\cf4 r4\cf5 , \cf6 #0x10\cf5 ]\cf2 \
+   a3354: f7f5 e992    	blx	0x9867c <_ZNSs6assignERKSs@plt> @ imm = #-0xacdc\
+   a3358: 3418         	adds	\cf4 r4\cf2 , \cf6 #0x18\cf2 \
+   a335a: f109 0918    	add.w	\cf4 r9\cf2 , \cf4 r9\cf2 , \cf6 #0x18\cf2 \
+   a335e: 4554         	cmp	\cf4 r4\cf2 , \cf4 r10\cf2 \
+   a3360: d1df         	bne	0xa3322 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x2a6> @ imm = #-0x42\
+   a3362: f8d7 9580    	ldr.w	\cf4 r9\cf2 , \cf5 [\cf4 r7\cf5 , \cf6 #0x580\cf5 ]\cf2 \
+   a3366: ab1e         	add	\cf4 r3\cf2 , \cf4 sp\cf2 , \cf6 #0x78\cf2 \
+   a3368: 464c         	mov	\cf4 r4\cf2 , \cf4 r9\cf2 \
+   a336a: 429e         	cmp	\cf4 r6\cf2 , \cf4 r3\cf2 \
+   a336c: d01e         	beq	0xa33ac <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x330> @ imm = #0x3c\
+   a336e: b1bc         	cbz	\cf4 r4\cf2 , 0xa33a0 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x324> @ imm = #0x2e\
+   a3370: 4620         	mov	\cf4 r0\cf2 , \cf4 r4\cf2 \
+   a3372: 4631         	mov	\cf4 r1\cf2 , \cf4 r6\cf2 \
+   a3374: f7f4 ec30    	blx	0x97bd8 <_ZNSsC1ERKSs@plt> @ imm = #-0xb7a0\
+   a3378: 1d20         	adds	\cf4 r0\cf2 , \cf4 r4\cf2 , \cf6 #0x4\cf2 \
+   a337a: 1d31         	adds	\cf4 r1\cf2 , \cf4 r6\cf2 , \cf6 #0x4\cf2 \
+   a337c: f7f4 ec2c    	blx	0x97bd8 <_ZNSsC1ERKSs@plt> @ imm = #-0xb7a8\
+   a3380: 68b3         	ldr	\cf4 r3\cf2 , \cf5 [\cf4 r6\cf5 , \cf6 #0x8\cf5 ]\cf2 \
+   a3382: f104 000c    	add.w	\cf4 r0\cf2 , \cf4 r4\cf2 , \cf6 #0xc\cf2 \
+   a3386: f106 010c    	add.w	\cf4 r1\cf2 , \cf4 r6\cf2 , \cf6 #0xc\cf2 \
+   a338a: 60a3         	str	\cf4 r3\cf2 , \cf5 [\cf4 r4\cf5 , \cf6 #0x8\cf5 ]\cf2 \
+   a338c: f7f4 ec24    	blx	0x97bd8 <_ZNSsC1ERKSs@plt> @ imm = #-0xb7b8\
+   a3390: 6933         	ldr	\cf4 r3\cf2 , \cf5 [\cf4 r6\cf5 , \cf6 #0x10\cf5 ]\cf2 \
+   a3392: f104 0014    	add.w	\cf4 r0\cf2 , \cf4 r4\cf2 , \cf6 #0x14\cf2 \
+   a3396: f106 0114    	add.w	\cf4 r1\cf2 , \cf4 r6\cf2 , \cf6 #0x14\cf2 \
+   a339a: 6123         	str	\cf4 r3\cf2 , \cf5 [\cf4 r4\cf5 , \cf6 #0x10\cf5 ]\cf2 \
+   a339c: f7f4 ec1c    	blx	0x97bd8 <_ZNSsC1ERKSs@plt> @ imm = #-0xb7c8\
+   a33a0: 3618         	adds	\cf4 r6\cf2 , \cf6 #0x18\cf2 \
+   a33a2: ab1e         	add	\cf4 r3\cf2 , \cf4 sp\cf2 , \cf6 #0x78\cf2 \
+   a33a4: 429e         	cmp	\cf4 r6\cf2 , \cf4 r3\cf2 \
+   a33a6: f104 0418    	add.w	\cf4 r4\cf2 , \cf4 r4\cf2 , \cf6 #0x18\cf2 \
+   a33aa: d1e0         	bne	0xa336e <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x2f2> @ imm = #-0x40\
+   a33ac: f8c7 4580    	str.w	\cf4 r4\cf2 , \cf5 [\cf4 r7\cf5 , \cf6 #0x580\cf5 ]\cf2 \
+   a33b0: 9b1d         	ldr	\cf4 r3\cf2 , \cf5 [\cf4 sp\cf5 , \cf6 #0x74\cf5 ]\cf2 \
+   a33b2: f1a3 000c    	sub.w	\cf4 r0\cf2 , \cf4 r3\cf2 , \cf6 #0xc\cf2 \
+   a33b6: 42a8         	cmp	\cf4 r0\cf2 , \cf4 r5\cf2 \
+   a33b8: f040 8157    	bne.w	0xa366a <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x5ee> @ imm = #0x2ae\
+   a33bc: 9b1b         	ldr	\cf4 r3\cf2 , \cf5 [\cf4 sp\cf5 , \cf6 #0x6c\cf5 ]\cf2 \
+   a33be: f1a3 000c    	sub.w	\cf4 r0\cf2 , \cf4 r3\cf2 , \cf6 #0xc\cf2 \
+   a33c2: 42a8         	cmp	\cf4 r0\cf2 , \cf4 r5\cf2 \
+   a33c4: f040 8257    	bne.w	0xa3876 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x7fa> @ imm = #0x4ae\
+   a33c8: 9b19         	ldr	\cf4 r3\cf2 , \cf5 [\cf4 sp\cf5 , \cf6 #0x64\cf5 ]\cf2 \
+   a33ca: f1a3 000c    	sub.w	\cf4 r0\cf2 , \cf4 r3\cf2 , \cf6 #0xc\cf2 \
+   a33ce: 42a8         	cmp	\cf4 r0\cf2 , \cf4 r5\cf2 \
+   a33d0: f040 826b    	bne.w	0xa38aa <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x82e> @ imm = #0x4d6\
+   a33d4: 9b18         	ldr	\cf4 r3\cf2 , \cf5 [\cf4 sp\cf5 , \cf6 #0x60\cf5 ]\cf2 \
+   a33d6: f1a3 000c    	sub.w	\cf4 r0\cf2 , \cf4 r3\cf2 , \cf6 #0xc\cf2 \
+   a33da: 42a8         	cmp	\cf4 r0\cf2 , \cf4 r5\cf2 \
+   a33dc: f040 827f    	bne.w	0xa38de <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x862> @ imm = #0x4fe\
+   a33e0: 9b17         	ldr	\cf4 r3\cf2 , \cf5 [\cf4 sp\cf5 , \cf6 #0x5c\cf5 ]\cf2 \
+   a33e2: f1a3 000c    	sub.w	\cf4 r0\cf2 , \cf4 r3\cf2 , \cf6 #0xc\cf2 \
+   a33e6: 42a8         	cmp	\cf4 r0\cf2 , \cf4 r5\cf2 \
+   a33e8: f040 8293    	bne.w	0xa3912 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x896> @ imm = #0x526\
+   a33ec: 9b16         	ldr	\cf4 r3\cf2 , \cf5 [\cf4 sp\cf5 , \cf6 #0x58\cf5 ]\cf2 \
+   a33ee: f1a3 000c    	sub.w	\cf4 r0\cf2 , \cf4 r3\cf2 , \cf6 #0xc\cf2 \
+   a33f2: 42a8         	cmp	\cf4 r0\cf2 , \cf4 r5\cf2 \
+   a33f4: f040 82a7    	bne.w	0xa3946 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x8ca> @ imm = #0x54e\
+   a33f8: 9b15         	ldr	\cf4 r3\cf2 , \cf5 [\cf4 sp\cf5 , \cf6 #0x54\cf5 ]\cf2 \
+   a33fa: f1a3 000c    	sub.w	\cf4 r0\cf2 , \cf4 r3\cf2 , \cf6 #0xc\cf2 \
+   a33fe: 42a8         	cmp	\cf4 r0\cf2 , \cf4 r5\cf2 \
+   a3400: f040 82bb    	bne.w	0xa397a <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x8fe> @ imm = #0x576\
+   a3404: 9b14         	ldr	\cf4 r3\cf2 , \cf5 [\cf4 sp\cf5 , \cf6 #0x50\cf5 ]\cf2 \
+   a3406: f1a3 000c    	sub.w	\cf4 r0\cf2 , \cf4 r3\cf2 , \cf6 #0xc\cf2 \
+   a340a: 42a8         	cmp	\cf4 r0\cf2 , \cf4 r5\cf2 \
+   a340c: f040 81b1    	bne.w	0xa3772 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x6f6> @ imm = #0x362\
+   a3410: 9b13         	ldr	\cf4 r3\cf2 , \cf5 [\cf4 sp\cf5 , \cf6 #0x4c\cf5 ]\cf2 \
+   a3412: f1a3 000c    	sub.w	\cf4 r0\cf2 , \cf4 r3\cf2 , \cf6 #0xc\cf2 \
+   a3416: 42a8         	cmp	\cf4 r0\cf2 , \cf4 r5\cf2 \
+   a3418: f040 81c5    	bne.w	0xa37a6 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x72a> @ imm = #0x38a\
+   a341c: 9b12         	ldr	\cf4 r3\cf2 , \cf5 [\cf4 sp\cf5 , \cf6 #0x48\cf5 ]\cf2 \
+   a341e: f1a3 000c    	sub.w	\cf4 r0\cf2 , \cf4 r3\cf2 , \cf6 #0xc\cf2 \
+   a3422: 42a8         	cmp	\cf4 r0\cf2 , \cf4 r5\cf2 \
+   a3424: f040 81d9    	bne.w	0xa37da <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x75e> @ imm = #0x3b2\
+   a3428: 9b11         	ldr	\cf4 r3\cf2 , \cf5 [\cf4 sp\cf5 , \cf6 #0x44\cf5 ]\cf2 \
+   a342a: f1a3 000c    	sub.w	\cf4 r0\cf2 , \cf4 r3\cf2 , \cf6 #0xc\cf2 \
+   a342e: 42a8         	cmp	\cf4 r0\cf2 , \cf4 r5\cf2 \
+   a3430: f040 81ed    	bne.w	0xa380e <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x792> @ imm = #0x3da\
+   a3434: 9b10         	ldr	\cf4 r3\cf2 , \cf5 [\cf4 sp\cf5 , \cf6 #0x40\cf5 ]\cf2 \
+   a3436: f1a3 000c    	sub.w	\cf4 r0\cf2 , \cf4 r3\cf2 , \cf6 #0xc\cf2 \
+   a343a: 42a8         	cmp	\cf4 r0\cf2 , \cf4 r5\cf2 \
+   a343c: f040 8165    	bne.w	0xa370a <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x68e> @ imm = #0x2ca\
+   a3440: 9b0f         	ldr	\cf4 r3\cf2 , \cf5 [\cf4 sp\cf5 , \cf6 #0x3c\cf5 ]\cf2 \
+   a3442: f1a3 000c    	sub.w	\cf4 r0\cf2 , \cf4 r3\cf2 , \cf6 #0xc\cf2 \
+   a3446: 42a8         	cmp	\cf4 r0\cf2 , \cf4 r5\cf2 \
+   a3448: f040 8179    	bne.w	0xa373e <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x6c2> @ imm = #0x2f2\
+   a344c: 9b0e         	ldr	\cf4 r3\cf2 , \cf5 [\cf4 sp\cf5 , \cf6 #0x38\cf5 ]\cf2 \
+   a344e: f1a3 000c    	sub.w	\cf4 r0\cf2 , \cf4 r3\cf2 , \cf6 #0xc\cf2 \
+   a3452: 42a8         	cmp	\cf4 r0\cf2 , \cf4 r5\cf2 \
+   a3454: f040 813f    	bne.w	0xa36d6 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x65a> @ imm = #0x27e\
+   a3458: b01e         	add	\cf4 sp\cf2 , \cf6 #0x78\cf2 \
+   a345a: e9dd 4500    	ldrd	\cf4 r4\cf2 , \cf4 r5\cf2 , \cf5 [\cf4 sp\cf5 ]\cf2 \
+   a345e: e9dd 6702    	ldrd	\cf4 r6\cf2 , \cf4 r7\cf2 , \cf5 [\cf4 sp\cf5 , \cf6 #8\cf5 ]\cf2 \
+   a3462: e9dd 8904    	ldrd	\cf4 r8\cf2 , \cf4 r9\cf2 , \cf5 [\cf4 sp\cf5 , \cf6 #16\cf5 ]\cf2 \
+   a3466: b006         	add	\cf4 sp\cf2 , \cf6 #0x18\cf2 \
+   a3468: e8bd 8400    	pop.w	\{\cf4 r10\cf2 , \cf4 pc\cf2 \}\
+   a346c: f1b9 0f00    	cmp.w	\cf4 r9\cf2 , \cf6 #0x0\cf2 \
+   a3470: f000 811c    	beq.w	0xa36ac <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x630> @ imm = #0x238\
+   a3474: 3a04         	subs	\cf4 r2\cf2 , \cf6 #0x4\cf2 \
+   a3476: f3bf 8f5f    	dmb	sy\
+   a347a: e852 1f00    	ldrex	\cf4 r1\cf2 , \cf5 [\cf4 r2\cf5 ]\cf2 \
+   a347e: f101 3eff    	add.w	\cf4 lr\cf2 , \cf4 r1\cf2 , \cf6 #0xffffffff\cf2 \
+   a3482: e842 ec00    	strex	\cf4 r12\cf2 , \cf4 lr\cf2 , \cf5 [\cf4 r2\cf5 ]\cf2 \
+   a3486: f1bc 0f00    	cmp.w	\cf4 r12\cf2 , \cf6 #0x0\cf2 \
+   a348a: d1f6         	bne	0xa347a <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x3fe> @ imm = #-0x14\
+   a348c: f3bf 8f5f    	dmb	sy\
+   a3490: 2900         	cmp	\cf4 r1\cf2 , \cf6 #0x0\cf2 \
+   a3492: f73f af18    	bgt.w	0xa32c6 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x24a> @ imm = #-0x1d0\
+   a3496: a90d         	add	\cf4 r1\cf2 , \cf4 sp\cf2 , \cf6 #0x34\cf2 \
+   a3498: 9301         	str	\cf4 r3\cf2 , \cf5 [\cf4 sp\cf5 , \cf6 #0x4\cf5 ]\cf2 \
+   a349a: f7f5 ea84    	blx	0x989a4 <_ZNSs4_Rep10_M_destroyERKSaIcE@plt> @ imm = #-0xaaf8\
+   a349e: 9b01         	ldr	\cf4 r3\cf2 , \cf5 [\cf4 sp\cf5 , \cf6 #0x4\cf5 ]\cf2 \
+   a34a0: e711         	b	0xa32c6 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x24a> @ imm = #-0x1de\
+   a34a2: f1b9 0f00    	cmp.w	\cf4 r9\cf2 , \cf6 #0x0\cf2 \
+   a34a6: f000 8108    	beq.w	0xa36ba <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x63e> @ imm = #0x210\
+   a34aa: 3a04         	subs	\cf4 r2\cf2 , \cf6 #0x4\cf2 \
+   a34ac: f3bf 8f5f    	dmb	sy\
+   a34b0: e852 1f00    	ldrex	\cf4 r1\cf2 , \cf5 [\cf4 r2\cf5 ]\cf2 \
+   a34b4: f101 3eff    	add.w	\cf4 lr\cf2 , \cf4 r1\cf2 , \cf6 #0xffffffff\cf2 \
+   a34b8: e842 ec00    	strex	\cf4 r12\cf2 , \cf4 lr\cf2 , \cf5 [\cf4 r2\cf5 ]\cf2 \
+   a34bc: f1bc 0f00    	cmp.w	\cf4 r12\cf2 , \cf6 #0x0\cf2 \
+   a34c0: d1f6         	bne	0xa34b0 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x434> @ imm = #-0x14\
+   a34c2: f3bf 8f5f    	dmb	sy\
+   a34c6: 2900         	cmp	\cf4 r1\cf2 , \cf6 #0x0\cf2 \
+   a34c8: f73f aef7    	bgt.w	0xa32ba <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x23e> @ imm = #-0x212\
+   a34cc: a90d         	add	\cf4 r1\cf2 , \cf4 sp\cf2 , \cf6 #0x34\cf2 \
+   a34ce: 9301         	str	\cf4 r3\cf2 , \cf5 [\cf4 sp\cf5 , \cf6 #0x4\cf5 ]\cf2 \
+   a34d0: f7f5 ea68    	blx	0x989a4 <_ZNSs4_Rep10_M_destroyERKSaIcE@plt> @ imm = #-0xab30\
+   a34d4: 9b01         	ldr	\cf4 r3\cf2 , \cf5 [\cf4 sp\cf5 , \cf6 #0x4\cf5 ]\cf2 \
+   a34d6: e6f0         	b	0xa32ba <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x23e> @ imm = #-0x220\
+   a34d8: f1b9 0f00    	cmp.w	\cf4 r9\cf2 , \cf6 #0x0\cf2 \
+   a34dc: f000 80df    	beq.w	0xa369e <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x622> @ imm = #0x1be\
+   a34e0: 3a04         	subs	\cf4 r2\cf2 , \cf6 #0x4\cf2 \
+   a34e2: f3bf 8f5f    	dmb	sy\
+   a34e6: e852 1f00    	ldrex	\cf4 r1\cf2 , \cf5 [\cf4 r2\cf5 ]\cf2 \
+   a34ea: f101 3eff    	add.w	\cf4 lr\cf2 , \cf4 r1\cf2 , \cf6 #0xffffffff\cf2 \
+   a34ee: e842 ec00    	strex	\cf4 r12\cf2 , \cf4 lr\cf2 , \cf5 [\cf4 r2\cf5 ]\cf2 \
+   a34f2: f1bc 0f00    	cmp.w	\cf4 r12\cf2 , \cf6 #0x0\cf2 \
+   a34f6: d1f6         	bne	0xa34e6 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x46a> @ imm = #-0x14\
+   a34f8: f3bf 8f5f    	dmb	sy\
+   a34fc: 2900         	cmp	\cf4 r1\cf2 , \cf6 #0x0\cf2 \
+   a34fe: f73f aed6    	bgt.w	0xa32ae <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x232> @ imm = #-0x254\
+   a3502: a90d         	add	\cf4 r1\cf2 , \cf4 sp\cf2 , \cf6 #0x34\cf2 \
+   a3504: 9301         	str	\cf4 r3\cf2 , \cf5 [\cf4 sp\cf5 , \cf6 #0x4\cf5 ]\cf2 \
+   a3506: f7f5 ea4e    	blx	0x989a4 <_ZNSs4_Rep10_M_destroyERKSaIcE@plt> @ imm = #-0xab64\
+   a350a: 9b01         	ldr	\cf4 r3\cf2 , \cf5 [\cf4 sp\cf5 , \cf6 #0x4\cf5 ]\cf2 \
+   a350c: e6cf         	b	0xa32ae <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x232> @ imm = #-0x262\
+   a350e: 2018         	movs	\cf4 r0\cf2 , \cf6 #0x18\cf2 \
+   a3510: f7f4 eee6    	blx	0x982e0 <_Znwj@plt>     @ imm = #-0xb234\
+   a3514: 4641         	mov	\cf4 r1\cf2 , \cf4 r8\cf2 \
+   a3516: 4606         	mov	\cf4 r6\cf2 , \cf4 r0\cf2 \
+   a3518: f7f4 eb5e    	blx	0x97bd8 <_ZNSsC1ERKSs@plt> @ imm = #-0xb944\
+   a351c: a919         	add	\cf4 r1\cf2 , \cf4 sp\cf2 , \cf6 #0x64\cf2 \
+   a351e: 1d30         	adds	\cf4 r0\cf2 , \cf4 r6\cf2 , \cf6 #0x4\cf2 \
+   a3520: f7f4 eb5a    	blx	0x97bd8 <_ZNSsC1ERKSs@plt> @ imm = #-0xb94c\
+   a3524: 9b1a         	ldr	\cf4 r3\cf2 , \cf5 [\cf4 sp\cf5 , \cf6 #0x68\cf5 ]\cf2 \
+   a3526: a91b         	add	\cf4 r1\cf2 , \cf4 sp\cf2 , \cf6 #0x6c\cf2 \
+   a3528: f106 000c    	add.w	\cf4 r0\cf2 , \cf4 r6\cf2 , \cf6 #0xc\cf2 \
+   a352c: 60b3         	str	\cf4 r3\cf2 , \cf5 [\cf4 r6\cf5 , \cf6 #0x8\cf5 ]\cf2 \
+   a352e: f7f4 eb54    	blx	0x97bd8 <_ZNSsC1ERKSs@plt> @ imm = #-0xb958\
+   a3532: 9b1c         	ldr	\cf4 r3\cf2 , \cf5 [\cf4 sp\cf5 , \cf6 #0x70\cf5 ]\cf2 \
+   a3534: a91d         	add	\cf4 r1\cf2 , \cf4 sp\cf2 , \cf6 #0x74\cf2 \
+   a3536: f106 0014    	add.w	\cf4 r0\cf2 , \cf4 r6\cf2 , \cf6 #0x14\cf2 \
+   a353a: 6133         	str	\cf4 r3\cf2 , \cf5 [\cf4 r6\cf5 , \cf6 #0x10\cf5 ]\cf2 \
+   a353c: f7f4 eb4c    	blx	0x97bd8 <_ZNSsC1ERKSs@plt> @ imm = #-0xb968\
+   a3540: f8d7 457c    	ldr.w	\cf4 r4\cf2 , \cf5 [\cf4 r7\cf5 , \cf6 #0x57c\cf5 ]\cf2 \
+   a3544: f8d7 9580    	ldr.w	\cf4 r9\cf2 , \cf5 [\cf4 r7\cf5 , \cf6 #0x580\cf5 ]\cf2 \
+   a3548: 454c         	cmp	\cf4 r4\cf2 , \cf4 r9\cf2 \
+   a354a: bf1c         	itt	ne\
+   a354c: f248 6ae8    	movwne	\cf4 r10\cf2 , \cf6 #0x86e8\cf2 \
+   a3550: f2c0 0a09    	movtne	\cf4 r10\cf2 , \cf6 #0x9\cf2 \
+   a3554: d112         	bne	0xa357c <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x500> @ imm = #0x24\
+   a3556: e074         	b	0xa3642 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x5c6> @ imm = #0xe8\
+   a3558: 68e3         	ldr	\cf4 r3\cf2 , \cf5 [\cf4 r4\cf5 , \cf6 #0xc\cf5 ]\cf2 \
+   a355a: f1a3 000c    	sub.w	\cf4 r0\cf2 , \cf4 r3\cf2 , \cf6 #0xc\cf2 \
+   a355e: 42a8         	cmp	\cf4 r0\cf2 , \cf4 r5\cf2 \
+   a3560: d156         	bne	0xa3610 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x594> @ imm = #0xac\
+   a3562: 6863         	ldr	\cf4 r3\cf2 , \cf5 [\cf4 r4\cf5 , \cf6 #0x4\cf5 ]\cf2 \
+   a3564: f1a3 000c    	sub.w	\cf4 r0\cf2 , \cf4 r3\cf2 , \cf6 #0xc\cf2 \
+   a3568: 42a8         	cmp	\cf4 r0\cf2 , \cf4 r5\cf2 \
+   a356a: d13a         	bne	0xa35e2 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x566> @ imm = #0x74\
+   a356c: 6823         	ldr	\cf4 r3\cf2 , \cf5 [\cf4 r4\cf5 ]\cf2 \
+   a356e: f1a3 000c    	sub.w	\cf4 r0\cf2 , \cf4 r3\cf2 , \cf6 #0xc\cf2 \
+   a3572: 42a8         	cmp	\cf4 r0\cf2 , \cf4 r5\cf2 \
+   a3574: d11e         	bne	0xa35b4 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x538> @ imm = #0x3c\
+   a3576: 3418         	adds	\cf4 r4\cf2 , \cf6 #0x18\cf2 \
+   a3578: 45a1         	cmp	\cf4 r9\cf2 , \cf4 r4\cf2 \
+   a357a: d060         	beq	0xa363e <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x5c2> @ imm = #0xc0\
+   a357c: 6963         	ldr	\cf4 r3\cf2 , \cf5 [\cf4 r4\cf5 , \cf6 #0x14\cf5 ]\cf2 \
+   a357e: f1a3 000c    	sub.w	\cf4 r0\cf2 , \cf4 r3\cf2 , \cf6 #0xc\cf2 \
+   a3582: 42a8         	cmp	\cf4 r0\cf2 , \cf4 r5\cf2 \
+   a3584: d0e8         	beq	0xa3558 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x4dc> @ imm = #-0x30\
+   a3586: f1ba 0f00    	cmp.w	\cf4 r10\cf2 , \cf6 #0x0\cf2 \
+   a358a: f000 8262    	beq.w	0xa3a52 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x9d6> @ imm = #0x4c4\
+   a358e: 3b04         	subs	\cf4 r3\cf2 , \cf6 #0x4\cf2 \
+   a3590: f3bf 8f5f    	dmb	sy\
+   a3594: e853 2f00    	ldrex	\cf4 r2\cf2 , \cf5 [\cf4 r3\cf5 ]\cf2 \
+   a3598: 1e51         	subs	\cf4 r1\cf2 , \cf4 r2\cf2 , \cf6 #0x1\cf2 \
+   a359a: e843 1e00    	strex	\cf4 lr\cf2 , \cf4 r1\cf2 , \cf5 [\cf4 r3\cf5 ]\cf2 \
+   a359e: f1be 0f00    	cmp.w	\cf4 lr\cf2 , \cf6 #0x0\cf2 \
+   a35a2: d1f7         	bne	0xa3594 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x518> @ imm = #-0x12\
+   a35a4: f3bf 8f5f    	dmb	sy\
+   a35a8: 2a00         	cmp	\cf4 r2\cf2 , \cf6 #0x0\cf2 \
+   a35aa: dcd5         	bgt	0xa3558 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x4dc> @ imm = #-0x56\
+   a35ac: a90d         	add	\cf4 r1\cf2 , \cf4 sp\cf2 , \cf6 #0x34\cf2 \
+   a35ae: f7f5 e9fa    	blx	0x989a4 <_ZNSs4_Rep10_M_destroyERKSaIcE@plt> @ imm = #-0xac0c\
+   a35b2: e7d1         	b	0xa3558 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x4dc> @ imm = #-0x5e\
+   a35b4: f1ba 0f00    	cmp.w	\cf4 r10\cf2 , \cf6 #0x0\cf2 \
+   a35b8: f000 8257    	beq.w	0xa3a6a <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x9ee> @ imm = #0x4ae\
+   a35bc: 3b04         	subs	\cf4 r3\cf2 , \cf6 #0x4\cf2 \
+   a35be: f3bf 8f5f    	dmb	sy\
+   a35c2: e853 2f00    	ldrex	\cf4 r2\cf2 , \cf5 [\cf4 r3\cf5 ]\cf2 \
+   a35c6: 1e51         	subs	\cf4 r1\cf2 , \cf4 r2\cf2 , \cf6 #0x1\cf2 \
+   a35c8: e843 1e00    	strex	\cf4 lr\cf2 , \cf4 r1\cf2 , \cf5 [\cf4 r3\cf5 ]\cf2 \
+   a35cc: f1be 0f00    	cmp.w	\cf4 lr\cf2 , \cf6 #0x0\cf2 \
+   a35d0: d1f7         	bne	0xa35c2 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x546> @ imm = #-0x12\
+   a35d2: f3bf 8f5f    	dmb	sy\
+   a35d6: 2a00         	cmp	\cf4 r2\cf2 , \cf6 #0x0\cf2 \
+   a35d8: dccd         	bgt	0xa3576 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x4fa> @ imm = #-0x66\
+   a35da: a90d         	add	\cf4 r1\cf2 , \cf4 sp\cf2 , \cf6 #0x34\cf2 \
+   a35dc: f7f5 e9e2    	blx	0x989a4 <_ZNSs4_Rep10_M_destroyERKSaIcE@plt> @ imm = #-0xac3c\
+   a35e0: e7c9         	b	0xa3576 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x4fa> @ imm = #-0x6e\
+   a35e2: f1ba 0f00    	cmp.w	\cf4 r10\cf2 , \cf6 #0x0\cf2 \
+   a35e6: f000 823a    	beq.w	0xa3a5e <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x9e2> @ imm = #0x474\
+   a35ea: 3b04         	subs	\cf4 r3\cf2 , \cf6 #0x4\cf2 \
+   a35ec: f3bf 8f5f    	dmb	sy\
+   a35f0: e853 2f00    	ldrex	\cf4 r2\cf2 , \cf5 [\cf4 r3\cf5 ]\cf2 \
+   a35f4: 1e51         	subs	\cf4 r1\cf2 , \cf4 r2\cf2 , \cf6 #0x1\cf2 \
+   a35f6: e843 1e00    	strex	\cf4 lr\cf2 , \cf4 r1\cf2 , \cf5 [\cf4 r3\cf5 ]\cf2 \
+   a35fa: f1be 0f00    	cmp.w	\cf4 lr\cf2 , \cf6 #0x0\cf2 \
+   a35fe: d1f7         	bne	0xa35f0 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x574> @ imm = #-0x12\
+   a3600: f3bf 8f5f    	dmb	sy\
+   a3604: 2a00         	cmp	\cf4 r2\cf2 , \cf6 #0x0\cf2 \
+   a3606: dcb1         	bgt	0xa356c <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x4f0> @ imm = #-0x9e\
+   a3608: a90d         	add	\cf4 r1\cf2 , \cf4 sp\cf2 , \cf6 #0x34\cf2 \
+   a360a: f7f5 e9cc    	blx	0x989a4 <_ZNSs4_Rep10_M_destroyERKSaIcE@plt> @ imm = #-0xac68\
+   a360e: e7ad         	b	0xa356c <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x4f0> @ imm = #-0xa6\
+   a3610: f1ba 0f00    	cmp.w	\cf4 r10\cf2 , \cf6 #0x0\cf2 \
+   a3614: f000 8217    	beq.w	0xa3a46 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x9ca> @ imm = #0x42e\
+   a3618: 3b04         	subs	\cf4 r3\cf2 , \cf6 #0x4\cf2 \
+   a361a: f3bf 8f5f    	dmb	sy\
+   a361e: e853 2f00    	ldrex	\cf4 r2\cf2 , \cf5 [\cf4 r3\cf5 ]\cf2 \
+   a3622: 1e51         	subs	\cf4 r1\cf2 , \cf4 r2\cf2 , \cf6 #0x1\cf2 \
+   a3624: e843 1e00    	strex	\cf4 lr\cf2 , \cf4 r1\cf2 , \cf5 [\cf4 r3\cf5 ]\cf2 \
+   a3628: f1be 0f00    	cmp.w	\cf4 lr\cf2 , \cf6 #0x0\cf2 \
+   a362c: d1f7         	bne	0xa361e <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x5a2> @ imm = #-0x12\
+   a362e: f3bf 8f5f    	dmb	sy\
+   a3632: 2a00         	cmp	\cf4 r2\cf2 , \cf6 #0x0\cf2 \
+   a3634: dc95         	bgt	0xa3562 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x4e6> @ imm = #-0xd6\
+   a3636: a90d         	add	\cf4 r1\cf2 , \cf4 sp\cf2 , \cf6 #0x34\cf2 \
+   a3638: f7f5 e9b4    	blx	0x989a4 <_ZNSs4_Rep10_M_destroyERKSaIcE@plt> @ imm = #-0xac98\
+   a363c: e791         	b	0xa3562 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x4e6> @ imm = #-0xde\
+   a363e: f8d7 957c    	ldr.w	\cf4 r9\cf2 , \cf5 [\cf4 r7\cf5 , \cf6 #0x57c\cf5 ]\cf2 \
+   a3642: f1b9 0f00    	cmp.w	\cf4 r9\cf2 , \cf6 #0x0\cf2 \
+   a3646: d002         	beq	0xa364e <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x5d2> @ imm = #0x4\
+   a3648: 4648         	mov	\cf4 r0\cf2 , \cf4 r9\cf2 \
+   a364a: f7f4 edcc    	blx	0x981e4 <_ZdlPv@plt>    @ imm = #-0xb468\
+   a364e: f106 0318    	add.w	\cf4 r3\cf2 , \cf4 r6\cf2 , \cf6 #0x18\cf2 \
+   a3652: f8c7 657c    	str.w	\cf4 r6\cf2 , \cf5 [\cf4 r7\cf5 , \cf6 #0x57c\cf5 ]\cf2 \
+   a3656: f8c7 3580    	str.w	\cf4 r3\cf2 , \cf5 [\cf4 r7\cf5 , \cf6 #0x580\cf5 ]\cf2 \
+   a365a: f8c7 3584    	str.w	\cf4 r3\cf2 , \cf5 [\cf4 r7\cf5 , \cf6 #0x584\cf5 ]\cf2 \
+   a365e: 9b1d         	ldr	\cf4 r3\cf2 , \cf5 [\cf4 sp\cf5 , \cf6 #0x74\cf5 ]\cf2 \
+   a3660: f1a3 000c    	sub.w	\cf4 r0\cf2 , \cf4 r3\cf2 , \cf6 #0xc\cf2 \
+   a3664: 42a8         	cmp	\cf4 r0\cf2 , \cf4 r5\cf2 \
+   a3666: f43f aea9    	beq.w	0xa33bc <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x340> @ imm = #-0x2ae\
+   a366a: f248 62e8    	movw	\cf4 r2\cf2 , \cf6 #0x86e8\cf2 \
+   a366e: f2c0 0209    	movt	\cf4 r2\cf2 , \cf6 #0x9\cf2 \
+   a3672: 2a00         	cmp	\cf4 r2\cf2 , \cf6 #0x0\cf2 \
+   a3674: f000 824f    	beq.w	0xa3b16 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0xa9a> @ imm = #0x49e\
+   a3678: 3b04         	subs	\cf4 r3\cf2 , \cf6 #0x4\cf2 \
+   a367a: f3bf 8f5f    	dmb	sy\
+   a367e: e853 2f00    	ldrex	\cf4 r2\cf2 , \cf5 [\cf4 r3\cf5 ]\cf2 \
+   a3682: 1e51         	subs	\cf4 r1\cf2 , \cf4 r2\cf2 , \cf6 #0x1\cf2 \
+   a3684: e843 1400    	strex	\cf4 r4\cf2 , \cf4 r1\cf2 , \cf5 [\cf4 r3\cf5 ]\cf2 \
+   a3688: 2c00         	cmp	\cf4 r4\cf2 , \cf6 #0x0\cf2 \
+   a368a: d1f8         	bne	0xa367e <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x602> @ imm = #-0x10\
+   a368c: f3bf 8f5f    	dmb	sy\
+   a3690: 2a00         	cmp	\cf4 r2\cf2 , \cf6 #0x0\cf2 \
+   a3692: f73f ae93    	bgt.w	0xa33bc <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x340> @ imm = #-0x2da\
+   a3696: a90d         	add	\cf4 r1\cf2 , \cf4 sp\cf2 , \cf6 #0x34\cf2 \
+   a3698: f7f5 e984    	blx	0x989a4 <_ZNSs4_Rep10_M_destroyERKSaIcE@plt> @ imm = #-0xacf8\
+   a369c: e68e         	b	0xa33bc <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x340> @ imm = #-0x2e4\
+   a369e: f852 1c04    	ldr	\cf4 r1\cf2 , \cf5 [\cf4 r2\cf5 , \cf6 #-4\cf5 ]\cf2 \
+   a36a2: f101 3eff    	add.w	\cf4 lr\cf2 , \cf4 r1\cf2 , \cf6 #0xffffffff\cf2 \
+   a36a6: f842 ec04    	str	\cf4 lr\cf2 , \cf5 [\cf4 r2\cf5 , \cf6 #-4\cf5 ]\cf2 \
+   a36aa: e727         	b	0xa34fc <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x480> @ imm = #-0x1b2\
+   a36ac: f852 1c04    	ldr	\cf4 r1\cf2 , \cf5 [\cf4 r2\cf5 , \cf6 #-4\cf5 ]\cf2 \
+   a36b0: f101 3eff    	add.w	\cf4 lr\cf2 , \cf4 r1\cf2 , \cf6 #0xffffffff\cf2 \
+   a36b4: f842 ec04    	str	\cf4 lr\cf2 , \cf5 [\cf4 r2\cf5 , \cf6 #-4\cf5 ]\cf2 \
+   a36b8: e6ea         	b	0xa3490 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x414> @ imm = #-0x22c\
+   a36ba: f852 1c04    	ldr	\cf4 r1\cf2 , \cf5 [\cf4 r2\cf5 , \cf6 #-4\cf5 ]\cf2 \
+   a36be: f101 3eff    	add.w	\cf4 lr\cf2 , \cf4 r1\cf2 , \cf6 #0xffffffff\cf2 \
+   a36c2: f842 ec04    	str	\cf4 lr\cf2 , \cf5 [\cf4 r2\cf5 , \cf6 #-4\cf5 ]\cf2 \
+   a36c6: e6fe         	b	0xa34c6 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x44a> @ imm = #-0x204\
+   a36c8: f852 1c04    	ldr	\cf4 r1\cf2 , \cf5 [\cf4 r2\cf5 , \cf6 #-4\cf5 ]\cf2 \
+   a36cc: f101 3eff    	add.w	\cf4 lr\cf2 , \cf4 r1\cf2 , \cf6 #0xffffffff\cf2 \
+   a36d0: f842 ec04    	str	\cf4 lr\cf2 , \cf5 [\cf4 r2\cf5 , \cf6 #-4\cf5 ]\cf2 \
+   a36d4: e611         	b	0xa32fa <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x27e> @ imm = #-0x3de\
+   a36d6: f248 62e8    	movw	\cf4 r2\cf2 , \cf6 #0x86e8\cf2 \
+   a36da: f2c0 0209    	movt	\cf4 r2\cf2 , \cf6 #0x9\cf2 \
+   a36de: 2a00         	cmp	\cf4 r2\cf2 , \cf6 #0x0\cf2 \
+   a36e0: f000 8201    	beq.w	0xa3ae6 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0xa6a> @ imm = #0x402\
+   a36e4: 3b04         	subs	\cf4 r3\cf2 , \cf6 #0x4\cf2 \
+   a36e6: f3bf 8f5f    	dmb	sy\
+   a36ea: e853 2f00    	ldrex	\cf4 r2\cf2 , \cf5 [\cf4 r3\cf5 ]\cf2 \
+   a36ee: 1e51         	subs	\cf4 r1\cf2 , \cf4 r2\cf2 , \cf6 #0x1\cf2 \
+   a36f0: e843 1400    	strex	\cf4 r4\cf2 , \cf4 r1\cf2 , \cf5 [\cf4 r3\cf5 ]\cf2 \
+   a36f4: 2c00         	cmp	\cf4 r4\cf2 , \cf6 #0x0\cf2 \
+   a36f6: d1f8         	bne	0xa36ea <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x66e> @ imm = #-0x10\
+   a36f8: f3bf 8f5f    	dmb	sy\
+   a36fc: 2a00         	cmp	\cf4 r2\cf2 , \cf6 #0x0\cf2 \
+   a36fe: f73f aeab    	bgt.w	0xa3458 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x3dc> @ imm = #-0x2aa\
+   a3702: 4641         	mov	\cf4 r1\cf2 , \cf4 r8\cf2 \
+   a3704: f7f5 e94e    	blx	0x989a4 <_ZNSs4_Rep10_M_destroyERKSaIcE@plt> @ imm = #-0xad64\
+   a3708: e6a6         	b	0xa3458 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x3dc> @ imm = #-0x2b4\
+   a370a: f248 62e8    	movw	\cf4 r2\cf2 , \cf6 #0x86e8\cf2 \
+   a370e: f2c0 0209    	movt	\cf4 r2\cf2 , \cf6 #0x9\cf2 \
+   a3712: 2a00         	cmp	\cf4 r2\cf2 , \cf6 #0x0\cf2 \
+   a3714: f000 81e1    	beq.w	0xa3ada <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0xa5e> @ imm = #0x3c2\
+   a3718: 3b04         	subs	\cf4 r3\cf2 , \cf6 #0x4\cf2 \
+   a371a: f3bf 8f5f    	dmb	sy\
+   a371e: e853 2f00    	ldrex	\cf4 r2\cf2 , \cf5 [\cf4 r3\cf5 ]\cf2 \
+   a3722: 1e51         	subs	\cf4 r1\cf2 , \cf4 r2\cf2 , \cf6 #0x1\cf2 \
+   a3724: e843 1400    	strex	\cf4 r4\cf2 , \cf4 r1\cf2 , \cf5 [\cf4 r3\cf5 ]\cf2 \
+   a3728: 2c00         	cmp	\cf4 r4\cf2 , \cf6 #0x0\cf2 \
+   a372a: d1f8         	bne	0xa371e <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x6a2> @ imm = #-0x10\
+   a372c: f3bf 8f5f    	dmb	sy\
+   a3730: 2a00         	cmp	\cf4 r2\cf2 , \cf6 #0x0\cf2 \
+   a3732: f73f ae85    	bgt.w	0xa3440 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x3c4> @ imm = #-0x2f6\
+   a3736: 4641         	mov	\cf4 r1\cf2 , \cf4 r8\cf2 \
+   a3738: f7f5 e934    	blx	0x989a4 <_ZNSs4_Rep10_M_destroyERKSaIcE@plt> @ imm = #-0xad98\
+   a373c: e680         	b	0xa3440 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x3c4> @ imm = #-0x300\
+   a373e: f248 62e8    	movw	\cf4 r2\cf2 , \cf6 #0x86e8\cf2 \
+   a3742: f2c0 0209    	movt	\cf4 r2\cf2 , \cf6 #0x9\cf2 \
+   a3746: 2a00         	cmp	\cf4 r2\cf2 , \cf6 #0x0\cf2 \
+   a3748: f000 81f1    	beq.w	0xa3b2e <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0xab2> @ imm = #0x3e2\
+   a374c: 3b04         	subs	\cf4 r3\cf2 , \cf6 #0x4\cf2 \
+   a374e: f3bf 8f5f    	dmb	sy\
+   a3752: e853 2f00    	ldrex	\cf4 r2\cf2 , \cf5 [\cf4 r3\cf5 ]\cf2 \
+   a3756: 1e51         	subs	\cf4 r1\cf2 , \cf4 r2\cf2 , \cf6 #0x1\cf2 \
+   a3758: e843 1400    	strex	\cf4 r4\cf2 , \cf4 r1\cf2 , \cf5 [\cf4 r3\cf5 ]\cf2 \
+   a375c: 2c00         	cmp	\cf4 r4\cf2 , \cf6 #0x0\cf2 \
+   a375e: d1f8         	bne	0xa3752 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x6d6> @ imm = #-0x10\
+   a3760: f3bf 8f5f    	dmb	sy\
+   a3764: 2a00         	cmp	\cf4 r2\cf2 , \cf6 #0x0\cf2 \
+   a3766: f73f ae71    	bgt.w	0xa344c <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x3d0> @ imm = #-0x31e\
+   a376a: 4641         	mov	\cf4 r1\cf2 , \cf4 r8\cf2 \
+   a376c: f7f5 e91a    	blx	0x989a4 <_ZNSs4_Rep10_M_destroyERKSaIcE@plt> @ imm = #-0xadcc\
+   a3770: e66c         	b	0xa344c <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x3d0> @ imm = #-0x328\
+   a3772: f248 62e8    	movw	\cf4 r2\cf2 , \cf6 #0x86e8\cf2 \
+   a3776: f2c0 0209    	movt	\cf4 r2\cf2 , \cf6 #0x9\cf2 \
+   a377a: 2a00         	cmp	\cf4 r2\cf2 , \cf6 #0x0\cf2 \
+   a377c: f000 81d1    	beq.w	0xa3b22 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0xaa6> @ imm = #0x3a2\
+   a3780: 3b04         	subs	\cf4 r3\cf2 , \cf6 #0x4\cf2 \
+   a3782: f3bf 8f5f    	dmb	sy\
+   a3786: e853 2f00    	ldrex	\cf4 r2\cf2 , \cf5 [\cf4 r3\cf5 ]\cf2 \
+   a378a: 1e51         	subs	\cf4 r1\cf2 , \cf4 r2\cf2 , \cf6 #0x1\cf2 \
+   a378c: e843 1400    	strex	\cf4 r4\cf2 , \cf4 r1\cf2 , \cf5 [\cf4 r3\cf5 ]\cf2 \
+   a3790: 2c00         	cmp	\cf4 r4\cf2 , \cf6 #0x0\cf2 \
+   a3792: d1f8         	bne	0xa3786 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x70a> @ imm = #-0x10\
+   a3794: f3bf 8f5f    	dmb	sy\
+   a3798: 2a00         	cmp	\cf4 r2\cf2 , \cf6 #0x0\cf2 \
+   a379a: f73f ae39    	bgt.w	0xa3410 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x394> @ imm = #-0x38e\
+   a379e: 4641         	mov	\cf4 r1\cf2 , \cf4 r8\cf2 \
+   a37a0: f7f5 e900    	blx	0x989a4 <_ZNSs4_Rep10_M_destroyERKSaIcE@plt> @ imm = #-0xae00\
+   a37a4: e634         	b	0xa3410 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x394> @ imm = #-0x398\
+   a37a6: f248 62e8    	movw	\cf4 r2\cf2 , \cf6 #0x86e8\cf2 \
+   a37aa: f2c0 0209    	movt	\cf4 r2\cf2 , \cf6 #0x9\cf2 \
+   a37ae: 2a00         	cmp	\cf4 r2\cf2 , \cf6 #0x0\cf2 \
+   a37b0: f000 81c9    	beq.w	0xa3b46 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0xaca> @ imm = #0x392\
+   a37b4: 3b04         	subs	\cf4 r3\cf2 , \cf6 #0x4\cf2 \
+   a37b6: f3bf 8f5f    	dmb	sy\
+   a37ba: e853 2f00    	ldrex	\cf4 r2\cf2 , \cf5 [\cf4 r3\cf5 ]\cf2 \
+   a37be: 1e51         	subs	\cf4 r1\cf2 , \cf4 r2\cf2 , \cf6 #0x1\cf2 \
+   a37c0: e843 1400    	strex	\cf4 r4\cf2 , \cf4 r1\cf2 , \cf5 [\cf4 r3\cf5 ]\cf2 \
+   a37c4: 2c00         	cmp	\cf4 r4\cf2 , \cf6 #0x0\cf2 \
+   a37c6: d1f8         	bne	0xa37ba <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x73e> @ imm = #-0x10\
+   a37c8: f3bf 8f5f    	dmb	sy\
+   a37cc: 2a00         	cmp	\cf4 r2\cf2 , \cf6 #0x0\cf2 \
+   a37ce: f73f ae25    	bgt.w	0xa341c <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x3a0> @ imm = #-0x3b6\
+   a37d2: 4641         	mov	\cf4 r1\cf2 , \cf4 r8\cf2 \
+   a37d4: f7f5 e8e6    	blx	0x989a4 <_ZNSs4_Rep10_M_destroyERKSaIcE@plt> @ imm = #-0xae34\
+   a37d8: e620         	b	0xa341c <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x3a0> @ imm = #-0x3c0\
+   a37da: f248 62e8    	movw	\cf4 r2\cf2 , \cf6 #0x86e8\cf2 \
+   a37de: f2c0 0209    	movt	\cf4 r2\cf2 , \cf6 #0x9\cf2 \
+   a37e2: 2a00         	cmp	\cf4 r2\cf2 , \cf6 #0x0\cf2 \
+   a37e4: f000 81a9    	beq.w	0xa3b3a <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0xabe> @ imm = #0x352\
+   a37e8: 3b04         	subs	\cf4 r3\cf2 , \cf6 #0x4\cf2 \
+   a37ea: f3bf 8f5f    	dmb	sy\
+   a37ee: e853 2f00    	ldrex	\cf4 r2\cf2 , \cf5 [\cf4 r3\cf5 ]\cf2 \
+   a37f2: 1e51         	subs	\cf4 r1\cf2 , \cf4 r2\cf2 , \cf6 #0x1\cf2 \
+   a37f4: e843 1400    	strex	\cf4 r4\cf2 , \cf4 r1\cf2 , \cf5 [\cf4 r3\cf5 ]\cf2 \
+   a37f8: 2c00         	cmp	\cf4 r4\cf2 , \cf6 #0x0\cf2 \
+   a37fa: d1f8         	bne	0xa37ee <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x772> @ imm = #-0x10\
+   a37fc: f3bf 8f5f    	dmb	sy\
+   a3800: 2a00         	cmp	\cf4 r2\cf2 , \cf6 #0x0\cf2 \
+   a3802: f73f ae11    	bgt.w	0xa3428 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x3ac> @ imm = #-0x3de\
+   a3806: 4641         	mov	\cf4 r1\cf2 , \cf4 r8\cf2 \
+   a3808: f7f5 e8cc    	blx	0x989a4 <_ZNSs4_Rep10_M_destroyERKSaIcE@plt> @ imm = #-0xae68\
+   a380c: e60c         	b	0xa3428 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x3ac> @ imm = #-0x3e8\
+   a380e: f248 62e8    	movw	\cf4 r2\cf2 , \cf6 #0x86e8\cf2 \
+   a3812: f2c0 0209    	movt	\cf4 r2\cf2 , \cf6 #0x9\cf2 \
+   a3816: 2a00         	cmp	\cf4 r2\cf2 , \cf6 #0x0\cf2 \
+   a3818: f000 8171    	beq.w	0xa3afe <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0xa82> @ imm = #0x2e2\
+   a381c: 3b04         	subs	\cf4 r3\cf2 , \cf6 #0x4\cf2 \
+   a381e: f3bf 8f5f    	dmb	sy\
+   a3822: e853 2f00    	ldrex	\cf4 r2\cf2 , \cf5 [\cf4 r3\cf5 ]\cf2 \
+   a3826: 1e51         	subs	\cf4 r1\cf2 , \cf4 r2\cf2 , \cf6 #0x1\cf2 \
+   a3828: e843 1400    	strex	\cf4 r4\cf2 , \cf4 r1\cf2 , \cf5 [\cf4 r3\cf5 ]\cf2 \
+   a382c: 2c00         	cmp	\cf4 r4\cf2 , \cf6 #0x0\cf2 \
+   a382e: d1f8         	bne	0xa3822 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x7a6> @ imm = #-0x10\
+   a3830: f3bf 8f5f    	dmb	sy\
+   a3834: 2a00         	cmp	\cf4 r2\cf2 , \cf6 #0x0\cf2 \
+   a3836: f73f adfd    	bgt.w	0xa3434 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x3b8> @ imm = #-0x406\
+   a383a: 4641         	mov	\cf4 r1\cf2 , \cf4 r8\cf2 \
+   a383c: f7f5 e8b2    	blx	0x989a4 <_ZNSs4_Rep10_M_destroyERKSaIcE@plt> @ imm = #-0xae9c\
+   a3840: e5f8         	b	0xa3434 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x3b8> @ imm = #-0x410\
+   a3842: f248 62e8    	movw	\cf4 r2\cf2 , \cf6 #0x86e8\cf2 \
+   a3846: f2c0 0209    	movt	\cf4 r2\cf2 , \cf6 #0x9\cf2 \
+   a384a: 2a00         	cmp	\cf4 r2\cf2 , \cf6 #0x0\cf2 \
+   a384c: f000 8151    	beq.w	0xa3af2 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0xa76> @ imm = #0x2a2\
+   a3850: 3b04         	subs	\cf4 r3\cf2 , \cf6 #0x4\cf2 \
+   a3852: f3bf 8f5f    	dmb	sy\
+   a3856: e853 2f00    	ldrex	\cf4 r2\cf2 , \cf5 [\cf4 r3\cf5 ]\cf2 \
+   a385a: 1e51         	subs	\cf4 r1\cf2 , \cf4 r2\cf2 , \cf6 #0x1\cf2 \
+   a385c: e843 1600    	strex	\cf4 r6\cf2 , \cf4 r1\cf2 , \cf5 [\cf4 r3\cf5 ]\cf2 \
+   a3860: 2e00         	cmp	\cf4 r6\cf2 , \cf6 #0x0\cf2 \
+   a3862: d1f8         	bne	0xa3856 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x7da> @ imm = #-0x10\
+   a3864: f3bf 8f5f    	dmb	sy\
+   a3868: 2a00         	cmp	\cf4 r2\cf2 , \cf6 #0x0\cf2 \
+   a386a: f73f ac4a    	bgt.w	0xa3102 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x86> @ imm = #-0x76c\
+   a386e: 4641         	mov	\cf4 r1\cf2 , \cf4 r8\cf2 \
+   a3870: f7f5 e898    	blx	0x989a4 <_ZNSs4_Rep10_M_destroyERKSaIcE@plt> @ imm = #-0xaed0\
+   a3874: e445         	b	0xa3102 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x86> @ imm = #-0x776\
+   a3876: f248 62e8    	movw	\cf4 r2\cf2 , \cf6 #0x86e8\cf2 \
+   a387a: f2c0 0209    	movt	\cf4 r2\cf2 , \cf6 #0x9\cf2 \
+   a387e: 2a00         	cmp	\cf4 r2\cf2 , \cf6 #0x0\cf2 \
+   a3880: f000 8143    	beq.w	0xa3b0a <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0xa8e> @ imm = #0x286\
+   a3884: 3b04         	subs	\cf4 r3\cf2 , \cf6 #0x4\cf2 \
+   a3886: f3bf 8f5f    	dmb	sy\
+   a388a: e853 2f00    	ldrex	\cf4 r2\cf2 , \cf5 [\cf4 r3\cf5 ]\cf2 \
+   a388e: 1e51         	subs	\cf4 r1\cf2 , \cf4 r2\cf2 , \cf6 #0x1\cf2 \
+   a3890: e843 1400    	strex	\cf4 r4\cf2 , \cf4 r1\cf2 , \cf5 [\cf4 r3\cf5 ]\cf2 \
+   a3894: 2c00         	cmp	\cf4 r4\cf2 , \cf6 #0x0\cf2 \
+   a3896: d1f8         	bne	0xa388a <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x80e> @ imm = #-0x10\
+   a3898: f3bf 8f5f    	dmb	sy\
+   a389c: 2a00         	cmp	\cf4 r2\cf2 , \cf6 #0x0\cf2 \
+   a389e: f73f ad93    	bgt.w	0xa33c8 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x34c> @ imm = #-0x4da\
+   a38a2: a90d         	add	\cf4 r1\cf2 , \cf4 sp\cf2 , \cf6 #0x34\cf2 \
+   a38a4: f7f5 e87e    	blx	0x989a4 <_ZNSs4_Rep10_M_destroyERKSaIcE@plt> @ imm = #-0xaf04\
+   a38a8: e58e         	b	0xa33c8 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x34c> @ imm = #-0x4e4\
+   a38aa: f248 62e8    	movw	\cf4 r2\cf2 , \cf6 #0x86e8\cf2 \
+   a38ae: f2c0 0209    	movt	\cf4 r2\cf2 , \cf6 #0x9\cf2 \
+   a38b2: 2a00         	cmp	\cf4 r2\cf2 , \cf6 #0x0\cf2 \
+   a38b4: f000 80ff    	beq.w	0xa3ab6 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0xa3a> @ imm = #0x1fe\
+   a38b8: 3b04         	subs	\cf4 r3\cf2 , \cf6 #0x4\cf2 \
+   a38ba: f3bf 8f5f    	dmb	sy\
+   a38be: e853 2f00    	ldrex	\cf4 r2\cf2 , \cf5 [\cf4 r3\cf5 ]\cf2 \
+   a38c2: 1e51         	subs	\cf4 r1\cf2 , \cf4 r2\cf2 , \cf6 #0x1\cf2 \
+   a38c4: e843 1400    	strex	\cf4 r4\cf2 , \cf4 r1\cf2 , \cf5 [\cf4 r3\cf5 ]\cf2 \
+   a38c8: 2c00         	cmp	\cf4 r4\cf2 , \cf6 #0x0\cf2 \
+   a38ca: d1f8         	bne	0xa38be <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x842> @ imm = #-0x10\
+   a38cc: f3bf 8f5f    	dmb	sy\
+   a38d0: 2a00         	cmp	\cf4 r2\cf2 , \cf6 #0x0\cf2 \
+   a38d2: f73f ad7f    	bgt.w	0xa33d4 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x358> @ imm = #-0x502\
+   a38d6: a90d         	add	\cf4 r1\cf2 , \cf4 sp\cf2 , \cf6 #0x34\cf2 \
+   a38d8: f7f5 e864    	blx	0x989a4 <_ZNSs4_Rep10_M_destroyERKSaIcE@plt> @ imm = #-0xaf38\
+   a38dc: e57a         	b	0xa33d4 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x358> @ imm = #-0x50c\
+   a38de: f248 62e8    	movw	\cf4 r2\cf2 , \cf6 #0x86e8\cf2 \
+   a38e2: f2c0 0209    	movt	\cf4 r2\cf2 , \cf6 #0x9\cf2 \
+   a38e6: 2a00         	cmp	\cf4 r2\cf2 , \cf6 #0x0\cf2 \
+   a38e8: f000 80df    	beq.w	0xa3aaa <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0xa2e> @ imm = #0x1be\
+   a38ec: 3b04         	subs	\cf4 r3\cf2 , \cf6 #0x4\cf2 \
+   a38ee: f3bf 8f5f    	dmb	sy\
+   a38f2: e853 2f00    	ldrex	\cf4 r2\cf2 , \cf5 [\cf4 r3\cf5 ]\cf2 \
+   a38f6: 1e51         	subs	\cf4 r1\cf2 , \cf4 r2\cf2 , \cf6 #0x1\cf2 \
+   a38f8: e843 1400    	strex	\cf4 r4\cf2 , \cf4 r1\cf2 , \cf5 [\cf4 r3\cf5 ]\cf2 \
+   a38fc: 2c00         	cmp	\cf4 r4\cf2 , \cf6 #0x0\cf2 \
+   a38fe: d1f8         	bne	0xa38f2 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x876> @ imm = #-0x10\
+   a3900: f3bf 8f5f    	dmb	sy\
+   a3904: 2a00         	cmp	\cf4 r2\cf2 , \cf6 #0x0\cf2 \
+   a3906: f73f ad6b    	bgt.w	0xa33e0 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x364> @ imm = #-0x52a\
+   a390a: a90d         	add	\cf4 r1\cf2 , \cf4 sp\cf2 , \cf6 #0x34\cf2 \
+   a390c: f7f5 e84a    	blx	0x989a4 <_ZNSs4_Rep10_M_destroyERKSaIcE@plt> @ imm = #-0xaf6c\
+   a3910: e566         	b	0xa33e0 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x364> @ imm = #-0x534\
+   a3912: f248 62e8    	movw	\cf4 r2\cf2 , \cf6 #0x86e8\cf2 \
+   a3916: f2c0 0209    	movt	\cf4 r2\cf2 , \cf6 #0x9\cf2 \
+   a391a: 2a00         	cmp	\cf4 r2\cf2 , \cf6 #0x0\cf2 \
+   a391c: f000 80d7    	beq.w	0xa3ace <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0xa52> @ imm = #0x1ae\
+   a3920: 3b04         	subs	\cf4 r3\cf2 , \cf6 #0x4\cf2 \
+   a3922: f3bf 8f5f    	dmb	sy\
+   a3926: e853 2f00    	ldrex	\cf4 r2\cf2 , \cf5 [\cf4 r3\cf5 ]\cf2 \
+   a392a: 1e51         	subs	\cf4 r1\cf2 , \cf4 r2\cf2 , \cf6 #0x1\cf2 \
+   a392c: e843 1400    	strex	\cf4 r4\cf2 , \cf4 r1\cf2 , \cf5 [\cf4 r3\cf5 ]\cf2 \
+   a3930: 2c00         	cmp	\cf4 r4\cf2 , \cf6 #0x0\cf2 \
+   a3932: d1f8         	bne	0xa3926 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x8aa> @ imm = #-0x10\
+   a3934: f3bf 8f5f    	dmb	sy\
+   a3938: 2a00         	cmp	\cf4 r2\cf2 , \cf6 #0x0\cf2 \
+   a393a: f73f ad57    	bgt.w	0xa33ec <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x370> @ imm = #-0x552\
+   a393e: 4641         	mov	\cf4 r1\cf2 , \cf4 r8\cf2 \
+   a3940: f7f5 e830    	blx	0x989a4 <_ZNSs4_Rep10_M_destroyERKSaIcE@plt> @ imm = #-0xafa0\
+   a3944: e552         	b	0xa33ec <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x370> @ imm = #-0x55c\
+   a3946: f248 62e8    	movw	\cf4 r2\cf2 , \cf6 #0x86e8\cf2 \
+   a394a: f2c0 0209    	movt	\cf4 r2\cf2 , \cf6 #0x9\cf2 \
+   a394e: 2a00         	cmp	\cf4 r2\cf2 , \cf6 #0x0\cf2 \
+   a3950: f000 80b7    	beq.w	0xa3ac2 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0xa46> @ imm = #0x16e\
+   a3954: 3b04         	subs	\cf4 r3\cf2 , \cf6 #0x4\cf2 \
+   a3956: f3bf 8f5f    	dmb	sy\
+   a395a: e853 2f00    	ldrex	\cf4 r2\cf2 , \cf5 [\cf4 r3\cf5 ]\cf2 \
+   a395e: 1e51         	subs	\cf4 r1\cf2 , \cf4 r2\cf2 , \cf6 #0x1\cf2 \
+   a3960: e843 1400    	strex	\cf4 r4\cf2 , \cf4 r1\cf2 , \cf5 [\cf4 r3\cf5 ]\cf2 \
+   a3964: 2c00         	cmp	\cf4 r4\cf2 , \cf6 #0x0\cf2 \
+   a3966: d1f8         	bne	0xa395a <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x8de> @ imm = #-0x10\
+   a3968: f3bf 8f5f    	dmb	sy\
+   a396c: 2a00         	cmp	\cf4 r2\cf2 , \cf6 #0x0\cf2 \
+   a396e: f73f ad43    	bgt.w	0xa33f8 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x37c> @ imm = #-0x57a\
+   a3972: 4641         	mov	\cf4 r1\cf2 , \cf4 r8\cf2 \
+   a3974: f7f5 e816    	blx	0x989a4 <_ZNSs4_Rep10_M_destroyERKSaIcE@plt> @ imm = #-0xafd4\
+   a3978: e53e         	b	0xa33f8 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x37c> @ imm = #-0x584\
+   a397a: f248 62e8    	movw	\cf4 r2\cf2 , \cf6 #0x86e8\cf2 \
+   a397e: f2c0 0209    	movt	\cf4 r2\cf2 , \cf6 #0x9\cf2 \
+   a3982: 2a00         	cmp	\cf4 r2\cf2 , \cf6 #0x0\cf2 \
+   a3984: d07f         	beq	0xa3a86 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0xa0a> @ imm = #0xfe\
+   a3986: 3b04         	subs	\cf4 r3\cf2 , \cf6 #0x4\cf2 \
+   a3988: f3bf 8f5f    	dmb	sy\
+   a398c: e853 2f00    	ldrex	\cf4 r2\cf2 , \cf5 [\cf4 r3\cf5 ]\cf2 \
+   a3990: 1e51         	subs	\cf4 r1\cf2 , \cf4 r2\cf2 , \cf6 #0x1\cf2 \
+   a3992: e843 1400    	strex	\cf4 r4\cf2 , \cf4 r1\cf2 , \cf5 [\cf4 r3\cf5 ]\cf2 \
+   a3996: 2c00         	cmp	\cf4 r4\cf2 , \cf6 #0x0\cf2 \
+   a3998: d1f8         	bne	0xa398c <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x910> @ imm = #-0x10\
+   a399a: f3bf 8f5f    	dmb	sy\
+   a399e: 2a00         	cmp	\cf4 r2\cf2 , \cf6 #0x0\cf2 \
+   a39a0: f73f ad30    	bgt.w	0xa3404 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x388> @ imm = #-0x5a0\
+   a39a4: 4641         	mov	\cf4 r1\cf2 , \cf4 r8\cf2 \
+   a39a6: f7f4 effe    	blx	0x989a4 <_ZNSs4_Rep10_M_destroyERKSaIcE@plt> @ imm = #-0xb004\
+   a39aa: e52b         	b	0xa3404 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x388> @ imm = #-0x5aa\
+   a39ac: f248 62e8    	movw	\cf4 r2\cf2 , \cf6 #0x86e8\cf2 \
+   a39b0: f2c0 0209    	movt	\cf4 r2\cf2 , \cf6 #0x9\cf2 \
+   a39b4: 2a00         	cmp	\cf4 r2\cf2 , \cf6 #0x0\cf2 \
+   a39b6: d060         	beq	0xa3a7a <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x9fe> @ imm = #0xc0\
+   a39b8: 3b04         	subs	\cf4 r3\cf2 , \cf6 #0x4\cf2 \
+   a39ba: f3bf 8f5f    	dmb	sy\
+   a39be: e853 2f00    	ldrex	\cf4 r2\cf2 , \cf5 [\cf4 r3\cf5 ]\cf2 \
+   a39c2: 1e51         	subs	\cf4 r1\cf2 , \cf4 r2\cf2 , \cf6 #0x1\cf2 \
+   a39c4: e843 1600    	strex	\cf4 r6\cf2 , \cf4 r1\cf2 , \cf5 [\cf4 r3\cf5 ]\cf2 \
+   a39c8: 2e00         	cmp	\cf4 r6\cf2 , \cf6 #0x0\cf2 \
+   a39ca: d1f8         	bne	0xa39be <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x942> @ imm = #-0x10\
+   a39cc: f3bf 8f5f    	dmb	sy\
+   a39d0: 2a00         	cmp	\cf4 r2\cf2 , \cf6 #0x0\cf2 \
+   a39d2: f73f abaa    	bgt.w	0xa312a <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0xae> @ imm = #-0x8ac\
+   a39d6: a917         	add	\cf4 r1\cf2 , \cf4 sp\cf2 , \cf6 #0x5c\cf2 \
+   a39d8: f7f4 efe4    	blx	0x989a4 <_ZNSs4_Rep10_M_destroyERKSaIcE@plt> @ imm = #-0xb038\
+   a39dc: f7ff bba5    	b.w	0xa312a <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0xae> @ imm = #-0x8b6\
+   a39e0: f248 62e8    	movw	\cf4 r2\cf2 , \cf6 #0x86e8\cf2 \
+   a39e4: f2c0 0209    	movt	\cf4 r2\cf2 , \cf6 #0x9\cf2 \
+   a39e8: 2a00         	cmp	\cf4 r2\cf2 , \cf6 #0x0\cf2 \
+   a39ea: d058         	beq	0xa3a9e <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0xa22> @ imm = #0xb0\
+   a39ec: 3b04         	subs	\cf4 r3\cf2 , \cf6 #0x4\cf2 \
+   a39ee: f3bf 8f5f    	dmb	sy\
+   a39f2: e853 2f00    	ldrex	\cf4 r2\cf2 , \cf5 [\cf4 r3\cf5 ]\cf2 \
+   a39f6: 1e51         	subs	\cf4 r1\cf2 , \cf4 r2\cf2 , \cf6 #0x1\cf2 \
+   a39f8: e843 1600    	strex	\cf4 r6\cf2 , \cf4 r1\cf2 , \cf5 [\cf4 r3\cf5 ]\cf2 \
+   a39fc: 2e00         	cmp	\cf4 r6\cf2 , \cf6 #0x0\cf2 \
+   a39fe: d1f8         	bne	0xa39f2 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x976> @ imm = #-0x10\
+   a3a00: f3bf 8f5f    	dmb	sy\
+   a3a04: 2a00         	cmp	\cf4 r2\cf2 , \cf6 #0x0\cf2 \
+   a3a06: f73f ab70    	bgt.w	0xa30ea <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x6e> @ imm = #-0x920\
+   a3a0a: a915         	add	\cf4 r1\cf2 , \cf4 sp\cf2 , \cf6 #0x54\cf2 \
+   a3a0c: f7f4 efca    	blx	0x989a4 <_ZNSs4_Rep10_M_destroyERKSaIcE@plt> @ imm = #-0xb06c\
+   a3a10: f7ff bb6b    	b.w	0xa30ea <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x6e> @ imm = #-0x92a\
+   a3a14: f248 62e8    	movw	\cf4 r2\cf2 , \cf6 #0x86e8\cf2 \
+   a3a18: f2c0 0209    	movt	\cf4 r2\cf2 , \cf6 #0x9\cf2 \
+   a3a1c: b3ca         	cbz	\cf4 r2\cf2 , 0xa3a92 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0xa16> @ imm = #0x72\
+   a3a1e: 3b04         	subs	\cf4 r3\cf2 , \cf6 #0x4\cf2 \
+   a3a20: f3bf 8f5f    	dmb	sy\
+   a3a24: e853 2f00    	ldrex	\cf4 r2\cf2 , \cf5 [\cf4 r3\cf5 ]\cf2 \
+   a3a28: 1e51         	subs	\cf4 r1\cf2 , \cf4 r2\cf2 , \cf6 #0x1\cf2 \
+   a3a2a: e843 1600    	strex	\cf4 r6\cf2 , \cf4 r1\cf2 , \cf5 [\cf4 r3\cf5 ]\cf2 \
+   a3a2e: 2e00         	cmp	\cf4 r6\cf2 , \cf6 #0x0\cf2 \
+   a3a30: d1f8         	bne	0xa3a24 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x9a8> @ imm = #-0x10\
+   a3a32: f3bf 8f5f    	dmb	sy\
+   a3a36: 2a00         	cmp	\cf4 r2\cf2 , \cf6 #0x0\cf2 \
+   a3a38: f73f ab5d    	bgt.w	0xa30f6 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x7a> @ imm = #-0x946\
+   a3a3c: 4641         	mov	\cf4 r1\cf2 , \cf4 r8\cf2 \
+   a3a3e: f7f4 efb2    	blx	0x989a4 <_ZNSs4_Rep10_M_destroyERKSaIcE@plt> @ imm = #-0xb09c\
+   a3a42: f7ff bb58    	b.w	0xa30f6 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x7a> @ imm = #-0x950\
+   a3a46: f853 2c04    	ldr	\cf4 r2\cf2 , \cf5 [\cf4 r3\cf5 , \cf6 #-4\cf5 ]\cf2 \
+   a3a4a: 1e51         	subs	\cf4 r1\cf2 , \cf4 r2\cf2 , \cf6 #0x1\cf2 \
+   a3a4c: f843 1c04    	str	\cf4 r1\cf2 , \cf5 [\cf4 r3\cf5 , \cf6 #-4\cf5 ]\cf2 \
+   a3a50: e5ef         	b	0xa3632 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x5b6> @ imm = #-0x422\
+   a3a52: f853 2c04    	ldr	\cf4 r2\cf2 , \cf5 [\cf4 r3\cf5 , \cf6 #-4\cf5 ]\cf2 \
+   a3a56: 1e51         	subs	\cf4 r1\cf2 , \cf4 r2\cf2 , \cf6 #0x1\cf2 \
+   a3a58: f843 1c04    	str	\cf4 r1\cf2 , \cf5 [\cf4 r3\cf5 , \cf6 #-4\cf5 ]\cf2 \
+   a3a5c: e5a4         	b	0xa35a8 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x52c> @ imm = #-0x4b8\
+   a3a5e: f853 2c04    	ldr	\cf4 r2\cf2 , \cf5 [\cf4 r3\cf5 , \cf6 #-4\cf5 ]\cf2 \
+   a3a62: 1e51         	subs	\cf4 r1\cf2 , \cf4 r2\cf2 , \cf6 #0x1\cf2 \
+   a3a64: f843 1c04    	str	\cf4 r1\cf2 , \cf5 [\cf4 r3\cf5 , \cf6 #-4\cf5 ]\cf2 \
+   a3a68: e5cc         	b	0xa3604 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x588> @ imm = #-0x468\
+   a3a6a: f853 2c04    	ldr	\cf4 r2\cf2 , \cf5 [\cf4 r3\cf5 , \cf6 #-4\cf5 ]\cf2 \
+   a3a6e: 1e51         	subs	\cf4 r1\cf2 , \cf4 r2\cf2 , \cf6 #0x1\cf2 \
+   a3a70: f843 1c04    	str	\cf4 r1\cf2 , \cf5 [\cf4 r3\cf5 , \cf6 #-4\cf5 ]\cf2 \
+   a3a74: e5af         	b	0xa35d6 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x55a> @ imm = #-0x4a2\
+   a3a76: 4689         	mov	\cf4 r9\cf2 , \cf4 r1\cf2 \
+   a3a78: e475         	b	0xa3366 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x2ea> @ imm = #-0x716\
+   a3a7a: f853 2c04    	ldr	\cf4 r2\cf2 , \cf5 [\cf4 r3\cf5 , \cf6 #-4\cf5 ]\cf2 \
+   a3a7e: 1e51         	subs	\cf4 r1\cf2 , \cf4 r2\cf2 , \cf6 #0x1\cf2 \
+   a3a80: f843 1c04    	str	\cf4 r1\cf2 , \cf5 [\cf4 r3\cf5 , \cf6 #-4\cf5 ]\cf2 \
+   a3a84: e7a4         	b	0xa39d0 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x954> @ imm = #-0xb8\
+   a3a86: f853 2c04    	ldr	\cf4 r2\cf2 , \cf5 [\cf4 r3\cf5 , \cf6 #-4\cf5 ]\cf2 \
+   a3a8a: 1e51         	subs	\cf4 r1\cf2 , \cf4 r2\cf2 , \cf6 #0x1\cf2 \
+   a3a8c: f843 1c04    	str	\cf4 r1\cf2 , \cf5 [\cf4 r3\cf5 , \cf6 #-4\cf5 ]\cf2 \
+   a3a90: e785         	b	0xa399e <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x922> @ imm = #-0xf6\
+   a3a92: f853 2c04    	ldr	\cf4 r2\cf2 , \cf5 [\cf4 r3\cf5 , \cf6 #-4\cf5 ]\cf2 \
+   a3a96: 1e51         	subs	\cf4 r1\cf2 , \cf4 r2\cf2 , \cf6 #0x1\cf2 \
+   a3a98: f843 1c04    	str	\cf4 r1\cf2 , \cf5 [\cf4 r3\cf5 , \cf6 #-4\cf5 ]\cf2 \
+   a3a9c: e7cb         	b	0xa3a36 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x9ba> @ imm = #-0x6a\
+   a3a9e: f853 2c04    	ldr	\cf4 r2\cf2 , \cf5 [\cf4 r3\cf5 , \cf6 #-4\cf5 ]\cf2 \
+   a3aa2: 1e51         	subs	\cf4 r1\cf2 , \cf4 r2\cf2 , \cf6 #0x1\cf2 \
+   a3aa4: f843 1c04    	str	\cf4 r1\cf2 , \cf5 [\cf4 r3\cf5 , \cf6 #-4\cf5 ]\cf2 \
+   a3aa8: e7ac         	b	0xa3a04 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x988> @ imm = #-0xa8\
+   a3aaa: f853 2c04    	ldr	\cf4 r2\cf2 , \cf5 [\cf4 r3\cf5 , \cf6 #-4\cf5 ]\cf2 \
+   a3aae: 1e51         	subs	\cf4 r1\cf2 , \cf4 r2\cf2 , \cf6 #0x1\cf2 \
+   a3ab0: f843 1c04    	str	\cf4 r1\cf2 , \cf5 [\cf4 r3\cf5 , \cf6 #-4\cf5 ]\cf2 \
+   a3ab4: e726         	b	0xa3904 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x888> @ imm = #-0x1b4\
+   a3ab6: f853 2c04    	ldr	\cf4 r2\cf2 , \cf5 [\cf4 r3\cf5 , \cf6 #-4\cf5 ]\cf2 \
+   a3aba: 1e51         	subs	\cf4 r1\cf2 , \cf4 r2\cf2 , \cf6 #0x1\cf2 \
+   a3abc: f843 1c04    	str	\cf4 r1\cf2 , \cf5 [\cf4 r3\cf5 , \cf6 #-4\cf5 ]\cf2 \
+   a3ac0: e706         	b	0xa38d0 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x854> @ imm = #-0x1f4\
+   a3ac2: f853 2c04    	ldr	\cf4 r2\cf2 , \cf5 [\cf4 r3\cf5 , \cf6 #-4\cf5 ]\cf2 \
+   a3ac6: 1e51         	subs	\cf4 r1\cf2 , \cf4 r2\cf2 , \cf6 #0x1\cf2 \
+   a3ac8: f843 1c04    	str	\cf4 r1\cf2 , \cf5 [\cf4 r3\cf5 , \cf6 #-4\cf5 ]\cf2 \
+   a3acc: e74e         	b	0xa396c <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x8f0> @ imm = #-0x164\
+   a3ace: f853 2c04    	ldr	\cf4 r2\cf2 , \cf5 [\cf4 r3\cf5 , \cf6 #-4\cf5 ]\cf2 \
+   a3ad2: 1e51         	subs	\cf4 r1\cf2 , \cf4 r2\cf2 , \cf6 #0x1\cf2 \
+   a3ad4: f843 1c04    	str	\cf4 r1\cf2 , \cf5 [\cf4 r3\cf5 , \cf6 #-4\cf5 ]\cf2 \
+   a3ad8: e72e         	b	0xa3938 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x8bc> @ imm = #-0x1a4\
+   a3ada: f853 2c04    	ldr	\cf4 r2\cf2 , \cf5 [\cf4 r3\cf5 , \cf6 #-4\cf5 ]\cf2 \
+   a3ade: 1e51         	subs	\cf4 r1\cf2 , \cf4 r2\cf2 , \cf6 #0x1\cf2 \
+   a3ae0: f843 1c04    	str	\cf4 r1\cf2 , \cf5 [\cf4 r3\cf5 , \cf6 #-4\cf5 ]\cf2 \
+   a3ae4: e624         	b	0xa3730 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x6b4> @ imm = #-0x3b8\
+   a3ae6: f853 2c04    	ldr	\cf4 r2\cf2 , \cf5 [\cf4 r3\cf5 , \cf6 #-4\cf5 ]\cf2 \
+   a3aea: 1e51         	subs	\cf4 r1\cf2 , \cf4 r2\cf2 , \cf6 #0x1\cf2 \
+   a3aec: f843 1c04    	str	\cf4 r1\cf2 , \cf5 [\cf4 r3\cf5 , \cf6 #-4\cf5 ]\cf2 \
+   a3af0: e604         	b	0xa36fc <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x680> @ imm = #-0x3f8\
+   a3af2: f853 2c04    	ldr	\cf4 r2\cf2 , \cf5 [\cf4 r3\cf5 , \cf6 #-4\cf5 ]\cf2 \
+   a3af6: 1e51         	subs	\cf4 r1\cf2 , \cf4 r2\cf2 , \cf6 #0x1\cf2 \
+   a3af8: f843 1c04    	str	\cf4 r1\cf2 , \cf5 [\cf4 r3\cf5 , \cf6 #-4\cf5 ]\cf2 \
+   a3afc: e6b4         	b	0xa3868 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x7ec> @ imm = #-0x298\
+   a3afe: f853 2c04    	ldr	\cf4 r2\cf2 , \cf5 [\cf4 r3\cf5 , \cf6 #-4\cf5 ]\cf2 \
+   a3b02: 1e51         	subs	\cf4 r1\cf2 , \cf4 r2\cf2 , \cf6 #0x1\cf2 \
+   a3b04: f843 1c04    	str	\cf4 r1\cf2 , \cf5 [\cf4 r3\cf5 , \cf6 #-4\cf5 ]\cf2 \
+   a3b08: e694         	b	0xa3834 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x7b8> @ imm = #-0x2d8\
+   a3b0a: f853 2c04    	ldr	\cf4 r2\cf2 , \cf5 [\cf4 r3\cf5 , \cf6 #-4\cf5 ]\cf2 \
+   a3b0e: 1e51         	subs	\cf4 r1\cf2 , \cf4 r2\cf2 , \cf6 #0x1\cf2 \
+   a3b10: f843 1c04    	str	\cf4 r1\cf2 , \cf5 [\cf4 r3\cf5 , \cf6 #-4\cf5 ]\cf2 \
+   a3b14: e6c2         	b	0xa389c <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x820> @ imm = #-0x27c\
+   a3b16: f853 2c04    	ldr	\cf4 r2\cf2 , \cf5 [\cf4 r3\cf5 , \cf6 #-4\cf5 ]\cf2 \
+   a3b1a: 1e51         	subs	\cf4 r1\cf2 , \cf4 r2\cf2 , \cf6 #0x1\cf2 \
+   a3b1c: f843 1c04    	str	\cf4 r1\cf2 , \cf5 [\cf4 r3\cf5 , \cf6 #-4\cf5 ]\cf2 \
+   a3b20: e5b6         	b	0xa3690 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x614> @ imm = #-0x494\
+   a3b22: f853 2c04    	ldr	\cf4 r2\cf2 , \cf5 [\cf4 r3\cf5 , \cf6 #-4\cf5 ]\cf2 \
+   a3b26: 1e51         	subs	\cf4 r1\cf2 , \cf4 r2\cf2 , \cf6 #0x1\cf2 \
+   a3b28: f843 1c04    	str	\cf4 r1\cf2 , \cf5 [\cf4 r3\cf5 , \cf6 #-4\cf5 ]\cf2 \
+   a3b2c: e634         	b	0xa3798 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x71c> @ imm = #-0x398\
+   a3b2e: f853 2c04    	ldr	\cf4 r2\cf2 , \cf5 [\cf4 r3\cf5 , \cf6 #-4\cf5 ]\cf2 \
+   a3b32: 1e51         	subs	\cf4 r1\cf2 , \cf4 r2\cf2 , \cf6 #0x1\cf2 \
+   a3b34: f843 1c04    	str	\cf4 r1\cf2 , \cf5 [\cf4 r3\cf5 , \cf6 #-4\cf5 ]\cf2 \
+   a3b38: e614         	b	0xa3764 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x6e8> @ imm = #-0x3d8\
+   a3b3a: f853 2c04    	ldr	\cf4 r2\cf2 , \cf5 [\cf4 r3\cf5 , \cf6 #-4\cf5 ]\cf2 \
+   a3b3e: 1e51         	subs	\cf4 r1\cf2 , \cf4 r2\cf2 , \cf6 #0x1\cf2 \
+   a3b40: f843 1c04    	str	\cf4 r1\cf2 , \cf5 [\cf4 r3\cf5 , \cf6 #-4\cf5 ]\cf2 \
+   a3b44: e65c         	b	0xa3800 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x784> @ imm = #-0x348\
+   a3b46: f853 2c04    	ldr	\cf4 r2\cf2 , \cf5 [\cf4 r3\cf5 , \cf6 #-4\cf5 ]\cf2 \
+   a3b4a: 1e51         	subs	\cf4 r1\cf2 , \cf4 r2\cf2 , \cf6 #0x1\cf2 \
+   a3b4c: f843 1c04    	str	\cf4 r1\cf2 , \cf5 [\cf4 r3\cf5 , \cf6 #-4\cf5 ]\cf2 \
+   a3b50: e63c         	b	0xa37cc <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0x750> @ imm = #-0x388\
+   a3b52: 68e3         	ldr	\cf4 r3\cf2 , \cf5 [\cf4 r4\cf5 , \cf6 #0xc\cf5 ]\cf2 \
+   a3b54: 4606         	mov	\cf4 r6\cf2 , \cf4 r0\cf2 \
+   a3b56: f1a3 000c    	sub.w	\cf4 r0\cf2 , \cf4 r3\cf2 , \cf6 #0xc\cf2 \
+   a3b5a: 42a8         	cmp	\cf4 r0\cf2 , \cf4 r5\cf2 \
+   a3b5c: d002         	beq	0xa3b64 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0xae8> @ imm = #0x4\
+   a3b5e: a90d         	add	\cf4 r1\cf2 , \cf4 sp\cf2 , \cf6 #0x34\cf2 \
+   a3b60: f7fe fba4    	bl	0xa22ac <std::string::_Rep::_M_dispose(std::allocator<char> const&) (.part.5)> @ imm = #-0x18b8\
+   a3b64: 6860         	ldr	\cf4 r0\cf2 , \cf5 [\cf4 r4\cf5 , \cf6 #0x4\cf5 ]\cf2 \
+   a3b66: 380c         	subs	\cf4 r0\cf2 , \cf6 #0xc\cf2 \
+   a3b68: 42a8         	cmp	\cf4 r0\cf2 , \cf4 r5\cf2 \
+   a3b6a: d002         	beq	0xa3b72 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0xaf6> @ imm = #0x4\
+   a3b6c: a90d         	add	\cf4 r1\cf2 , \cf4 sp\cf2 , \cf6 #0x34\cf2 \
+   a3b6e: f7fe fb9d    	bl	0xa22ac <std::string::_Rep::_M_dispose(std::allocator<char> const&) (.part.5)> @ imm = #-0x18c6\
+   a3b72: 6820         	ldr	\cf4 r0\cf2 , \cf5 [\cf4 r4\cf5 ]\cf2 \
+   a3b74: 380c         	subs	\cf4 r0\cf2 , \cf6 #0xc\cf2 \
+   a3b76: 42a8         	cmp	\cf4 r0\cf2 , \cf4 r5\cf2 \
+   a3b78: d002         	beq	0xa3b80 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0xb04> @ imm = #0x4\
+   a3b7a: a90d         	add	\cf4 r1\cf2 , \cf4 sp\cf2 , \cf6 #0x34\cf2 \
+   a3b7c: f7fe fb96    	bl	0xa22ac <std::string::_Rep::_M_dispose(std::allocator<char> const&) (.part.5)> @ imm = #-0x18d4\
+   a3b80: 4630         	mov	\cf4 r0\cf2 , \cf4 r6\cf2 \
+   a3b82: f7f4 e818    	blx	0x97bb4 <__cxa_begin_catch@plt> @ imm = #-0xbfd0\
+   a3b86: 454c         	cmp	\cf4 r4\cf2 , \cf4 r9\cf2 \
+   a3b88: d009         	beq	0xa3b9e <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0xb22> @ imm = #0x12\
+   a3b8a: 4648         	mov	\cf4 r0\cf2 , \cf4 r9\cf2 \
+   a3b8c: f109 0918    	add.w	\cf4 r9\cf2 , \cf4 r9\cf2 , \cf6 #0x18\cf2 \
+   a3b90: f001 fab0    	bl	0xa50f4 <jibo::ServiceRecord::~ServiceRecord()> @ imm = #0x1560\
+   a3b94: e7f7         	b	0xa3b86 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0xb0a> @ imm = #-0x12\
+   a3b96: 4606         	mov	\cf4 r6\cf2 , \cf4 r0\cf2 \
+   a3b98: e7e4         	b	0xa3b64 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0xae8> @ imm = #-0x38\
+   a3b9a: 4606         	mov	\cf4 r6\cf2 , \cf4 r0\cf2 \
+   a3b9c: e7e9         	b	0xa3b72 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0xaf6> @ imm = #-0x2e\
+   a3b9e: f7f4 ed80    	blx	0x986a0 <__cxa_rethrow@plt> @ imm = #-0xb500\
+   a3ba2: e7ee         	b	0xa3b82 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0xb06> @ imm = #-0x24\
+   a3ba4: 9811         	ldr	\cf4 r0\cf2 , \cf5 [\cf4 sp\cf5 , \cf6 #0x44\cf5 ]\cf2 \
+   a3ba6: 380c         	subs	\cf4 r0\cf2 , \cf6 #0xc\cf2 \
+   a3ba8: 42a8         	cmp	\cf4 r0\cf2 , \cf4 r5\cf2 \
+   a3baa: d002         	beq	0xa3bb2 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0xb36> @ imm = #0x4\
+   a3bac: a90d         	add	\cf4 r1\cf2 , \cf4 sp\cf2 , \cf6 #0x34\cf2 \
+   a3bae: f7fe fb7d    	bl	0xa22ac <std::string::_Rep::_M_dispose(std::allocator<char> const&) (.part.5)> @ imm = #-0x1906\
+   a3bb2: 9810         	ldr	\cf4 r0\cf2 , \cf5 [\cf4 sp\cf5 , \cf6 #0x40\cf5 ]\cf2 \
+   a3bb4: 380c         	subs	\cf4 r0\cf2 , \cf6 #0xc\cf2 \
+   a3bb6: 42a8         	cmp	\cf4 r0\cf2 , \cf4 r5\cf2 \
+   a3bb8: d002         	beq	0xa3bc0 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0xb44> @ imm = #0x4\
+   a3bba: a90d         	add	\cf4 r1\cf2 , \cf4 sp\cf2 , \cf6 #0x34\cf2 \
+   a3bbc: f7fe fb76    	bl	0xa22ac <std::string::_Rep::_M_dispose(std::allocator<char> const&) (.part.5)> @ imm = #-0x1914\
+   a3bc0: 980f         	ldr	\cf4 r0\cf2 , \cf5 [\cf4 sp\cf5 , \cf6 #0x3c\cf5 ]\cf2 \
+   a3bc2: 380c         	subs	\cf4 r0\cf2 , \cf6 #0xc\cf2 \
+   a3bc4: 42a8         	cmp	\cf4 r0\cf2 , \cf4 r5\cf2 \
+   a3bc6: d002         	beq	0xa3bce <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0xb52> @ imm = #0x4\
+   a3bc8: a90d         	add	\cf4 r1\cf2 , \cf4 sp\cf2 , \cf6 #0x34\cf2 \
+   a3bca: f7fe fb6f    	bl	0xa22ac <std::string::_Rep::_M_dispose(std::allocator<char> const&) (.part.5)> @ imm = #-0x1922\
+   a3bce: 980e         	ldr	\cf4 r0\cf2 , \cf5 [\cf4 sp\cf5 , \cf6 #0x38\cf5 ]\cf2 \
+   a3bd0: 380c         	subs	\cf4 r0\cf2 , \cf6 #0xc\cf2 \
+   a3bd2: 42a8         	cmp	\cf4 r0\cf2 , \cf4 r5\cf2 \
+   a3bd4: d002         	beq	0xa3bdc <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0xb60> @ imm = #0x4\
+   a3bd6: a90d         	add	\cf4 r1\cf2 , \cf4 sp\cf2 , \cf6 #0x34\cf2 \
+   a3bd8: f7fe fb68    	bl	0xa22ac <std::string::_Rep::_M_dispose(std::allocator<char> const&) (.part.5)> @ imm = #-0x1930\
+   a3bdc: f7f4 eed4    	blx	0x98988 <__cxa_end_cleanup@plt> @ imm = #-0xb258\
+   a3be0: 9818         	ldr	\cf4 r0\cf2 , \cf5 [\cf4 sp\cf5 , \cf6 #0x60\cf5 ]\cf2 \
+   a3be2: f248 2520    	movw	\cf4 r5\cf2 , \cf6 #0x8220\cf2 \
+   a3be6: f2c0 0519    	movt	\cf4 r5\cf2 , \cf6 #0x19\cf2 \
+   a3bea: 380c         	subs	\cf4 r0\cf2 , \cf6 #0xc\cf2 \
+   a3bec: 42a8         	cmp	\cf4 r0\cf2 , \cf4 r5\cf2 \
+   a3bee: d002         	beq	0xa3bf6 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0xb7a> @ imm = #0x4\
+   a3bf0: a915         	add	\cf4 r1\cf2 , \cf4 sp\cf2 , \cf6 #0x54\cf2 \
+   a3bf2: f7fe fb5b    	bl	0xa22ac <std::string::_Rep::_M_dispose(std::allocator<char> const&) (.part.5)> @ imm = #-0x194a\
+   a3bf6: 9817         	ldr	\cf4 r0\cf2 , \cf5 [\cf4 sp\cf5 , \cf6 #0x5c\cf5 ]\cf2 \
+   a3bf8: 380c         	subs	\cf4 r0\cf2 , \cf6 #0xc\cf2 \
+   a3bfa: 42a8         	cmp	\cf4 r0\cf2 , \cf4 r5\cf2 \
+   a3bfc: d002         	beq	0xa3c04 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0xb88> @ imm = #0x4\
+   a3bfe: a915         	add	\cf4 r1\cf2 , \cf4 sp\cf2 , \cf6 #0x54\cf2 \
+   a3c00: f7fe fb54    	bl	0xa22ac <std::string::_Rep::_M_dispose(std::allocator<char> const&) (.part.5)> @ imm = #-0x1958\
+   a3c04: 9816         	ldr	\cf4 r0\cf2 , \cf5 [\cf4 sp\cf5 , \cf6 #0x58\cf5 ]\cf2 \
+   a3c06: 380c         	subs	\cf4 r0\cf2 , \cf6 #0xc\cf2 \
+   a3c08: 42a8         	cmp	\cf4 r0\cf2 , \cf4 r5\cf2 \
+   a3c0a: d0e7         	beq	0xa3bdc <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0xb60> @ imm = #-0x32\
+   a3c0c: a915         	add	\cf4 r1\cf2 , \cf4 sp\cf2 , \cf6 #0x54\cf2 \
+   a3c0e: f7fe fb4d    	bl	0xa22ac <std::string::_Rep::_M_dispose(std::allocator<char> const&) (.part.5)> @ imm = #-0x1966\
+   a3c12: e7e3         	b	0xa3bdc <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0xb60> @ imm = #-0x3a\
+   a3c14: 9812         	ldr	\cf4 r0\cf2 , \cf5 [\cf4 sp\cf5 , \cf6 #0x48\cf5 ]\cf2 \
+   a3c16: 380c         	subs	\cf4 r0\cf2 , \cf6 #0xc\cf2 \
+   a3c18: 42a8         	cmp	\cf4 r0\cf2 , \cf4 r5\cf2 \
+   a3c1a: d0c3         	beq	0xa3ba4 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0xb28> @ imm = #-0x7a\
+   a3c1c: a90d         	add	\cf4 r1\cf2 , \cf4 sp\cf2 , \cf6 #0x34\cf2 \
+   a3c1e: f7fe fb45    	bl	0xa22ac <std::string::_Rep::_M_dispose(std::allocator<char> const&) (.part.5)> @ imm = #-0x1976\
+   a3c22: e7bf         	b	0xa3ba4 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0xb28> @ imm = #-0x82\
+   a3c24: f7f4 ecf6    	blx	0x98614 <__cxa_end_catch@plt> @ imm = #-0xb614\
+   a3c28: 4640         	mov	\cf4 r0\cf2 , \cf4 r8\cf2 \
+   a3c2a: f001 fa63    	bl	0xa50f4 <jibo::ServiceRecord::~ServiceRecord()> @ imm = #0x14c6\
+   a3c2e: 9817         	ldr	\cf4 r0\cf2 , \cf5 [\cf4 sp\cf5 , \cf6 #0x5c\cf5 ]\cf2 \
+   a3c30: 380c         	subs	\cf4 r0\cf2 , \cf6 #0xc\cf2 \
+   a3c32: 42a8         	cmp	\cf4 r0\cf2 , \cf4 r5\cf2 \
+   a3c34: d002         	beq	0xa3c3c <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0xbc0> @ imm = #0x4\
+   a3c36: a90d         	add	\cf4 r1\cf2 , \cf4 sp\cf2 , \cf6 #0x34\cf2 \
+   a3c38: f7fe fb38    	bl	0xa22ac <std::string::_Rep::_M_dispose(std::allocator<char> const&) (.part.5)> @ imm = #-0x1990\
+   a3c3c: 9816         	ldr	\cf4 r0\cf2 , \cf5 [\cf4 sp\cf5 , \cf6 #0x58\cf5 ]\cf2 \
+   a3c3e: 380c         	subs	\cf4 r0\cf2 , \cf6 #0xc\cf2 \
+   a3c40: 42a8         	cmp	\cf4 r0\cf2 , \cf4 r5\cf2 \
+   a3c42: d002         	beq	0xa3c4a <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0xbce> @ imm = #0x4\
+   a3c44: a90d         	add	\cf4 r1\cf2 , \cf4 sp\cf2 , \cf6 #0x34\cf2 \
+   a3c46: f7fe fb31    	bl	0xa22ac <std::string::_Rep::_M_dispose(std::allocator<char> const&) (.part.5)> @ imm = #-0x199e\
+   a3c4a: 9815         	ldr	\cf4 r0\cf2 , \cf5 [\cf4 sp\cf5 , \cf6 #0x54\cf5 ]\cf2 \
+   a3c4c: 380c         	subs	\cf4 r0\cf2 , \cf6 #0xc\cf2 \
+   a3c4e: 42a8         	cmp	\cf4 r0\cf2 , \cf4 r5\cf2 \
+   a3c50: d002         	beq	0xa3c58 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0xbdc> @ imm = #0x4\
+   a3c52: a90d         	add	\cf4 r1\cf2 , \cf4 sp\cf2 , \cf6 #0x34\cf2 \
+   a3c54: f7fe fb2a    	bl	0xa22ac <std::string::_Rep::_M_dispose(std::allocator<char> const&) (.part.5)> @ imm = #-0x19ac\
+   a3c58: 9814         	ldr	\cf4 r0\cf2 , \cf5 [\cf4 sp\cf5 , \cf6 #0x50\cf5 ]\cf2 \
+   a3c5a: 380c         	subs	\cf4 r0\cf2 , \cf6 #0xc\cf2 \
+   a3c5c: 42a8         	cmp	\cf4 r0\cf2 , \cf4 r5\cf2 \
+   a3c5e: d002         	beq	0xa3c66 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0xbea> @ imm = #0x4\
+   a3c60: a90d         	add	\cf4 r1\cf2 , \cf4 sp\cf2 , \cf6 #0x34\cf2 \
+   a3c62: f7fe fb23    	bl	0xa22ac <std::string::_Rep::_M_dispose(std::allocator<char> const&) (.part.5)> @ imm = #-0x19ba\
+   a3c66: 9813         	ldr	\cf4 r0\cf2 , \cf5 [\cf4 sp\cf5 , \cf6 #0x4c\cf5 ]\cf2 \
+   a3c68: 380c         	subs	\cf4 r0\cf2 , \cf6 #0xc\cf2 \
+   a3c6a: 42a8         	cmp	\cf4 r0\cf2 , \cf4 r5\cf2 \
+   a3c6c: d0d2         	beq	0xa3c14 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0xb98> @ imm = #-0x5c\
+   a3c6e: a90d         	add	\cf4 r1\cf2 , \cf4 sp\cf2 , \cf6 #0x34\cf2 \
+   a3c70: f7fe fb1c    	bl	0xa22ac <std::string::_Rep::_M_dispose(std::allocator<char> const&) (.part.5)> @ imm = #-0x19c8\
+   a3c74: e7ce         	b	0xa3c14 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0xb98> @ imm = #-0x64\
+   a3c76: f248 2520    	movw	\cf4 r5\cf2 , \cf6 #0x8220\cf2 \
+   a3c7a: f2c0 0519    	movt	\cf4 r5\cf2 , \cf6 #0x19\cf2 \
+   a3c7e: e7ba         	b	0xa3bf6 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0xb7a> @ imm = #-0x8c\
+   a3c80: e7d2         	b	0xa3c28 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0xbac> @ imm = #-0x5c\
+   a3c82: 9818         	ldr	\cf4 r0\cf2 , \cf5 [\cf4 sp\cf5 , \cf6 #0x60\cf5 ]\cf2 \
+   a3c84: 380c         	subs	\cf4 r0\cf2 , \cf6 #0xc\cf2 \
+   a3c86: 42a8         	cmp	\cf4 r0\cf2 , \cf4 r5\cf2 \
+   a3c88: d0a8         	beq	0xa3bdc <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0xb60> @ imm = #-0xb0\
+   a3c8a: a917         	add	\cf4 r1\cf2 , \cf4 sp\cf2 , \cf6 #0x5c\cf2 \
+   a3c8c: f7fe fb0e    	bl	0xa22ac <std::string::_Rep::_M_dispose(std::allocator<char> const&) (.part.5)> @ imm = #-0x19e4\
+   a3c90: e7a4         	b	0xa3bdc <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0xb60> @ imm = #-0xb8\
+   a3c92: f248 2520    	movw	\cf4 r5\cf2 , \cf6 #0x8220\cf2 \
+   a3c96: f2c0 0519    	movt	\cf4 r5\cf2 , \cf6 #0x19\cf2 \
+   a3c9a: e7b3         	b	0xa3c04 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0xb88> @ imm = #-0x9a\
+   a3c9c: e7c7         	b	0xa3c2e <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0xbb2> @ imm = #-0x72\
+   a3c9e: 4604         	mov	\cf4 r4\cf2 , \cf4 r0\cf2 \
+   a3ca0: 6870         	ldr	\cf4 r0\cf2 , \cf5 [\cf4 r6\cf5 , \cf6 #0x4\cf5 ]\cf2 \
+   a3ca2: 380c         	subs	\cf4 r0\cf2 , \cf6 #0xc\cf2 \
+   a3ca4: 42a8         	cmp	\cf4 r0\cf2 , \cf4 r5\cf2 \
+   a3ca6: d002         	beq	0xa3cae <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0xc32> @ imm = #0x4\
+   a3ca8: a90d         	add	\cf4 r1\cf2 , \cf4 sp\cf2 , \cf6 #0x34\cf2 \
+   a3caa: f7fe faff    	bl	0xa22ac <std::string::_Rep::_M_dispose(std::allocator<char> const&) (.part.5)> @ imm = #-0x1a02\
+   a3cae: 6830         	ldr	\cf4 r0\cf2 , \cf5 [\cf4 r6\cf5 ]\cf2 \
+   a3cb0: 380c         	subs	\cf4 r0\cf2 , \cf6 #0xc\cf2 \
+   a3cb2: 42a8         	cmp	\cf4 r0\cf2 , \cf4 r5\cf2 \
+   a3cb4: d002         	beq	0xa3cbc <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0xc40> @ imm = #0x4\
+   a3cb6: a90d         	add	\cf4 r1\cf2 , \cf4 sp\cf2 , \cf6 #0x34\cf2 \
+   a3cb8: f7fe faf8    	bl	0xa22ac <std::string::_Rep::_M_dispose(std::allocator<char> const&) (.part.5)> @ imm = #-0x1a10\
+   a3cbc: 4620         	mov	\cf4 r0\cf2 , \cf4 r4\cf2 \
+   a3cbe: f7f3 ef7a    	blx	0x97bb4 <__cxa_begin_catch@plt> @ imm = #-0xc10c\
+   a3cc2: f7f4 ecee    	blx	0x986a0 <__cxa_rethrow@plt> @ imm = #-0xb624\
+   a3cc6: 68f3         	ldr	\cf4 r3\cf2 , \cf5 [\cf4 r6\cf5 , \cf6 #0xc\cf5 ]\cf2 \
+   a3cc8: 4604         	mov	\cf4 r4\cf2 , \cf4 r0\cf2 \
+   a3cca: f1a3 000c    	sub.w	\cf4 r0\cf2 , \cf4 r3\cf2 , \cf6 #0xc\cf2 \
+   a3cce: 42a8         	cmp	\cf4 r0\cf2 , \cf4 r5\cf2 \
+   a3cd0: d0e6         	beq	0xa3ca0 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0xc24> @ imm = #-0x34\
+   a3cd2: a90d         	add	\cf4 r1\cf2 , \cf4 sp\cf2 , \cf6 #0x34\cf2 \
+   a3cd4: f7fe faea    	bl	0xa22ac <std::string::_Rep::_M_dispose(std::allocator<char> const&) (.part.5)> @ imm = #-0x1a2c\
+   a3cd8: e7e2         	b	0xa3ca0 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0xc24> @ imm = #-0x3c\
+   a3cda: e7f0         	b	0xa3cbe <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0xc42> @ imm = #-0x20\
+   a3cdc: 4604         	mov	\cf4 r4\cf2 , \cf4 r0\cf2 \
+   a3cde: f7f4 ec9a    	blx	0x98614 <__cxa_end_catch@plt> @ imm = #-0xb6cc\
+   a3ce2: 4620         	mov	\cf4 r0\cf2 , \cf4 r4\cf2 \
+   a3ce4: f7f3 ef66    	blx	0x97bb4 <__cxa_begin_catch@plt> @ imm = #-0xc134\
+   a3ce8: 4630         	mov	\cf4 r0\cf2 , \cf4 r6\cf2 \
+   a3cea: f7f4 ea7c    	blx	0x981e4 <_ZdlPv@plt>    @ imm = #-0xbb08\
+   a3cee: f7f4 ecd8    	blx	0x986a0 <__cxa_rethrow@plt> @ imm = #-0xb650\
+   a3cf2: 4604         	mov	\cf4 r4\cf2 , \cf4 r0\cf2 \
+   a3cf4: e7db         	b	0xa3cae <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0xc32> @ imm = #-0x4a\
+   a3cf6: e7b6         	b	0xa3c66 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0xbea> @ imm = #-0x94\
+   a3cf8: e7a0         	b	0xa3c3c <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0xbc0> @ imm = #-0xc0\
+   a3cfa: e7a6         	b	0xa3c4a <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0xbce> @ imm = #-0xb4\
+   a3cfc: e767         	b	0xa3bce <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0xb52> @ imm = #-0x132\
+   a3cfe: e75f         	b	0xa3bc0 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0xb44> @ imm = #-0x142\
+   a3d00: e7aa         	b	0xa3c58 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0xbdc> @ imm = #-0xac\
+   a3d02: e756         	b	0xa3bb2 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0xb36> @ imm = #-0x154\
+   a3d04: f7f4 ec86    	blx	0x98614 <__cxa_end_catch@plt> @ imm = #-0xb6f4\
+   a3d08: e78e         	b	0xa3c28 <jibo::nlu::NluService::onInitialize(Poco::Util::Application&)+0xbac> @ imm = #-0xe4\
+   a3d0a: bf00         	nop\
+victorchironachi@Victors-MacBook-Pro ~ % }

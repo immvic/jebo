@@ -1,0 +1,943 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2870
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fnil\fcharset0 Menlo-Regular;}
+{\colortbl;\red255\green255\blue255;\red224\green224\blue224;\red25\green29\blue39;\red107\green192\blue194;
+\red91\green157\blue93;\red163\green65\blue56;}
+{\*\expandedcolortbl;;\csgenericrgb\c87761\c87761\c87761;\csgenericrgb\c9839\c11388\c15260\c95000;\cssrgb\c48472\c79501\c80571;
+\cssrgb\c42416\c66728\c44152;\cssrgb\c70509\c33572\c28115;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf2 \cb3 \CocoaLigature0 victorchironachi@Victors-MacBook-Pro ~ % $(brew --prefix llvm)/bin/llvm-objdump \\\
+  -d \\\
+  --start-address=0x000b1c94 \\\
+  --stop-address=0x000b25e0 \\\
+  ~/Desktop/jibo-jetstream-service\
+\
+/Users/victorchironachi/Desktop/jibo-jetstream-service:	file format elf32-littlearm\
+\
+Disassembly of section .text:\
+\
+000b1c94 <_ZN4jibo3asr17jm_hub_skill_info6toJsonEv>:\
+   b1c94: f84d 4d0c    	str	\cf4 \cb3 r4\cf2 \cb3 , \cf5 \cb3 [\cf4 sp\cf5 , \cf6 #-12\cf5 ]\cf2 \cb3 !\
+   b1c98: 460c         	mov	\cf4 \cb3 r4\cf2 \cb3 , \cf4 \cb3 r1\cf2 \cb3 \
+   b1c9a: e9cd 5e01    	strd	\cf4 \cb3 r5\cf2 \cb3 , \cf4 \cb3 lr\cf2 \cb3 , \cf5 \cb3 [\cf4 sp\cf5 , \cf6 #4\cf5 ]\cf2 \cb3 \
+   b1c9e: b087         	sub	\cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0x1c\cf2 \cb3 \
+   b1ca0: 4605         	mov	\cf4 \cb3 r5\cf2 \cb3 , \cf4 \cb3 r0\cf2 \cb3 \
+   b1ca2: a804         	add	\cf4 \cb3 r0\cf2 \cb3 , \cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0x10\cf2 \cb3 \
+   b1ca4: f7e8 fdba    	bl	0x9a81c <_ZN4jibo3asr7jm_base6toJsonEv> @ imm = #-0x1748c\
+   b1ca8: f245 3128    	movw	\cf4 \cb3 r1\cf2 \cb3 , \cf6 \cb3 #0x5328\cf2 \cb3 \
+   b1cac: a805         	add	\cf4 \cb3 r0\cf2 \cb3 , \cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0x14\cf2 \cb3 \
+   b1cae: f2c0 011f    	movt	\cf4 \cb3 r1\cf2 \cb3 , \cf6 \cb3 #0x1f\cf2 \cb3 \
+   b1cb2: aa02         	add	\cf4 \cb3 r2\cf2 \cb3 , \cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0x8\cf2 \cb3 \
+   b1cb4: f7c5 eb74    	blx	0x773a0 <_ZNSsC1EPKcRKSaIcE@plt> @ imm = #-0x3a918\
+   b1cb8: 2200         	movs	\cf4 \cb3 r2\cf2 \cb3 , \cf6 \cb3 #0x0\cf2 \cb3 \
+   b1cba: a904         	add	\cf4 \cb3 r1\cf2 \cb3 , \cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0x10\cf2 \cb3 \
+   b1cbc: f104 032c    	add.w	\cf4 \cb3 r3\cf2 \cb3 , \cf4 \cb3 r4\cf2 \cb3 , \cf6 \cb3 #0x2c\cf2 \cb3 \
+   b1cc0: 4628         	mov	\cf4 \cb3 r0\cf2 \cb3 , \cf4 \cb3 r5\cf2 \cb3 \
+   b1cc2: 9200         	str	\cf4 \cb3 r2\cf2 \cb3 , \cf5 \cb3 [\cf4 sp\cf5 ]\cf2 \cb3 \
+   b1cc4: aa05         	add	\cf4 \cb3 r2\cf2 \cb3 , \cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0x14\cf2 \cb3 \
+   b1cc6: f7ff fb0b    	bl	0xb12e0 <_ZN4Poco7replaceISsEET_RKS1_S3_S3_NS1_9size_typeE> @ imm = #-0x9ea\
+   b1cca: 9b05         	ldr	\cf4 \cb3 r3\cf2 \cb3 , \cf5 \cb3 [\cf4 sp\cf5 , \cf6 #0x14\cf5 ]\cf2 \cb3 \
+   b1ccc: f245 7400    	movw	\cf4 \cb3 r4\cf2 \cb3 , \cf6 \cb3 #0x5700\cf2 \cb3 \
+   b1cd0: f2c0 0432    	movt	\cf4 \cb3 r4\cf2 \cb3 , \cf6 \cb3 #0x32\cf2 \cb3 \
+   b1cd4: f1a3 000c    	sub.w	\cf4 \cb3 r0\cf2 \cb3 , \cf4 \cb3 r3\cf2 \cb3 , \cf6 \cb3 #0xc\cf2 \cb3 \
+   b1cd8: 42a0         	cmp	\cf4 \cb3 r0\cf2 \cb3 , \cf4 \cb3 r4\cf2 \cb3 \
+   b1cda: d10b         	bne	0xb1cf4 <_ZN4jibo3asr17jm_hub_skill_info6toJsonEv+0x60> @ imm = #0x16\
+   b1cdc: 9b04         	ldr	\cf4 \cb3 r3\cf2 \cb3 , \cf5 \cb3 [\cf4 sp\cf5 , \cf6 #0x10\cf5 ]\cf2 \cb3 \
+   b1cde: f1a3 000c    	sub.w	\cf4 \cb3 r0\cf2 \cb3 , \cf4 \cb3 r3\cf2 \cb3 , \cf6 \cb3 #0xc\cf2 \cb3 \
+   b1ce2: 42a0         	cmp	\cf4 \cb3 r0\cf2 \cb3 , \cf4 \cb3 r4\cf2 \cb3 \
+   b1ce4: d10e         	bne	0xb1d04 <_ZN4jibo3asr17jm_hub_skill_info6toJsonEv+0x70> @ imm = #0x1c\
+   b1ce6: 4628         	mov	\cf4 \cb3 r0\cf2 \cb3 , \cf4 \cb3 r5\cf2 \cb3 \
+   b1ce8: b007         	add	\cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0x1c\cf2 \cb3 \
+   b1cea: e9dd 4500    	ldrd	\cf4 \cb3 r4\cf2 \cb3 , \cf4 \cb3 r5\cf2 \cb3 , \cf5 \cb3 [\cf4 sp\cf5 ]\cf2 \cb3 \
+   b1cee: b002         	add	\cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0x8\cf2 \cb3 \
+   b1cf0: f85d fb04    	ldr	\cf4 \cb3 pc\cf2 \cb3 , \cf5 \cb3 [\cf4 sp\cf5 ]\cf2 \cb3 , \cf6 \cb3 #4\cf2 \cb3 \
+   b1cf4: a903         	add	\cf4 \cb3 r1\cf2 \cb3 , \cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0xc\cf2 \cb3 \
+   b1cf6: f7f9 fcdd    	bl	0xab6b4 <_ZNSs4_Rep10_M_disposeERKSaIcE.part.11> @ imm = #-0x6646\
+   b1cfa: 9b04         	ldr	\cf4 \cb3 r3\cf2 \cb3 , \cf5 \cb3 [\cf4 sp\cf5 , \cf6 #0x10\cf5 ]\cf2 \cb3 \
+   b1cfc: f1a3 000c    	sub.w	\cf4 \cb3 r0\cf2 \cb3 , \cf4 \cb3 r3\cf2 \cb3 , \cf6 \cb3 #0xc\cf2 \cb3 \
+   b1d00: 42a0         	cmp	\cf4 \cb3 r0\cf2 \cb3 , \cf4 \cb3 r4\cf2 \cb3 \
+   b1d02: d0f0         	beq	0xb1ce6 <_ZN4jibo3asr17jm_hub_skill_info6toJsonEv+0x52> @ imm = #-0x20\
+   b1d04: a905         	add	\cf4 \cb3 r1\cf2 \cb3 , \cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0x14\cf2 \cb3 \
+   b1d06: f7f9 fcd5    	bl	0xab6b4 <_ZNSs4_Rep10_M_disposeERKSaIcE.part.11> @ imm = #-0x6656\
+   b1d0a: e7ec         	b	0xb1ce6 <_ZN4jibo3asr17jm_hub_skill_info6toJsonEv+0x52> @ imm = #-0x28\
+   b1d0c: f245 7400    	movw	\cf4 \cb3 r4\cf2 \cb3 , \cf6 \cb3 #0x5700\cf2 \cb3 \
+   b1d10: f2c0 0432    	movt	\cf4 \cb3 r4\cf2 \cb3 , \cf6 \cb3 #0x32\cf2 \cb3 \
+   b1d14: 9804         	ldr	\cf4 \cb3 r0\cf2 \cb3 , \cf5 \cb3 [\cf4 sp\cf5 , \cf6 #0x10\cf5 ]\cf2 \cb3 \
+   b1d16: 380c         	subs	\cf4 \cb3 r0\cf2 \cb3 , \cf6 \cb3 #0xc\cf2 \cb3 \
+   b1d18: 42a0         	cmp	\cf4 \cb3 r0\cf2 \cb3 , \cf4 \cb3 r4\cf2 \cb3 \
+   b1d1a: d002         	beq	0xb1d22 <_ZN4jibo3asr17jm_hub_skill_info6toJsonEv+0x8e> @ imm = #0x4\
+   b1d1c: a903         	add	\cf4 \cb3 r1\cf2 \cb3 , \cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0xc\cf2 \cb3 \
+   b1d1e: f7f9 fcc9    	bl	0xab6b4 <_ZNSs4_Rep10_M_disposeERKSaIcE.part.11> @ imm = #-0x666e\
+   b1d22: f7c5 e832    	blx	0x76d88 <__cxa_end_cleanup@plt> @ imm = #-0x3af9c\
+   b1d26: 9805         	ldr	\cf4 \cb3 r0\cf2 \cb3 , \cf5 \cb3 [\cf4 sp\cf5 , \cf6 #0x14\cf5 ]\cf2 \cb3 \
+   b1d28: f245 7400    	movw	\cf4 \cb3 r4\cf2 \cb3 , \cf6 \cb3 #0x5700\cf2 \cb3 \
+   b1d2c: f2c0 0432    	movt	\cf4 \cb3 r4\cf2 \cb3 , \cf6 \cb3 #0x32\cf2 \cb3 \
+   b1d30: 380c         	subs	\cf4 \cb3 r0\cf2 \cb3 , \cf6 \cb3 #0xc\cf2 \cb3 \
+   b1d32: 42a0         	cmp	\cf4 \cb3 r0\cf2 \cb3 , \cf4 \cb3 r4\cf2 \cb3 \
+   b1d34: d0ee         	beq	0xb1d14 <_ZN4jibo3asr17jm_hub_skill_info6toJsonEv+0x80> @ imm = #-0x24\
+   b1d36: a903         	add	\cf4 \cb3 r1\cf2 \cb3 , \cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0xc\cf2 \cb3 \
+   b1d38: f7f9 fcbc    	bl	0xab6b4 <_ZNSs4_Rep10_M_disposeERKSaIcE.part.11> @ imm = #-0x6688\
+   b1d3c: e7ea         	b	0xb1d14 <_ZN4jibo3asr17jm_hub_skill_info6toJsonEv+0x80> @ imm = #-0x2c\
+   b1d3e: bf00         	nop\
+\
+000b1d40 <_ZN4jibo3asr6Hubmsg6toJsonEv>:\
+   b1d40: f84d 4d14    	str	\cf4 \cb3 r4\cf2 \cb3 , \cf5 \cb3 [\cf4 sp\cf5 , \cf6 #-20\cf5 ]\cf2 \cb3 !\
+   b1d44: e9cd 5601    	strd	\cf4 \cb3 r5\cf2 \cb3 , \cf4 \cb3 r6\cf2 \cb3 , \cf5 \cb3 [\cf4 sp\cf5 , \cf6 #4\cf5 ]\cf2 \cb3 \
+   b1d48: 4605         	mov	\cf4 \cb3 r5\cf2 \cb3 , \cf4 \cb3 r0\cf2 \cb3 \
+   b1d4a: 460e         	mov	\cf4 \cb3 r6\cf2 \cb3 , \cf4 \cb3 r1\cf2 \cb3 \
+   b1d4c: e9cd 7e03    	strd	\cf4 \cb3 r7\cf2 \cb3 , \cf4 \cb3 lr\cf2 \cb3 , \cf5 \cb3 [\cf4 sp\cf5 , \cf6 #12\cf5 ]\cf2 \cb3 \
+   b1d50: b0f1         	sub	\cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0x1c4\cf2 \cb3 \
+   b1d52: 2110         	movs	\cf4 \cb3 r1\cf2 \cb3 , \cf6 \cb3 #0x10\cf2 \cb3 \
+   b1d54: ac04         	add	\cf4 \cb3 r4\cf2 \cb3 , \cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0x10\cf2 \cb3 \
+   b1d56: 2720         	movs	\cf4 \cb3 r7\cf2 \cb3 , \cf6 \cb3 #0x20\cf2 \cb3 \
+   b1d58: 4620         	mov	\cf4 \cb3 r0\cf2 \cb3 , \cf4 \cb3 r4\cf2 \cb3 \
+   b1d5a: f7c4 ea96    	blx	0x76288 <_ZNSt19basic_ostringstreamIcSt11char_traitsIcESaIcEEC1ESt13_Ios_Openmode@plt> @ imm = #-0x3bad4\
+   b1d5e: f44f 70a2    	mov.w	\cf4 \cb3 r0\cf2 \cb3 , \cf6 \cb3 #0x144\cf2 \cb3 \
+   b1d62: 2304         	movs	\cf4 \cb3 r3\cf2 \cb3 , \cf6 \cb3 #0x4\cf2 \cb3 \
+   b1d64: f88d 7008    	strb.w	\cf4 \cb3 r7\cf2 \cb3 , \cf5 \cb3 [\cf4 sp\cf5 , \cf6 #0x8\cf5 ]\cf2 \cb3 \
+   b1d68: 4621         	mov	\cf4 \cb3 r1\cf2 \cb3 , \cf4 \cb3 r4\cf2 \cb3 \
+   b1d6a: eb0d 0203    	add.w	\cf4 \cb3 r2\cf2 \cb3 , \cf4 \cb3 sp\cf2 \cb3 , \cf4 \cb3 r3\cf2 \cb3 \
+   b1d6e: 9001         	str	\cf4 \cb3 r0\cf2 \cb3 , \cf5 \cb3 [\cf4 sp\cf5 , \cf6 #0x4\cf5 ]\cf2 \cb3 \
+   b1d70: a831         	add	\cf4 \cb3 r0\cf2 \cb3 , \cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0xc4\cf2 \cb3 \
+   b1d72: 9303         	str	\cf4 \cb3 r3\cf2 \cb3 , \cf5 \cb3 [\cf4 sp\cf5 , \cf6 #0xc\cf5 ]\cf2 \cb3 \
+   b1d74: f7d9 fae0    	bl	0x8b338 <_ZN6cereal17JSONOutputArchiveC2ERSoRKNS0_7OptionsE> @ imm = #-0x26a40\
+   b1d78: 6833         	ldr	\cf4 \cb3 r3\cf2 \cb3 , \cf5 \cb3 [\cf4 r6\cf5 ]\cf2 \cb3 \
+   b1d7a: 4630         	mov	\cf4 \cb3 r0\cf2 \cb3 , \cf4 \cb3 r6\cf2 \cb3 \
+   b1d7c: a931         	add	\cf4 \cb3 r1\cf2 \cb3 , \cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0xc4\cf2 \cb3 \
+   b1d7e: 681b         	ldr	\cf4 \cb3 r3\cf2 \cb3 , \cf5 \cb3 [\cf4 r3\cf5 ]\cf2 \cb3 \
+   b1d80: 4798         	blx	\cf4 \cb3 r3\cf2 \cb3 \
+   b1d82: a831         	add	\cf4 \cb3 r0\cf2 \cb3 , \cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0xc4\cf2 \cb3 \
+   b1d84: f7d6 f87c    	bl	0x87e80 <_ZN6cereal17JSONOutputArchiveD2Ev> @ imm = #-0x29f08\
+   b1d88: 4628         	mov	\cf4 \cb3 r0\cf2 \cb3 , \cf4 \cb3 r5\cf2 \cb3 \
+   b1d8a: a905         	add	\cf4 \cb3 r1\cf2 \cb3 , \cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0x14\cf2 \cb3 \
+   b1d8c: f7c4 e9d2    	blx	0x76134 <_ZNKSt15basic_stringbufIcSt11char_traitsIcESaIcEE3strEv@plt> @ imm = #-0x3bc5c\
+   b1d90: 6aa3         	ldr	\cf4 \cb3 r3\cf2 \cb3 , \cf5 \cb3 [\cf4 r4\cf5 , \cf6 #0x28\cf5 ]\cf2 \cb3 \
+   b1d92: f245 7200    	movw	\cf4 \cb3 r2\cf2 \cb3 , \cf6 \cb3 #0x5700\cf2 \cb3 \
+   b1d96: 491b         	ldr	\cf4 \cb3 r1\cf2 \cb3 , \cf5 \cb3 [pc, \cf6 #0x6c\cf5 ]\cf2 \cb3          @ 0xb1e04 <_ZN4jibo3asr6Hubmsg6toJsonEv+0xc4>\
+   b1d98: f2c0 0232    	movt	\cf4 \cb3 r2\cf2 \cb3 , \cf6 \cb3 #0x32\cf2 \cb3 \
+   b1d9c: 481a         	ldr	\cf4 \cb3 r0\cf2 \cb3 , \cf5 \cb3 [pc, \cf6 #0x68\cf5 ]\cf2 \cb3          @ 0xb1e08 <_ZN4jibo3asr6Hubmsg6toJsonEv+0xc8>\
+   b1d9e: 3b0c         	subs	\cf4 \cb3 r3\cf2 \cb3 , \cf6 \cb3 #0xc\cf2 \cb3 \
+   b1da0: f101 0614    	add.w	\cf4 \cb3 r6\cf2 \cb3 , \cf4 \cb3 r1\cf2 \cb3 , \cf6 \cb3 #0x14\cf2 \cb3 \
+   b1da4: 4293         	cmp	\cf4 \cb3 r3\cf2 \cb3 , \cf4 \cb3 r2\cf2 \cb3 \
+   b1da6: 6021         	str	\cf4 \cb3 r1\cf2 \cb3 , \cf5 \cb3 [\cf4 r4\cf5 ]\cf2 \cb3 \
+   b1da8: 6060         	str	\cf4 \cb3 r0\cf2 \cb3 , \cf5 \cb3 [\cf4 r4\cf5 , \cf6 #0x4\cf5 ]\cf2 \cb3 \
+   b1daa: 62e6         	str	\cf4 \cb3 r6\cf2 \cb3 , \cf5 \cb3 [\cf4 r4\cf5 , \cf6 #0x2c\cf5 ]\cf2 \cb3 \
+   b1dac: d11c         	bne	0xb1de8 <_ZN4jibo3asr6Hubmsg6toJsonEv+0xa8> @ imm = #0x38\
+   b1dae: 4b17         	ldr	\cf4 \cb3 r3\cf2 \cb3 , \cf5 \cb3 [pc, \cf6 #0x5c\cf5 ]\cf2 \cb3          @ 0xb1e0c <_ZN4jibo3asr6Hubmsg6toJsonEv+0xcc>\
+   b1db0: a80c         	add	\cf4 \cb3 r0\cf2 \cb3 , \cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0x30\cf2 \cb3 \
+   b1db2: 6063         	str	\cf4 \cb3 r3\cf2 \cb3 , \cf5 \cb3 [\cf4 r4\cf5 , \cf6 #0x4\cf5 ]\cf2 \cb3 \
+   b1db4: f7c5 e832    	blx	0x76e1c <_ZNSt6localeD1Ev@plt> @ imm = #-0x3af9c\
+   b1db8: f645 3360    	movw	\cf4 \cb3 r3\cf2 \cb3 , \cf6 \cb3 #0x5b60\cf2 \cb3 \
+   b1dbc: 4914         	ldr	\cf4 \cb3 r1\cf2 \cb3 , \cf5 \cb3 [pc, \cf6 #0x50\cf5 ]\cf2 \cb3          @ 0xb1e10 <_ZN4jibo3asr6Hubmsg6toJsonEv+0xd0>\
+   b1dbe: a80f         	add	\cf4 \cb3 r0\cf2 \cb3 , \cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0x3c\cf2 \cb3 \
+   b1dc0: f2c0 0332    	movt	\cf4 \cb3 r3\cf2 \cb3 , \cf6 \cb3 #0x32\cf2 \cb3 \
+   b1dc4: e9d3 2601    	ldrd	\cf4 \cb3 r2\cf2 \cb3 , \cf4 \cb3 r6\cf2 \cb3 , \cf5 \cb3 [\cf4 r3\cf5 , \cf6 #4\cf5 ]\cf2 \cb3 \
+   b1dc8: f852 3c0c    	ldr	\cf4 \cb3 r3\cf2 \cb3 , \cf5 \cb3 [\cf4 r2\cf5 , \cf6 #-12\cf5 ]\cf2 \cb3 \
+   b1dcc: 6022         	str	\cf4 \cb3 r2\cf2 \cb3 , \cf5 \cb3 [\cf4 r4\cf5 ]\cf2 \cb3 \
+   b1dce: 50e6         	str	\cf4 \cb3 r6\cf2 \cb3 , \cf5 \cb3 [\cf4 r4\cf5 , \cf4 r3\cf5 ]\cf2 \cb3 \
+   b1dd0: 62e1         	str	\cf4 \cb3 r1\cf2 \cb3 , \cf5 \cb3 [\cf4 r4\cf5 , \cf6 #0x2c\cf5 ]\cf2 \cb3 \
+   b1dd2: f7c4 ec2c    	blx	0x7662c <_ZNSt8ios_baseD2Ev@plt> @ imm = #-0x3b7a8\
+   b1dd6: 4628         	mov	\cf4 \cb3 r0\cf2 \cb3 , \cf4 \cb3 r5\cf2 \cb3 \
+   b1dd8: b071         	add	\cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0x1c4\cf2 \cb3 \
+   b1dda: e9dd 4500    	ldrd	\cf4 \cb3 r4\cf2 \cb3 , \cf4 \cb3 r5\cf2 \cb3 , \cf5 \cb3 [\cf4 sp\cf5 ]\cf2 \cb3 \
+   b1dde: e9dd 6702    	ldrd	\cf4 \cb3 r6\cf2 \cb3 , \cf4 \cb3 r7\cf2 \cb3 , \cf5 \cb3 [\cf4 sp\cf5 , \cf6 #8\cf5 ]\cf2 \cb3 \
+   b1de2: b004         	add	\cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0x10\cf2 \cb3 \
+   b1de4: f85d fb04    	ldr	\cf4 \cb3 pc\cf2 \cb3 , \cf5 \cb3 [\cf4 sp\cf5 ]\cf2 \cb3 , \cf6 \cb3 #4\cf2 \cb3 \
+   b1de8: 4618         	mov	\cf4 \cb3 r0\cf2 \cb3 , \cf4 \cb3 r3\cf2 \cb3 \
+   b1dea: a931         	add	\cf4 \cb3 r1\cf2 \cb3 , \cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0xc4\cf2 \cb3 \
+   b1dec: f7f9 fc62    	bl	0xab6b4 <_ZNSs4_Rep10_M_disposeERKSaIcE.part.11> @ imm = #-0x673c\
+   b1df0: e7dd         	b	0xb1dae <_ZN4jibo3asr6Hubmsg6toJsonEv+0x6e> @ imm = #-0x46\
+   b1df2: 4620         	mov	\cf4 \cb3 r0\cf2 \cb3 , \cf4 \cb3 r4\cf2 \cb3 \
+   b1df4: f7c3 ecf6    	blx	0x757e4 <_ZNSt19basic_ostringstreamIcSt11char_traitsIcESaIcEED1Ev@plt> @ imm = #-0x3c614\
+   b1df8: f7c4 efc6    	blx	0x76d88 <__cxa_end_cleanup@plt> @ imm = #-0x3b074\
+   b1dfc: a831         	add	\cf4 \cb3 r0\cf2 \cb3 , \cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0xc4\cf2 \cb3 \
+   b1dfe: f7d6 f83f    	bl	0x87e80 <_ZN6cereal17JSONOutputArchiveD2Ev> @ imm = #-0x29f82\
+   b1e02: e7f6         	b	0xb1df2 <_ZN4jibo3asr6Hubmsg6toJsonEv+0xb2> @ imm = #-0x14\
+   b1e04: 24 57 32 00  	.word	0x00325724\
+   b1e08: 90 56 32 00  	.word	0x00325690\
+   b1e0c: 68 59 32 00  	.word	0x00325968\
+   b1e10: f8 59 32 00  	.word	0x003259f8\
+\
+000b1e14 <_ZN4jibo3asr14Hubmsg_CONTEXT6toJsonEv>:\
+   b1e14: f84d 4d14    	str	\cf4 \cb3 r4\cf2 \cb3 , \cf5 \cb3 [\cf4 sp\cf5 , \cf6 #-20\cf5 ]\cf2 \cb3 !\
+   b1e18: e9cd 5601    	strd	\cf4 \cb3 r5\cf2 \cb3 , \cf4 \cb3 r6\cf2 \cb3 , \cf5 \cb3 [\cf4 sp\cf5 , \cf6 #4\cf5 ]\cf2 \cb3 \
+   b1e1c: 460d         	mov	\cf4 \cb3 r5\cf2 \cb3 , \cf4 \cb3 r1\cf2 \cb3 \
+   b1e1e: f245 3154    	movw	\cf4 \cb3 r1\cf2 \cb3 , \cf6 \cb3 #0x5354\cf2 \cb3 \
+   b1e22: e9cd 7e03    	strd	\cf4 \cb3 r7\cf2 \cb3 , \cf4 \cb3 lr\cf2 \cb3 , \cf5 \cb3 [\cf4 sp\cf5 , \cf6 #12\cf5 ]\cf2 \cb3 \
+   b1e26: b0f7         	sub	\cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0x1dc\cf2 \cb3 \
+   b1e28: f2c0 011f    	movt	\cf4 \cb3 r1\cf2 \cb3 , \cf6 \cb3 #0x1f\cf2 \cb3 \
+   b1e2c: af06         	add	\cf4 \cb3 r7\cf2 \cb3 , \cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0x18\cf2 \cb3 \
+   b1e2e: 4606         	mov	\cf4 \cb3 r6\cf2 \cb3 , \cf4 \cb3 r0\cf2 \cb3 \
+   b1e30: aa37         	add	\cf4 \cb3 r2\cf2 \cb3 , \cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0xdc\cf2 \cb3 \
+   b1e32: 4638         	mov	\cf4 \cb3 r0\cf2 \cb3 , \cf4 \cb3 r7\cf2 \cb3 \
+   b1e34: ac0a         	add	\cf4 \cb3 r4\cf2 \cb3 , \cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0x28\cf2 \cb3 \
+   b1e36: f7c5 eab4    	blx	0x773a0 <_ZNSsC1EPKcRKSaIcE@plt> @ imm = #-0x3aa98\
+   b1e3a: 4620         	mov	\cf4 \cb3 r0\cf2 \cb3 , \cf4 \cb3 r4\cf2 \cb3 \
+   b1e3c: 2110         	movs	\cf4 \cb3 r1\cf2 \cb3 , \cf6 \cb3 #0x10\cf2 \cb3 \
+   b1e3e: f7c4 ea24    	blx	0x76288 <_ZNSt19basic_ostringstreamIcSt11char_traitsIcESaIcEEC1ESt13_Ios_Openmode@plt> @ imm = #-0x3bbb8\
+   b1e42: f44f 71a2    	mov.w	\cf4 \cb3 r1\cf2 \cb3 , \cf6 \cb3 #0x144\cf2 \cb3 \
+   b1e46: f04f 0e20    	mov.w	\cf4 \cb3 lr\cf2 \cb3 , \cf6 \cb3 #0x20\cf2 \cb3 \
+   b1e4a: 2304         	movs	\cf4 \cb3 r3\cf2 \cb3 , \cf6 \cb3 #0x4\cf2 \cb3 \
+   b1e4c: aa07         	add	\cf4 \cb3 r2\cf2 \cb3 , \cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0x1c\cf2 \cb3 \
+   b1e4e: 9107         	str	\cf4 \cb3 r1\cf2 \cb3 , \cf5 \cb3 [\cf4 sp\cf5 , \cf6 #0x1c\cf5 ]\cf2 \cb3 \
+   b1e50: a837         	add	\cf4 \cb3 r0\cf2 \cb3 , \cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0xdc\cf2 \cb3 \
+   b1e52: 4621         	mov	\cf4 \cb3 r1\cf2 \cb3 , \cf4 \cb3 r4\cf2 \cb3 \
+   b1e54: f88d e020    	strb.w	\cf4 \cb3 lr\cf2 \cb3 , \cf5 \cb3 [\cf4 sp\cf5 , \cf6 #0x20\cf5 ]\cf2 \cb3 \
+   b1e58: 9309         	str	\cf4 \cb3 r3\cf2 \cb3 , \cf5 \cb3 [\cf4 sp\cf5 , \cf6 #0x24\cf5 ]\cf2 \cb3 \
+   b1e5a: f7d9 fa6d    	bl	0x8b338 <_ZN6cereal17JSONOutputArchiveC2ERSoRKNS0_7OptionsE> @ imm = #-0x26b26\
+   b1e5e: f243 53a8    	movw	\cf4 \cb3 r3\cf2 \cb3 , \cf6 \cb3 #0x35a8\cf2 \cb3 \
+   b1e62: 1d2a         	adds	\cf4 \cb3 r2\cf2 \cb3 , \cf4 \cb3 r5\cf2 \cb3 , \cf6 \cb3 #0x4\cf2 \cb3 \
+   b1e64: f2c0 0321    	movt	\cf4 \cb3 r3\cf2 \cb3 , \cf6 \cb3 #0x21\cf2 \cb3 \
+   b1e68: a837         	add	\cf4 \cb3 r0\cf2 \cb3 , \cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0xdc\cf2 \cb3 \
+   b1e6a: a907         	add	\cf4 \cb3 r1\cf2 \cb3 , \cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0x1c\cf2 \cb3 \
+   b1e6c: e9cd 3207    	strd	\cf4 \cb3 r3\cf2 \cb3 , \cf4 \cb3 r2\cf2 \cb3 , \cf5 \cb3 [\cf4 sp\cf5 , \cf6 #28\cf5 ]\cf2 \cb3 \
+   b1e70: f7f3 fcb8    	bl	0xa57e4 <_ZN6cereal13OutputArchiveINS_17JSONOutputArchiveELj0EEclIJNS_13NameValuePairIRSsEEEEERS1_DpOT_> @ imm = #-0xc690\
+   b1e74: f245 03b0    	movw	\cf4 \cb3 r3\cf2 \cb3 , \cf6 \cb3 #0x50b0\cf2 \cb3 \
+   b1e78: f105 0210    	add.w	\cf4 \cb3 r2\cf2 \cb3 , \cf4 \cb3 r5\cf2 \cb3 , \cf6 \cb3 #0x10\cf2 \cb3 \
+   b1e7c: f2c0 0321    	movt	\cf4 \cb3 r3\cf2 \cb3 , \cf6 \cb3 #0x21\cf2 \cb3 \
+   b1e80: a837         	add	\cf4 \cb3 r0\cf2 \cb3 , \cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0xdc\cf2 \cb3 \
+   b1e82: a907         	add	\cf4 \cb3 r1\cf2 \cb3 , \cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0x1c\cf2 \cb3 \
+   b1e84: e9cd 3207    	strd	\cf4 \cb3 r3\cf2 \cb3 , \cf4 \cb3 r2\cf2 \cb3 , \cf5 \cb3 [\cf4 sp\cf5 , \cf6 #28\cf5 ]\cf2 \cb3 \
+   b1e88: f7f3 fd38    	bl	0xa58fc <_ZN6cereal13OutputArchiveINS_17JSONOutputArchiveELj0EEclIJNS_13NameValuePairIRxEEEEERS1_DpOT_> @ imm = #-0xc590\
+   b1e8c: f245 137c    	movw	\cf4 \cb3 r3\cf2 \cb3 , \cf6 \cb3 #0x517c\cf2 \cb3 \
+   b1e90: f105 0208    	add.w	\cf4 \cb3 r2\cf2 \cb3 , \cf4 \cb3 r5\cf2 \cb3 , \cf6 \cb3 #0x8\cf2 \cb3 \
+   b1e94: f2c0 031f    	movt	\cf4 \cb3 r3\cf2 \cb3 , \cf6 \cb3 #0x1f\cf2 \cb3 \
+   b1e98: a837         	add	\cf4 \cb3 r0\cf2 \cb3 , \cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0xdc\cf2 \cb3 \
+   b1e9a: a907         	add	\cf4 \cb3 r1\cf2 \cb3 , \cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0x1c\cf2 \cb3 \
+   b1e9c: e9cd 3207    	strd	\cf4 \cb3 r3\cf2 \cb3 , \cf4 \cb3 r2\cf2 \cb3 , \cf5 \cb3 [\cf4 sp\cf5 , \cf6 #28\cf5 ]\cf2 \cb3 \
+   b1ea0: f7f3 fca0    	bl	0xa57e4 <_ZN6cereal13OutputArchiveINS_17JSONOutputArchiveELj0EEclIJNS_13NameValuePairIRSsEEEEERS1_DpOT_> @ imm = #-0xc6c0\
+   b1ea4: f245 1384    	movw	\cf4 \cb3 r3\cf2 \cb3 , \cf6 \cb3 #0x5184\cf2 \cb3 \
+   b1ea8: f105 020c    	add.w	\cf4 \cb3 r2\cf2 \cb3 , \cf4 \cb3 r5\cf2 \cb3 , \cf6 \cb3 #0xc\cf2 \cb3 \
+   b1eac: f2c0 031f    	movt	\cf4 \cb3 r3\cf2 \cb3 , \cf6 \cb3 #0x1f\cf2 \cb3 \
+   b1eb0: a837         	add	\cf4 \cb3 r0\cf2 \cb3 , \cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0xdc\cf2 \cb3 \
+   b1eb2: a907         	add	\cf4 \cb3 r1\cf2 \cb3 , \cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0x1c\cf2 \cb3 \
+   b1eb4: e9cd 3207    	strd	\cf4 \cb3 r3\cf2 \cb3 , \cf4 \cb3 r2\cf2 \cb3 , \cf5 \cb3 [\cf4 sp\cf5 , \cf6 #28\cf5 ]\cf2 \cb3 \
+   b1eb8: f7f3 fc94    	bl	0xa57e4 <_ZN6cereal13OutputArchiveINS_17JSONOutputArchiveELj0EEclIJNS_13NameValuePairIRSsEEEEERS1_DpOT_> @ imm = #-0xc6d8\
+   b1ebc: f240 2324    	movw	\cf4 \cb3 r3\cf2 \cb3 , \cf6 \cb3 #0x224\cf2 \cb3 \
+   b1ec0: a837         	add	\cf4 \cb3 r0\cf2 \cb3 , \cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0xdc\cf2 \cb3 \
+   b1ec2: 9708         	str	\cf4 \cb3 r7\cf2 \cb3 , \cf5 \cb3 [\cf4 sp\cf5 , \cf6 #0x20\cf5 ]\cf2 \cb3 \
+   b1ec4: f2c0 0322    	movt	\cf4 \cb3 r3\cf2 \cb3 , \cf6 \cb3 #0x22\cf2 \cb3 \
+   b1ec8: a907         	add	\cf4 \cb3 r1\cf2 \cb3 , \cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0x1c\cf2 \cb3 \
+   b1eca: 9307         	str	\cf4 \cb3 r3\cf2 \cb3 , \cf5 \cb3 [\cf4 sp\cf5 , \cf6 #0x1c\cf5 ]\cf2 \cb3 \
+   b1ecc: f7f3 fc8a    	bl	0xa57e4 <_ZN6cereal13OutputArchiveINS_17JSONOutputArchiveELj0EEclIJNS_13NameValuePairIRSsEEEEERS1_DpOT_> @ imm = #-0xc6ec\
+   b1ed0: a837         	add	\cf4 \cb3 r0\cf2 \cb3 , \cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0xdc\cf2 \cb3 \
+   b1ed2: f7d5 ffd5    	bl	0x87e80 <_ZN6cereal17JSONOutputArchiveD2Ev> @ imm = #-0x2a056\
+   b1ed6: 4630         	mov	\cf4 \cb3 r0\cf2 \cb3 , \cf4 \cb3 r6\cf2 \cb3 \
+   b1ed8: a90b         	add	\cf4 \cb3 r1\cf2 \cb3 , \cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0x2c\cf2 \cb3 \
+   b1eda: f7c4 e92c    	blx	0x76134 <_ZNKSt15basic_stringbufIcSt11char_traitsIcESaIcEE3strEv@plt> @ imm = #-0x3bda8\
+   b1ede: f245 3178    	movw	\cf4 \cb3 r1\cf2 \cb3 , \cf6 \cb3 #0x5378\cf2 \cb3 \
+   b1ee2: a807         	add	\cf4 \cb3 r0\cf2 \cb3 , \cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0x1c\cf2 \cb3 \
+   b1ee4: aa04         	add	\cf4 \cb3 r2\cf2 \cb3 , \cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0x10\cf2 \cb3 \
+   b1ee6: f2c0 011f    	movt	\cf4 \cb3 r1\cf2 \cb3 , \cf6 \cb3 #0x1f\cf2 \cb3 \
+   b1eea: f7c5 ea5a    	blx	0x773a0 <_ZNSsC1EPKcRKSaIcE@plt> @ imm = #-0x3ab4c\
+   b1eee: 2200         	movs	\cf4 \cb3 r2\cf2 \cb3 , \cf6 \cb3 #0x0\cf2 \cb3 \
+   b1ef0: f105 0318    	add.w	\cf4 \cb3 r3\cf2 \cb3 , \cf4 \cb3 r5\cf2 \cb3 , \cf6 \cb3 #0x18\cf2 \cb3 \
+   b1ef4: a837         	add	\cf4 \cb3 r0\cf2 \cb3 , \cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0xdc\cf2 \cb3 \
+   b1ef6: 4631         	mov	\cf4 \cb3 r1\cf2 \cb3 , \cf4 \cb3 r6\cf2 \cb3 \
+   b1ef8: 9200         	str	\cf4 \cb3 r2\cf2 \cb3 , \cf5 \cb3 [\cf4 sp\cf5 ]\cf2 \cb3 \
+   b1efa: aa07         	add	\cf4 \cb3 r2\cf2 \cb3 , \cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0x1c\cf2 \cb3 \
+   b1efc: f7ff f9f0    	bl	0xb12e0 <_ZN4Poco7replaceISsEET_RKS1_S3_S3_NS1_9size_typeE> @ imm = #-0xc20\
+   b1f00: 4630         	mov	\cf4 \cb3 r0\cf2 \cb3 , \cf4 \cb3 r6\cf2 \cb3 \
+   b1f02: a937         	add	\cf4 \cb3 r1\cf2 \cb3 , \cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0xdc\cf2 \cb3 \
+   b1f04: f7c4 ea1a    	blx	0x7633c <_ZNSs4swapERSs@plt> @ imm = #-0x3bbcc\
+   b1f08: 9837         	ldr	\cf4 \cb3 r0\cf2 \cb3 , \cf5 \cb3 [\cf4 sp\cf5 , \cf6 #0xdc\cf5 ]\cf2 \cb3 \
+   b1f0a: f245 7500    	movw	\cf4 \cb3 r5\cf2 \cb3 , \cf6 \cb3 #0x5700\cf2 \cb3 \
+   b1f0e: f2c0 0532    	movt	\cf4 \cb3 r5\cf2 \cb3 , \cf6 \cb3 #0x32\cf2 \cb3 \
+   b1f12: 380c         	subs	\cf4 \cb3 r0\cf2 \cb3 , \cf6 \cb3 #0xc\cf2 \cb3 \
+   b1f14: 42a8         	cmp	\cf4 \cb3 r0\cf2 \cb3 , \cf4 \cb3 r5\cf2 \cb3 \
+   b1f16: d131         	bne	0xb1f7c <_ZN4jibo3asr14Hubmsg_CONTEXT6toJsonEv+0x168> @ imm = #0x62\
+   b1f18: 9807         	ldr	\cf4 \cb3 r0\cf2 \cb3 , \cf5 \cb3 [\cf4 sp\cf5 , \cf6 #0x1c\cf5 ]\cf2 \cb3 \
+   b1f1a: 380c         	subs	\cf4 \cb3 r0\cf2 \cb3 , \cf6 \cb3 #0xc\cf2 \cb3 \
+   b1f1c: 42a8         	cmp	\cf4 \cb3 r0\cf2 \cb3 , \cf4 \cb3 r5\cf2 \cb3 \
+   b1f1e: d134         	bne	0xb1f8a <_ZN4jibo3asr14Hubmsg_CONTEXT6toJsonEv+0x176> @ imm = #0x68\
+   b1f20: 6aa3         	ldr	\cf4 \cb3 r3\cf2 \cb3 , \cf5 \cb3 [\cf4 r4\cf5 , \cf6 #0x28\cf5 ]\cf2 \cb3 \
+   b1f22: 4a41         	ldr	\cf4 \cb3 r2\cf2 \cb3 , \cf5 \cb3 [pc, \cf6 #0x104\cf5 ]\cf2 \cb3         @ 0xb2028 <_ZN4jibo3asr14Hubmsg_CONTEXT6toJsonEv+0x214>\
+   b1f24: 4941         	ldr	\cf4 \cb3 r1\cf2 \cb3 , \cf5 \cb3 [pc, \cf6 #0x104\cf5 ]\cf2 \cb3         @ 0xb202c <_ZN4jibo3asr14Hubmsg_CONTEXT6toJsonEv+0x218>\
+   b1f26: 3b0c         	subs	\cf4 \cb3 r3\cf2 \cb3 , \cf6 \cb3 #0xc\cf2 \cb3 \
+   b1f28: f102 0014    	add.w	\cf4 \cb3 r0\cf2 \cb3 , \cf4 \cb3 r2\cf2 \cb3 , \cf6 \cb3 #0x14\cf2 \cb3 \
+   b1f2c: 42ab         	cmp	\cf4 \cb3 r3\cf2 \cb3 , \cf4 \cb3 r5\cf2 \cb3 \
+   b1f2e: 6022         	str	\cf4 \cb3 r2\cf2 \cb3 , \cf5 \cb3 [\cf4 r4\cf5 ]\cf2 \cb3 \
+   b1f30: 6061         	str	\cf4 \cb3 r1\cf2 \cb3 , \cf5 \cb3 [\cf4 r4\cf5 , \cf6 #0x4\cf5 ]\cf2 \cb3 \
+   b1f32: 62e0         	str	\cf4 \cb3 r0\cf2 \cb3 , \cf5 \cb3 [\cf4 r4\cf5 , \cf6 #0x2c\cf5 ]\cf2 \cb3 \
+   b1f34: d12d         	bne	0xb1f92 <_ZN4jibo3asr14Hubmsg_CONTEXT6toJsonEv+0x17e> @ imm = #0x5a\
+   b1f36: 4b3e         	ldr	\cf4 \cb3 r3\cf2 \cb3 , \cf5 \cb3 [pc, \cf6 #0xf8\cf5 ]\cf2 \cb3          @ 0xb2030 <_ZN4jibo3asr14Hubmsg_CONTEXT6toJsonEv+0x21c>\
+   b1f38: a812         	add	\cf4 \cb3 r0\cf2 \cb3 , \cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0x48\cf2 \cb3 \
+   b1f3a: 6063         	str	\cf4 \cb3 r3\cf2 \cb3 , \cf5 \cb3 [\cf4 r4\cf5 , \cf6 #0x4\cf5 ]\cf2 \cb3 \
+   b1f3c: f7c4 ef6e    	blx	0x76e1c <_ZNSt6localeD1Ev@plt> @ imm = #-0x3b124\
+   b1f40: f645 3360    	movw	\cf4 \cb3 r3\cf2 \cb3 , \cf6 \cb3 #0x5b60\cf2 \cb3 \
+   b1f44: 493b         	ldr	\cf4 \cb3 r1\cf2 \cb3 , \cf5 \cb3 [pc, \cf6 #0xec\cf5 ]\cf2 \cb3          @ 0xb2034 <_ZN4jibo3asr14Hubmsg_CONTEXT6toJsonEv+0x220>\
+   b1f46: a815         	add	\cf4 \cb3 r0\cf2 \cb3 , \cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0x54\cf2 \cb3 \
+   b1f48: f2c0 0332    	movt	\cf4 \cb3 r3\cf2 \cb3 , \cf6 \cb3 #0x32\cf2 \cb3 \
+   b1f4c: e9d3 2301    	ldrd	\cf4 \cb3 r2\cf2 \cb3 , \cf4 \cb3 r3\cf2 \cb3 , \cf5 \cb3 [\cf4 r3\cf5 , \cf6 #4\cf5 ]\cf2 \cb3 \
+   b1f50: 9303         	str	\cf4 \cb3 r3\cf2 \cb3 , \cf5 \cb3 [\cf4 sp\cf5 , \cf6 #0xc\cf5 ]\cf2 \cb3 \
+   b1f52: f852 3c0c    	ldr	\cf4 \cb3 r3\cf2 \cb3 , \cf5 \cb3 [\cf4 r2\cf5 , \cf6 #-12\cf5 ]\cf2 \cb3 \
+   b1f56: 6022         	str	\cf4 \cb3 r2\cf2 \cb3 , \cf5 \cb3 [\cf4 r4\cf5 ]\cf2 \cb3 \
+   b1f58: 9a03         	ldr	\cf4 \cb3 r2\cf2 \cb3 , \cf5 \cb3 [\cf4 sp\cf5 , \cf6 #0xc\cf5 ]\cf2 \cb3 \
+   b1f5a: 50e2         	str	\cf4 \cb3 r2\cf2 \cb3 , \cf5 \cb3 [\cf4 r4\cf5 , \cf4 r3\cf5 ]\cf2 \cb3 \
+   b1f5c: 62e1         	str	\cf4 \cb3 r1\cf2 \cb3 , \cf5 \cb3 [\cf4 r4\cf5 , \cf6 #0x2c\cf5 ]\cf2 \cb3 \
+   b1f5e: f7c4 eb66    	blx	0x7662c <_ZNSt8ios_baseD2Ev@plt> @ imm = #-0x3b934\
+   b1f62: 6838         	ldr	\cf4 \cb3 r0\cf2 \cb3 , \cf5 \cb3 [\cf4 r7\cf5 ]\cf2 \cb3 \
+   b1f64: 380c         	subs	\cf4 \cb3 r0\cf2 \cb3 , \cf6 \cb3 #0xc\cf2 \cb3 \
+   b1f66: 42a8         	cmp	\cf4 \cb3 r0\cf2 \cb3 , \cf4 \cb3 r5\cf2 \cb3 \
+   b1f68: d118         	bne	0xb1f9c <_ZN4jibo3asr14Hubmsg_CONTEXT6toJsonEv+0x188> @ imm = #0x30\
+   b1f6a: 4630         	mov	\cf4 \cb3 r0\cf2 \cb3 , \cf4 \cb3 r6\cf2 \cb3 \
+   b1f6c: b077         	add	\cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0x1dc\cf2 \cb3 \
+   b1f6e: e9dd 4500    	ldrd	\cf4 \cb3 r4\cf2 \cb3 , \cf4 \cb3 r5\cf2 \cb3 , \cf5 \cb3 [\cf4 sp\cf5 ]\cf2 \cb3 \
+   b1f72: e9dd 6702    	ldrd	\cf4 \cb3 r6\cf2 \cb3 , \cf4 \cb3 r7\cf2 \cb3 , \cf5 \cb3 [\cf4 sp\cf5 , \cf6 #8\cf5 ]\cf2 \cb3 \
+   b1f76: b004         	add	\cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0x10\cf2 \cb3 \
+   b1f78: f85d fb04    	ldr	\cf4 \cb3 pc\cf2 \cb3 , \cf5 \cb3 [\cf4 sp\cf5 ]\cf2 \cb3 , \cf6 \cb3 #4\cf2 \cb3 \
+   b1f7c: a905         	add	\cf4 \cb3 r1\cf2 \cb3 , \cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0x14\cf2 \cb3 \
+   b1f7e: f7f9 fb99    	bl	0xab6b4 <_ZNSs4_Rep10_M_disposeERKSaIcE.part.11> @ imm = #-0x68ce\
+   b1f82: 9807         	ldr	\cf4 \cb3 r0\cf2 \cb3 , \cf5 \cb3 [\cf4 sp\cf5 , \cf6 #0x1c\cf5 ]\cf2 \cb3 \
+   b1f84: 380c         	subs	\cf4 \cb3 r0\cf2 \cb3 , \cf6 \cb3 #0xc\cf2 \cb3 \
+   b1f86: 42a8         	cmp	\cf4 \cb3 r0\cf2 \cb3 , \cf4 \cb3 r5\cf2 \cb3 \
+   b1f88: d0ca         	beq	0xb1f20 <_ZN4jibo3asr14Hubmsg_CONTEXT6toJsonEv+0x10c> @ imm = #-0x6c\
+   b1f8a: a937         	add	\cf4 \cb3 r1\cf2 \cb3 , \cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0xdc\cf2 \cb3 \
+   b1f8c: f7f9 fb92    	bl	0xab6b4 <_ZNSs4_Rep10_M_disposeERKSaIcE.part.11> @ imm = #-0x68dc\
+   b1f90: e7c6         	b	0xb1f20 <_ZN4jibo3asr14Hubmsg_CONTEXT6toJsonEv+0x10c> @ imm = #-0x74\
+   b1f92: 4618         	mov	\cf4 \cb3 r0\cf2 \cb3 , \cf4 \cb3 r3\cf2 \cb3 \
+   b1f94: a937         	add	\cf4 \cb3 r1\cf2 \cb3 , \cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0xdc\cf2 \cb3 \
+   b1f96: f7f9 fb8d    	bl	0xab6b4 <_ZNSs4_Rep10_M_disposeERKSaIcE.part.11> @ imm = #-0x68e6\
+   b1f9a: e7cc         	b	0xb1f36 <_ZN4jibo3asr14Hubmsg_CONTEXT6toJsonEv+0x122> @ imm = #-0x68\
+   b1f9c: a937         	add	\cf4 \cb3 r1\cf2 \cb3 , \cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0xdc\cf2 \cb3 \
+   b1f9e: f7f9 fb89    	bl	0xab6b4 <_ZNSs4_Rep10_M_disposeERKSaIcE.part.11> @ imm = #-0x68ee\
+   b1fa2: e7e2         	b	0xb1f6a <_ZN4jibo3asr14Hubmsg_CONTEXT6toJsonEv+0x156> @ imm = #-0x3c\
+   b1fa4: f245 7500    	movw	\cf4 \cb3 r5\cf2 \cb3 , \cf6 \cb3 #0x5700\cf2 \cb3 \
+   b1fa8: f2c0 0532    	movt	\cf4 \cb3 r5\cf2 \cb3 , \cf6 \cb3 #0x32\cf2 \cb3 \
+   b1fac: 4620         	mov	\cf4 \cb3 r0\cf2 \cb3 , \cf4 \cb3 r4\cf2 \cb3 \
+   b1fae: f7c3 ec1a    	blx	0x757e4 <_ZNSt19basic_ostringstreamIcSt11char_traitsIcESaIcEED1Ev@plt> @ imm = #-0x3c7cc\
+   b1fb2: 6838         	ldr	\cf4 \cb3 r0\cf2 \cb3 , \cf5 \cb3 [\cf4 r7\cf5 ]\cf2 \cb3 \
+   b1fb4: 380c         	subs	\cf4 \cb3 r0\cf2 \cb3 , \cf6 \cb3 #0xc\cf2 \cb3 \
+   b1fb6: 42a8         	cmp	\cf4 \cb3 r0\cf2 \cb3 , \cf4 \cb3 r5\cf2 \cb3 \
+   b1fb8: d002         	beq	0xb1fc0 <_ZN4jibo3asr14Hubmsg_CONTEXT6toJsonEv+0x1ac> @ imm = #0x4\
+   b1fba: a905         	add	\cf4 \cb3 r1\cf2 \cb3 , \cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0x14\cf2 \cb3 \
+   b1fbc: f7f9 fb7a    	bl	0xab6b4 <_ZNSs4_Rep10_M_disposeERKSaIcE.part.11> @ imm = #-0x690c\
+   b1fc0: f7c4 eee2    	blx	0x76d88 <__cxa_end_cleanup@plt> @ imm = #-0x3b23c\
+   b1fc4: f245 7500    	movw	\cf4 \cb3 r5\cf2 \cb3 , \cf6 \cb3 #0x5700\cf2 \cb3 \
+   b1fc8: f2c0 0532    	movt	\cf4 \cb3 r5\cf2 \cb3 , \cf6 \cb3 #0x32\cf2 \cb3 \
+   b1fcc: e7f1         	b	0xb1fb2 <_ZN4jibo3asr14Hubmsg_CONTEXT6toJsonEv+0x19e> @ imm = #-0x1e\
+   b1fce: f245 7500    	movw	\cf4 \cb3 r5\cf2 \cb3 , \cf6 \cb3 #0x5700\cf2 \cb3 \
+   b1fd2: f2c0 0532    	movt	\cf4 \cb3 r5\cf2 \cb3 , \cf6 \cb3 #0x32\cf2 \cb3 \
+   b1fd6: 9807         	ldr	\cf4 \cb3 r0\cf2 \cb3 , \cf5 \cb3 [\cf4 sp\cf5 , \cf6 #0x1c\cf5 ]\cf2 \cb3 \
+   b1fd8: 380c         	subs	\cf4 \cb3 r0\cf2 \cb3 , \cf6 \cb3 #0xc\cf2 \cb3 \
+   b1fda: 42a8         	cmp	\cf4 \cb3 r0\cf2 \cb3 , \cf4 \cb3 r5\cf2 \cb3 \
+   b1fdc: d002         	beq	0xb1fe4 <_ZN4jibo3asr14Hubmsg_CONTEXT6toJsonEv+0x1d0> @ imm = #0x4\
+   b1fde: a905         	add	\cf4 \cb3 r1\cf2 \cb3 , \cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0x14\cf2 \cb3 \
+   b1fe0: f7f9 fb68    	bl	0xab6b4 <_ZNSs4_Rep10_M_disposeERKSaIcE.part.11> @ imm = #-0x6930\
+   b1fe4: 6830         	ldr	\cf4 \cb3 r0\cf2 \cb3 , \cf5 \cb3 [\cf4 r6\cf5 ]\cf2 \cb3 \
+   b1fe6: 380c         	subs	\cf4 \cb3 r0\cf2 \cb3 , \cf6 \cb3 #0xc\cf2 \cb3 \
+   b1fe8: 42a8         	cmp	\cf4 \cb3 r0\cf2 \cb3 , \cf4 \cb3 r5\cf2 \cb3 \
+   b1fea: d0df         	beq	0xb1fac <_ZN4jibo3asr14Hubmsg_CONTEXT6toJsonEv+0x198> @ imm = #-0x42\
+   b1fec: a905         	add	\cf4 \cb3 r1\cf2 \cb3 , \cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0x14\cf2 \cb3 \
+   b1fee: f7f9 fb61    	bl	0xab6b4 <_ZNSs4_Rep10_M_disposeERKSaIcE.part.11> @ imm = #-0x693e\
+   b1ff2: e7db         	b	0xb1fac <_ZN4jibo3asr14Hubmsg_CONTEXT6toJsonEv+0x198> @ imm = #-0x4a\
+   b1ff4: f245 7500    	movw	\cf4 \cb3 r5\cf2 \cb3 , \cf6 \cb3 #0x5700\cf2 \cb3 \
+   b1ff8: f2c0 0532    	movt	\cf4 \cb3 r5\cf2 \cb3 , \cf6 \cb3 #0x32\cf2 \cb3 \
+   b1ffc: e7f2         	b	0xb1fe4 <_ZN4jibo3asr14Hubmsg_CONTEXT6toJsonEv+0x1d0> @ imm = #-0x1c\
+   b1ffe: a837         	add	\cf4 \cb3 r0\cf2 \cb3 , \cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0xdc\cf2 \cb3 \
+   b2000: f245 7500    	movw	\cf4 \cb3 r5\cf2 \cb3 , \cf6 \cb3 #0x5700\cf2 \cb3 \
+   b2004: f7d5 ff3c    	bl	0x87e80 <_ZN6cereal17JSONOutputArchiveD2Ev> @ imm = #-0x2a188\
+   b2008: f2c0 0532    	movt	\cf4 \cb3 r5\cf2 \cb3 , \cf6 \cb3 #0x32\cf2 \cb3 \
+   b200c: e7ce         	b	0xb1fac <_ZN4jibo3asr14Hubmsg_CONTEXT6toJsonEv+0x198> @ imm = #-0x64\
+   b200e: 9837         	ldr	\cf4 \cb3 r0\cf2 \cb3 , \cf5 \cb3 [\cf4 sp\cf5 , \cf6 #0xdc\cf5 ]\cf2 \cb3 \
+   b2010: f245 7500    	movw	\cf4 \cb3 r5\cf2 \cb3 , \cf6 \cb3 #0x5700\cf2 \cb3 \
+   b2014: f2c0 0532    	movt	\cf4 \cb3 r5\cf2 \cb3 , \cf6 \cb3 #0x32\cf2 \cb3 \
+   b2018: 380c         	subs	\cf4 \cb3 r0\cf2 \cb3 , \cf6 \cb3 #0xc\cf2 \cb3 \
+   b201a: 42a8         	cmp	\cf4 \cb3 r0\cf2 \cb3 , \cf4 \cb3 r5\cf2 \cb3 \
+   b201c: d0db         	beq	0xb1fd6 <_ZN4jibo3asr14Hubmsg_CONTEXT6toJsonEv+0x1c2> @ imm = #-0x4a\
+   b201e: a905         	add	\cf4 \cb3 r1\cf2 \cb3 , \cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0x14\cf2 \cb3 \
+   b2020: f7f9 fb48    	bl	0xab6b4 <_ZNSs4_Rep10_M_disposeERKSaIcE.part.11> @ imm = #-0x6970\
+   b2024: e7d7         	b	0xb1fd6 <_ZN4jibo3asr14Hubmsg_CONTEXT6toJsonEv+0x1c2> @ imm = #-0x52\
+   b2026: bf00         	nop\
+   b2028: 24 57 32 00  	.word	0x00325724\
+   b202c: 90 56 32 00  	.word	0x00325690\
+   b2030: 68 59 32 00  	.word	0x00325968\
+   b2034: f8 59 32 00  	.word	0x003259f8\
+\
+000b2038 <_ZN4jibo3asr17Hubmsg_CLIENT_NLU6toJsonEv>:\
+   b2038: f84d 4d14    	str	\cf4 \cb3 r4\cf2 \cb3 , \cf5 \cb3 [\cf4 sp\cf5 , \cf6 #-20\cf5 ]\cf2 \cb3 !\
+   b203c: e9cd 5601    	strd	\cf4 \cb3 r5\cf2 \cb3 , \cf4 \cb3 r6\cf2 \cb3 , \cf5 \cb3 [\cf4 sp\cf5 , \cf6 #4\cf5 ]\cf2 \cb3 \
+   b2040: 460d         	mov	\cf4 \cb3 r5\cf2 \cb3 , \cf4 \cb3 r1\cf2 \cb3 \
+   b2042: f245 3154    	movw	\cf4 \cb3 r1\cf2 \cb3 , \cf6 \cb3 #0x5354\cf2 \cb3 \
+   b2046: e9cd 7e03    	strd	\cf4 \cb3 r7\cf2 \cb3 , \cf4 \cb3 lr\cf2 \cb3 , \cf5 \cb3 [\cf4 sp\cf5 , \cf6 #12\cf5 ]\cf2 \cb3 \
+   b204a: b0f7         	sub	\cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0x1dc\cf2 \cb3 \
+   b204c: f2c0 011f    	movt	\cf4 \cb3 r1\cf2 \cb3 , \cf6 \cb3 #0x1f\cf2 \cb3 \
+   b2050: af06         	add	\cf4 \cb3 r7\cf2 \cb3 , \cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0x18\cf2 \cb3 \
+   b2052: 4606         	mov	\cf4 \cb3 r6\cf2 \cb3 , \cf4 \cb3 r0\cf2 \cb3 \
+   b2054: aa37         	add	\cf4 \cb3 r2\cf2 \cb3 , \cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0xdc\cf2 \cb3 \
+   b2056: 4638         	mov	\cf4 \cb3 r0\cf2 \cb3 , \cf4 \cb3 r7\cf2 \cb3 \
+   b2058: ac0a         	add	\cf4 \cb3 r4\cf2 \cb3 , \cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0x28\cf2 \cb3 \
+   b205a: f7c5 e9a2    	blx	0x773a0 <_ZNSsC1EPKcRKSaIcE@plt> @ imm = #-0x3acbc\
+   b205e: 4620         	mov	\cf4 \cb3 r0\cf2 \cb3 , \cf4 \cb3 r4\cf2 \cb3 \
+   b2060: 2110         	movs	\cf4 \cb3 r1\cf2 \cb3 , \cf6 \cb3 #0x10\cf2 \cb3 \
+   b2062: f7c4 e912    	blx	0x76288 <_ZNSt19basic_ostringstreamIcSt11char_traitsIcESaIcEEC1ESt13_Ios_Openmode@plt> @ imm = #-0x3bddc\
+   b2066: f44f 71a2    	mov.w	\cf4 \cb3 r1\cf2 \cb3 , \cf6 \cb3 #0x144\cf2 \cb3 \
+   b206a: f04f 0e20    	mov.w	\cf4 \cb3 lr\cf2 \cb3 , \cf6 \cb3 #0x20\cf2 \cb3 \
+   b206e: 2304         	movs	\cf4 \cb3 r3\cf2 \cb3 , \cf6 \cb3 #0x4\cf2 \cb3 \
+   b2070: aa07         	add	\cf4 \cb3 r2\cf2 \cb3 , \cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0x1c\cf2 \cb3 \
+   b2072: 9107         	str	\cf4 \cb3 r1\cf2 \cb3 , \cf5 \cb3 [\cf4 sp\cf5 , \cf6 #0x1c\cf5 ]\cf2 \cb3 \
+   b2074: a837         	add	\cf4 \cb3 r0\cf2 \cb3 , \cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0xdc\cf2 \cb3 \
+   b2076: 4621         	mov	\cf4 \cb3 r1\cf2 \cb3 , \cf4 \cb3 r4\cf2 \cb3 \
+   b2078: f88d e020    	strb.w	\cf4 \cb3 lr\cf2 \cb3 , \cf5 \cb3 [\cf4 sp\cf5 , \cf6 #0x20\cf5 ]\cf2 \cb3 \
+   b207c: 9309         	str	\cf4 \cb3 r3\cf2 \cb3 , \cf5 \cb3 [\cf4 sp\cf5 , \cf6 #0x24\cf5 ]\cf2 \cb3 \
+   b207e: f7d9 f95b    	bl	0x8b338 <_ZN6cereal17JSONOutputArchiveC2ERSoRKNS0_7OptionsE> @ imm = #-0x26d4a\
+   b2082: f243 53a8    	movw	\cf4 \cb3 r3\cf2 \cb3 , \cf6 \cb3 #0x35a8\cf2 \cb3 \
+   b2086: 1d2a         	adds	\cf4 \cb3 r2\cf2 \cb3 , \cf4 \cb3 r5\cf2 \cb3 , \cf6 \cb3 #0x4\cf2 \cb3 \
+   b2088: f2c0 0321    	movt	\cf4 \cb3 r3\cf2 \cb3 , \cf6 \cb3 #0x21\cf2 \cb3 \
+   b208c: a837         	add	\cf4 \cb3 r0\cf2 \cb3 , \cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0xdc\cf2 \cb3 \
+   b208e: a907         	add	\cf4 \cb3 r1\cf2 \cb3 , \cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0x1c\cf2 \cb3 \
+   b2090: e9cd 3207    	strd	\cf4 \cb3 r3\cf2 \cb3 , \cf4 \cb3 r2\cf2 \cb3 , \cf5 \cb3 [\cf4 sp\cf5 , \cf6 #28\cf5 ]\cf2 \cb3 \
+   b2094: f7f3 fba6    	bl	0xa57e4 <_ZN6cereal13OutputArchiveINS_17JSONOutputArchiveELj0EEclIJNS_13NameValuePairIRSsEEEEERS1_DpOT_> @ imm = #-0xc8b4\
+   b2098: f245 03b0    	movw	\cf4 \cb3 r3\cf2 \cb3 , \cf6 \cb3 #0x50b0\cf2 \cb3 \
+   b209c: f105 0210    	add.w	\cf4 \cb3 r2\cf2 \cb3 , \cf4 \cb3 r5\cf2 \cb3 , \cf6 \cb3 #0x10\cf2 \cb3 \
+   b20a0: f2c0 0321    	movt	\cf4 \cb3 r3\cf2 \cb3 , \cf6 \cb3 #0x21\cf2 \cb3 \
+   b20a4: a837         	add	\cf4 \cb3 r0\cf2 \cb3 , \cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0xdc\cf2 \cb3 \
+   b20a6: a907         	add	\cf4 \cb3 r1\cf2 \cb3 , \cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0x1c\cf2 \cb3 \
+   b20a8: e9cd 3207    	strd	\cf4 \cb3 r3\cf2 \cb3 , \cf4 \cb3 r2\cf2 \cb3 , \cf5 \cb3 [\cf4 sp\cf5 , \cf6 #28\cf5 ]\cf2 \cb3 \
+   b20ac: f7f3 fc26    	bl	0xa58fc <_ZN6cereal13OutputArchiveINS_17JSONOutputArchiveELj0EEclIJNS_13NameValuePairIRxEEEEERS1_DpOT_> @ imm = #-0xc7b4\
+   b20b0: f245 137c    	movw	\cf4 \cb3 r3\cf2 \cb3 , \cf6 \cb3 #0x517c\cf2 \cb3 \
+   b20b4: f105 0208    	add.w	\cf4 \cb3 r2\cf2 \cb3 , \cf4 \cb3 r5\cf2 \cb3 , \cf6 \cb3 #0x8\cf2 \cb3 \
+   b20b8: f2c0 031f    	movt	\cf4 \cb3 r3\cf2 \cb3 , \cf6 \cb3 #0x1f\cf2 \cb3 \
+   b20bc: a837         	add	\cf4 \cb3 r0\cf2 \cb3 , \cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0xdc\cf2 \cb3 \
+   b20be: a907         	add	\cf4 \cb3 r1\cf2 \cb3 , \cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0x1c\cf2 \cb3 \
+   b20c0: e9cd 3207    	strd	\cf4 \cb3 r3\cf2 \cb3 , \cf4 \cb3 r2\cf2 \cb3 , \cf5 \cb3 [\cf4 sp\cf5 , \cf6 #28\cf5 ]\cf2 \cb3 \
+   b20c4: f7f3 fb8e    	bl	0xa57e4 <_ZN6cereal13OutputArchiveINS_17JSONOutputArchiveELj0EEclIJNS_13NameValuePairIRSsEEEEERS1_DpOT_> @ imm = #-0xc8e4\
+   b20c8: f245 1384    	movw	\cf4 \cb3 r3\cf2 \cb3 , \cf6 \cb3 #0x5184\cf2 \cb3 \
+   b20cc: f105 020c    	add.w	\cf4 \cb3 r2\cf2 \cb3 , \cf4 \cb3 r5\cf2 \cb3 , \cf6 \cb3 #0xc\cf2 \cb3 \
+   b20d0: f2c0 031f    	movt	\cf4 \cb3 r3\cf2 \cb3 , \cf6 \cb3 #0x1f\cf2 \cb3 \
+   b20d4: a837         	add	\cf4 \cb3 r0\cf2 \cb3 , \cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0xdc\cf2 \cb3 \
+   b20d6: a907         	add	\cf4 \cb3 r1\cf2 \cb3 , \cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0x1c\cf2 \cb3 \
+   b20d8: e9cd 3207    	strd	\cf4 \cb3 r3\cf2 \cb3 , \cf4 \cb3 r2\cf2 \cb3 , \cf5 \cb3 [\cf4 sp\cf5 , \cf6 #28\cf5 ]\cf2 \cb3 \
+   b20dc: f7f3 fb82    	bl	0xa57e4 <_ZN6cereal13OutputArchiveINS_17JSONOutputArchiveELj0EEclIJNS_13NameValuePairIRSsEEEEERS1_DpOT_> @ imm = #-0xc8fc\
+   b20e0: f240 2324    	movw	\cf4 \cb3 r3\cf2 \cb3 , \cf6 \cb3 #0x224\cf2 \cb3 \
+   b20e4: a837         	add	\cf4 \cb3 r0\cf2 \cb3 , \cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0xdc\cf2 \cb3 \
+   b20e6: 9708         	str	\cf4 \cb3 r7\cf2 \cb3 , \cf5 \cb3 [\cf4 sp\cf5 , \cf6 #0x20\cf5 ]\cf2 \cb3 \
+   b20e8: f2c0 0322    	movt	\cf4 \cb3 r3\cf2 \cb3 , \cf6 \cb3 #0x22\cf2 \cb3 \
+   b20ec: a907         	add	\cf4 \cb3 r1\cf2 \cb3 , \cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0x1c\cf2 \cb3 \
+   b20ee: 9307         	str	\cf4 \cb3 r3\cf2 \cb3 , \cf5 \cb3 [\cf4 sp\cf5 , \cf6 #0x1c\cf5 ]\cf2 \cb3 \
+   b20f0: f7f3 fb78    	bl	0xa57e4 <_ZN6cereal13OutputArchiveINS_17JSONOutputArchiveELj0EEclIJNS_13NameValuePairIRSsEEEEERS1_DpOT_> @ imm = #-0xc910\
+   b20f4: a837         	add	\cf4 \cb3 r0\cf2 \cb3 , \cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0xdc\cf2 \cb3 \
+   b20f6: f7d5 fec3    	bl	0x87e80 <_ZN6cereal17JSONOutputArchiveD2Ev> @ imm = #-0x2a27a\
+   b20fa: 4630         	mov	\cf4 \cb3 r0\cf2 \cb3 , \cf4 \cb3 r6\cf2 \cb3 \
+   b20fc: a90b         	add	\cf4 \cb3 r1\cf2 \cb3 , \cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0x2c\cf2 \cb3 \
+   b20fe: f7c4 e81a    	blx	0x76134 <_ZNKSt15basic_stringbufIcSt11char_traitsIcESaIcEE3strEv@plt> @ imm = #-0x3bfcc\
+   b2102: f245 3178    	movw	\cf4 \cb3 r1\cf2 \cb3 , \cf6 \cb3 #0x5378\cf2 \cb3 \
+   b2106: a807         	add	\cf4 \cb3 r0\cf2 \cb3 , \cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0x1c\cf2 \cb3 \
+   b2108: aa04         	add	\cf4 \cb3 r2\cf2 \cb3 , \cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0x10\cf2 \cb3 \
+   b210a: f2c0 011f    	movt	\cf4 \cb3 r1\cf2 \cb3 , \cf6 \cb3 #0x1f\cf2 \cb3 \
+   b210e: f7c5 e948    	blx	0x773a0 <_ZNSsC1EPKcRKSaIcE@plt> @ imm = #-0x3ad70\
+   b2112: 2200         	movs	\cf4 \cb3 r2\cf2 \cb3 , \cf6 \cb3 #0x0\cf2 \cb3 \
+   b2114: f105 0318    	add.w	\cf4 \cb3 r3\cf2 \cb3 , \cf4 \cb3 r5\cf2 \cb3 , \cf6 \cb3 #0x18\cf2 \cb3 \
+   b2118: a837         	add	\cf4 \cb3 r0\cf2 \cb3 , \cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0xdc\cf2 \cb3 \
+   b211a: 4631         	mov	\cf4 \cb3 r1\cf2 \cb3 , \cf4 \cb3 r6\cf2 \cb3 \
+   b211c: 9200         	str	\cf4 \cb3 r2\cf2 \cb3 , \cf5 \cb3 [\cf4 sp\cf5 ]\cf2 \cb3 \
+   b211e: aa07         	add	\cf4 \cb3 r2\cf2 \cb3 , \cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0x1c\cf2 \cb3 \
+   b2120: f7ff f8de    	bl	0xb12e0 <_ZN4Poco7replaceISsEET_RKS1_S3_S3_NS1_9size_typeE> @ imm = #-0xe44\
+   b2124: 4630         	mov	\cf4 \cb3 r0\cf2 \cb3 , \cf4 \cb3 r6\cf2 \cb3 \
+   b2126: a937         	add	\cf4 \cb3 r1\cf2 \cb3 , \cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0xdc\cf2 \cb3 \
+   b2128: f7c4 e908    	blx	0x7633c <_ZNSs4swapERSs@plt> @ imm = #-0x3bdf0\
+   b212c: 9837         	ldr	\cf4 \cb3 r0\cf2 \cb3 , \cf5 \cb3 [\cf4 sp\cf5 , \cf6 #0xdc\cf5 ]\cf2 \cb3 \
+   b212e: f245 7500    	movw	\cf4 \cb3 r5\cf2 \cb3 , \cf6 \cb3 #0x5700\cf2 \cb3 \
+   b2132: f2c0 0532    	movt	\cf4 \cb3 r5\cf2 \cb3 , \cf6 \cb3 #0x32\cf2 \cb3 \
+   b2136: 380c         	subs	\cf4 \cb3 r0\cf2 \cb3 , \cf6 \cb3 #0xc\cf2 \cb3 \
+   b2138: 42a8         	cmp	\cf4 \cb3 r0\cf2 \cb3 , \cf4 \cb3 r5\cf2 \cb3 \
+   b213a: d131         	bne	0xb21a0 <_ZN4jibo3asr17Hubmsg_CLIENT_NLU6toJsonEv+0x168> @ imm = #0x62\
+   b213c: 9807         	ldr	\cf4 \cb3 r0\cf2 \cb3 , \cf5 \cb3 [\cf4 sp\cf5 , \cf6 #0x1c\cf5 ]\cf2 \cb3 \
+   b213e: 380c         	subs	\cf4 \cb3 r0\cf2 \cb3 , \cf6 \cb3 #0xc\cf2 \cb3 \
+   b2140: 42a8         	cmp	\cf4 \cb3 r0\cf2 \cb3 , \cf4 \cb3 r5\cf2 \cb3 \
+   b2142: d134         	bne	0xb21ae <_ZN4jibo3asr17Hubmsg_CLIENT_NLU6toJsonEv+0x176> @ imm = #0x68\
+   b2144: 6aa3         	ldr	\cf4 \cb3 r3\cf2 \cb3 , \cf5 \cb3 [\cf4 r4\cf5 , \cf6 #0x28\cf5 ]\cf2 \cb3 \
+   b2146: 4a41         	ldr	\cf4 \cb3 r2\cf2 \cb3 , \cf5 \cb3 [pc, \cf6 #0x104\cf5 ]\cf2 \cb3         @ 0xb224c <_ZN4jibo3asr17Hubmsg_CLIENT_NLU6toJsonEv+0x214>\
+   b2148: 4941         	ldr	\cf4 \cb3 r1\cf2 \cb3 , \cf5 \cb3 [pc, \cf6 #0x104\cf5 ]\cf2 \cb3         @ 0xb2250 <_ZN4jibo3asr17Hubmsg_CLIENT_NLU6toJsonEv+0x218>\
+   b214a: 3b0c         	subs	\cf4 \cb3 r3\cf2 \cb3 , \cf6 \cb3 #0xc\cf2 \cb3 \
+   b214c: f102 0014    	add.w	\cf4 \cb3 r0\cf2 \cb3 , \cf4 \cb3 r2\cf2 \cb3 , \cf6 \cb3 #0x14\cf2 \cb3 \
+   b2150: 42ab         	cmp	\cf4 \cb3 r3\cf2 \cb3 , \cf4 \cb3 r5\cf2 \cb3 \
+   b2152: 6022         	str	\cf4 \cb3 r2\cf2 \cb3 , \cf5 \cb3 [\cf4 r4\cf5 ]\cf2 \cb3 \
+   b2154: 6061         	str	\cf4 \cb3 r1\cf2 \cb3 , \cf5 \cb3 [\cf4 r4\cf5 , \cf6 #0x4\cf5 ]\cf2 \cb3 \
+   b2156: 62e0         	str	\cf4 \cb3 r0\cf2 \cb3 , \cf5 \cb3 [\cf4 r4\cf5 , \cf6 #0x2c\cf5 ]\cf2 \cb3 \
+   b2158: d12d         	bne	0xb21b6 <_ZN4jibo3asr17Hubmsg_CLIENT_NLU6toJsonEv+0x17e> @ imm = #0x5a\
+   b215a: 4b3e         	ldr	\cf4 \cb3 r3\cf2 \cb3 , \cf5 \cb3 [pc, \cf6 #0xf8\cf5 ]\cf2 \cb3          @ 0xb2254 <_ZN4jibo3asr17Hubmsg_CLIENT_NLU6toJsonEv+0x21c>\
+   b215c: a812         	add	\cf4 \cb3 r0\cf2 \cb3 , \cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0x48\cf2 \cb3 \
+   b215e: 6063         	str	\cf4 \cb3 r3\cf2 \cb3 , \cf5 \cb3 [\cf4 r4\cf5 , \cf6 #0x4\cf5 ]\cf2 \cb3 \
+   b2160: f7c4 ee5c    	blx	0x76e1c <_ZNSt6localeD1Ev@plt> @ imm = #-0x3b348\
+   b2164: f645 3360    	movw	\cf4 \cb3 r3\cf2 \cb3 , \cf6 \cb3 #0x5b60\cf2 \cb3 \
+   b2168: 493b         	ldr	\cf4 \cb3 r1\cf2 \cb3 , \cf5 \cb3 [pc, \cf6 #0xec\cf5 ]\cf2 \cb3          @ 0xb2258 <_ZN4jibo3asr17Hubmsg_CLIENT_NLU6toJsonEv+0x220>\
+   b216a: a815         	add	\cf4 \cb3 r0\cf2 \cb3 , \cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0x54\cf2 \cb3 \
+   b216c: f2c0 0332    	movt	\cf4 \cb3 r3\cf2 \cb3 , \cf6 \cb3 #0x32\cf2 \cb3 \
+   b2170: e9d3 2301    	ldrd	\cf4 \cb3 r2\cf2 \cb3 , \cf4 \cb3 r3\cf2 \cb3 , \cf5 \cb3 [\cf4 r3\cf5 , \cf6 #4\cf5 ]\cf2 \cb3 \
+   b2174: 9303         	str	\cf4 \cb3 r3\cf2 \cb3 , \cf5 \cb3 [\cf4 sp\cf5 , \cf6 #0xc\cf5 ]\cf2 \cb3 \
+   b2176: f852 3c0c    	ldr	\cf4 \cb3 r3\cf2 \cb3 , \cf5 \cb3 [\cf4 r2\cf5 , \cf6 #-12\cf5 ]\cf2 \cb3 \
+   b217a: 6022         	str	\cf4 \cb3 r2\cf2 \cb3 , \cf5 \cb3 [\cf4 r4\cf5 ]\cf2 \cb3 \
+   b217c: 9a03         	ldr	\cf4 \cb3 r2\cf2 \cb3 , \cf5 \cb3 [\cf4 sp\cf5 , \cf6 #0xc\cf5 ]\cf2 \cb3 \
+   b217e: 50e2         	str	\cf4 \cb3 r2\cf2 \cb3 , \cf5 \cb3 [\cf4 r4\cf5 , \cf4 r3\cf5 ]\cf2 \cb3 \
+   b2180: 62e1         	str	\cf4 \cb3 r1\cf2 \cb3 , \cf5 \cb3 [\cf4 r4\cf5 , \cf6 #0x2c\cf5 ]\cf2 \cb3 \
+   b2182: f7c4 ea54    	blx	0x7662c <_ZNSt8ios_baseD2Ev@plt> @ imm = #-0x3bb58\
+   b2186: 6838         	ldr	\cf4 \cb3 r0\cf2 \cb3 , \cf5 \cb3 [\cf4 r7\cf5 ]\cf2 \cb3 \
+   b2188: 380c         	subs	\cf4 \cb3 r0\cf2 \cb3 , \cf6 \cb3 #0xc\cf2 \cb3 \
+   b218a: 42a8         	cmp	\cf4 \cb3 r0\cf2 \cb3 , \cf4 \cb3 r5\cf2 \cb3 \
+   b218c: d118         	bne	0xb21c0 <_ZN4jibo3asr17Hubmsg_CLIENT_NLU6toJsonEv+0x188> @ imm = #0x30\
+   b218e: 4630         	mov	\cf4 \cb3 r0\cf2 \cb3 , \cf4 \cb3 r6\cf2 \cb3 \
+   b2190: b077         	add	\cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0x1dc\cf2 \cb3 \
+   b2192: e9dd 4500    	ldrd	\cf4 \cb3 r4\cf2 \cb3 , \cf4 \cb3 r5\cf2 \cb3 , \cf5 \cb3 [\cf4 sp\cf5 ]\cf2 \cb3 \
+   b2196: e9dd 6702    	ldrd	\cf4 \cb3 r6\cf2 \cb3 , \cf4 \cb3 r7\cf2 \cb3 , \cf5 \cb3 [\cf4 sp\cf5 , \cf6 #8\cf5 ]\cf2 \cb3 \
+   b219a: b004         	add	\cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0x10\cf2 \cb3 \
+   b219c: f85d fb04    	ldr	\cf4 \cb3 pc\cf2 \cb3 , \cf5 \cb3 [\cf4 sp\cf5 ]\cf2 \cb3 , \cf6 \cb3 #4\cf2 \cb3 \
+   b21a0: a905         	add	\cf4 \cb3 r1\cf2 \cb3 , \cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0x14\cf2 \cb3 \
+   b21a2: f7f9 fa87    	bl	0xab6b4 <_ZNSs4_Rep10_M_disposeERKSaIcE.part.11> @ imm = #-0x6af2\
+   b21a6: 9807         	ldr	\cf4 \cb3 r0\cf2 \cb3 , \cf5 \cb3 [\cf4 sp\cf5 , \cf6 #0x1c\cf5 ]\cf2 \cb3 \
+   b21a8: 380c         	subs	\cf4 \cb3 r0\cf2 \cb3 , \cf6 \cb3 #0xc\cf2 \cb3 \
+   b21aa: 42a8         	cmp	\cf4 \cb3 r0\cf2 \cb3 , \cf4 \cb3 r5\cf2 \cb3 \
+   b21ac: d0ca         	beq	0xb2144 <_ZN4jibo3asr17Hubmsg_CLIENT_NLU6toJsonEv+0x10c> @ imm = #-0x6c\
+   b21ae: a937         	add	\cf4 \cb3 r1\cf2 \cb3 , \cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0xdc\cf2 \cb3 \
+   b21b0: f7f9 fa80    	bl	0xab6b4 <_ZNSs4_Rep10_M_disposeERKSaIcE.part.11> @ imm = #-0x6b00\
+   b21b4: e7c6         	b	0xb2144 <_ZN4jibo3asr17Hubmsg_CLIENT_NLU6toJsonEv+0x10c> @ imm = #-0x74\
+   b21b6: 4618         	mov	\cf4 \cb3 r0\cf2 \cb3 , \cf4 \cb3 r3\cf2 \cb3 \
+   b21b8: a937         	add	\cf4 \cb3 r1\cf2 \cb3 , \cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0xdc\cf2 \cb3 \
+   b21ba: f7f9 fa7b    	bl	0xab6b4 <_ZNSs4_Rep10_M_disposeERKSaIcE.part.11> @ imm = #-0x6b0a\
+   b21be: e7cc         	b	0xb215a <_ZN4jibo3asr17Hubmsg_CLIENT_NLU6toJsonEv+0x122> @ imm = #-0x68\
+   b21c0: a937         	add	\cf4 \cb3 r1\cf2 \cb3 , \cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0xdc\cf2 \cb3 \
+   b21c2: f7f9 fa77    	bl	0xab6b4 <_ZNSs4_Rep10_M_disposeERKSaIcE.part.11> @ imm = #-0x6b12\
+   b21c6: e7e2         	b	0xb218e <_ZN4jibo3asr17Hubmsg_CLIENT_NLU6toJsonEv+0x156> @ imm = #-0x3c\
+   b21c8: f245 7500    	movw	\cf4 \cb3 r5\cf2 \cb3 , \cf6 \cb3 #0x5700\cf2 \cb3 \
+   b21cc: f2c0 0532    	movt	\cf4 \cb3 r5\cf2 \cb3 , \cf6 \cb3 #0x32\cf2 \cb3 \
+   b21d0: 4620         	mov	\cf4 \cb3 r0\cf2 \cb3 , \cf4 \cb3 r4\cf2 \cb3 \
+   b21d2: f7c3 eb08    	blx	0x757e4 <_ZNSt19basic_ostringstreamIcSt11char_traitsIcESaIcEED1Ev@plt> @ imm = #-0x3c9f0\
+   b21d6: 6838         	ldr	\cf4 \cb3 r0\cf2 \cb3 , \cf5 \cb3 [\cf4 r7\cf5 ]\cf2 \cb3 \
+   b21d8: 380c         	subs	\cf4 \cb3 r0\cf2 \cb3 , \cf6 \cb3 #0xc\cf2 \cb3 \
+   b21da: 42a8         	cmp	\cf4 \cb3 r0\cf2 \cb3 , \cf4 \cb3 r5\cf2 \cb3 \
+   b21dc: d002         	beq	0xb21e4 <_ZN4jibo3asr17Hubmsg_CLIENT_NLU6toJsonEv+0x1ac> @ imm = #0x4\
+   b21de: a905         	add	\cf4 \cb3 r1\cf2 \cb3 , \cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0x14\cf2 \cb3 \
+   b21e0: f7f9 fa68    	bl	0xab6b4 <_ZNSs4_Rep10_M_disposeERKSaIcE.part.11> @ imm = #-0x6b30\
+   b21e4: f7c4 edd0    	blx	0x76d88 <__cxa_end_cleanup@plt> @ imm = #-0x3b460\
+   b21e8: f245 7500    	movw	\cf4 \cb3 r5\cf2 \cb3 , \cf6 \cb3 #0x5700\cf2 \cb3 \
+   b21ec: f2c0 0532    	movt	\cf4 \cb3 r5\cf2 \cb3 , \cf6 \cb3 #0x32\cf2 \cb3 \
+   b21f0: e7f1         	b	0xb21d6 <_ZN4jibo3asr17Hubmsg_CLIENT_NLU6toJsonEv+0x19e> @ imm = #-0x1e\
+   b21f2: f245 7500    	movw	\cf4 \cb3 r5\cf2 \cb3 , \cf6 \cb3 #0x5700\cf2 \cb3 \
+   b21f6: f2c0 0532    	movt	\cf4 \cb3 r5\cf2 \cb3 , \cf6 \cb3 #0x32\cf2 \cb3 \
+   b21fa: 9807         	ldr	\cf4 \cb3 r0\cf2 \cb3 , \cf5 \cb3 [\cf4 sp\cf5 , \cf6 #0x1c\cf5 ]\cf2 \cb3 \
+   b21fc: 380c         	subs	\cf4 \cb3 r0\cf2 \cb3 , \cf6 \cb3 #0xc\cf2 \cb3 \
+   b21fe: 42a8         	cmp	\cf4 \cb3 r0\cf2 \cb3 , \cf4 \cb3 r5\cf2 \cb3 \
+   b2200: d002         	beq	0xb2208 <_ZN4jibo3asr17Hubmsg_CLIENT_NLU6toJsonEv+0x1d0> @ imm = #0x4\
+   b2202: a905         	add	\cf4 \cb3 r1\cf2 \cb3 , \cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0x14\cf2 \cb3 \
+   b2204: f7f9 fa56    	bl	0xab6b4 <_ZNSs4_Rep10_M_disposeERKSaIcE.part.11> @ imm = #-0x6b54\
+   b2208: 6830         	ldr	\cf4 \cb3 r0\cf2 \cb3 , \cf5 \cb3 [\cf4 r6\cf5 ]\cf2 \cb3 \
+   b220a: 380c         	subs	\cf4 \cb3 r0\cf2 \cb3 , \cf6 \cb3 #0xc\cf2 \cb3 \
+   b220c: 42a8         	cmp	\cf4 \cb3 r0\cf2 \cb3 , \cf4 \cb3 r5\cf2 \cb3 \
+   b220e: d0df         	beq	0xb21d0 <_ZN4jibo3asr17Hubmsg_CLIENT_NLU6toJsonEv+0x198> @ imm = #-0x42\
+   b2210: a905         	add	\cf4 \cb3 r1\cf2 \cb3 , \cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0x14\cf2 \cb3 \
+   b2212: f7f9 fa4f    	bl	0xab6b4 <_ZNSs4_Rep10_M_disposeERKSaIcE.part.11> @ imm = #-0x6b62\
+   b2216: e7db         	b	0xb21d0 <_ZN4jibo3asr17Hubmsg_CLIENT_NLU6toJsonEv+0x198> @ imm = #-0x4a\
+   b2218: f245 7500    	movw	\cf4 \cb3 r5\cf2 \cb3 , \cf6 \cb3 #0x5700\cf2 \cb3 \
+   b221c: f2c0 0532    	movt	\cf4 \cb3 r5\cf2 \cb3 , \cf6 \cb3 #0x32\cf2 \cb3 \
+   b2220: e7f2         	b	0xb2208 <_ZN4jibo3asr17Hubmsg_CLIENT_NLU6toJsonEv+0x1d0> @ imm = #-0x1c\
+   b2222: a837         	add	\cf4 \cb3 r0\cf2 \cb3 , \cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0xdc\cf2 \cb3 \
+   b2224: f245 7500    	movw	\cf4 \cb3 r5\cf2 \cb3 , \cf6 \cb3 #0x5700\cf2 \cb3 \
+   b2228: f7d5 fe2a    	bl	0x87e80 <_ZN6cereal17JSONOutputArchiveD2Ev> @ imm = #-0x2a3ac\
+   b222c: f2c0 0532    	movt	\cf4 \cb3 r5\cf2 \cb3 , \cf6 \cb3 #0x32\cf2 \cb3 \
+   b2230: e7ce         	b	0xb21d0 <_ZN4jibo3asr17Hubmsg_CLIENT_NLU6toJsonEv+0x198> @ imm = #-0x64\
+   b2232: 9837         	ldr	\cf4 \cb3 r0\cf2 \cb3 , \cf5 \cb3 [\cf4 sp\cf5 , \cf6 #0xdc\cf5 ]\cf2 \cb3 \
+   b2234: f245 7500    	movw	\cf4 \cb3 r5\cf2 \cb3 , \cf6 \cb3 #0x5700\cf2 \cb3 \
+   b2238: f2c0 0532    	movt	\cf4 \cb3 r5\cf2 \cb3 , \cf6 \cb3 #0x32\cf2 \cb3 \
+   b223c: 380c         	subs	\cf4 \cb3 r0\cf2 \cb3 , \cf6 \cb3 #0xc\cf2 \cb3 \
+   b223e: 42a8         	cmp	\cf4 \cb3 r0\cf2 \cb3 , \cf4 \cb3 r5\cf2 \cb3 \
+   b2240: d0db         	beq	0xb21fa <_ZN4jibo3asr17Hubmsg_CLIENT_NLU6toJsonEv+0x1c2> @ imm = #-0x4a\
+   b2242: a905         	add	\cf4 \cb3 r1\cf2 \cb3 , \cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0x14\cf2 \cb3 \
+   b2244: f7f9 fa36    	bl	0xab6b4 <_ZNSs4_Rep10_M_disposeERKSaIcE.part.11> @ imm = #-0x6b94\
+   b2248: e7d7         	b	0xb21fa <_ZN4jibo3asr17Hubmsg_CLIENT_NLU6toJsonEv+0x1c2> @ imm = #-0x52\
+   b224a: bf00         	nop\
+   b224c: 24 57 32 00  	.word	0x00325724\
+   b2250: 90 56 32 00  	.word	0x00325690\
+   b2254: 68 59 32 00  	.word	0x00325968\
+   b2258: f8 59 32 00  	.word	0x003259f8\
+\
+000b225c <_ZNK4jibo3asr13Hubmsg_LISTEN4saveERN6cereal17JSONOutputArchiveE>:\
+   b225c: f84d 4d24    	str	\cf4 \cb3 r4\cf2 \cb3 , \cf5 \cb3 [\cf4 sp\cf5 , \cf6 #-36\cf5 ]\cf2 \cb3 !\
+   b2260: 460c         	mov	\cf4 \cb3 r4\cf2 \cb3 , \cf4 \cb3 r1\cf2 \cb3 \
+   b2262: e9cd be07    	strd	\cf4 \cb3 r11\cf2 \cb3 , \cf4 \cb3 lr\cf2 \cb3 , \cf5 \cb3 [\cf4 sp\cf5 , \cf6 #28\cf5 ]\cf2 \cb3 \
+   b2266: e9cd 5601    	strd	\cf4 \cb3 r5\cf2 \cb3 , \cf4 \cb3 r6\cf2 \cb3 , \cf5 \cb3 [\cf4 sp\cf5 , \cf6 #4\cf5 ]\cf2 \cb3 \
+   b226a: 4606         	mov	\cf4 \cb3 r6\cf2 \cb3 , \cf4 \cb3 r0\cf2 \cb3 \
+   b226c: e9cd 7803    	strd	\cf4 \cb3 r7\cf2 \cb3 , \cf4 \cb3 r8\cf2 \cb3 , \cf5 \cb3 [\cf4 sp\cf5 , \cf6 #12\cf5 ]\cf2 \cb3 \
+   b2270: e9cd 9a05    	strd	\cf4 \cb3 r9\cf2 \cb3 , \cf4 \cb3 r10\cf2 \cb3 , \cf5 \cb3 [\cf4 sp\cf5 , \cf6 #20\cf5 ]\cf2 \cb3 \
+   b2274: b085         	sub	\cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0x14\cf2 \cb3 \
+   b2276: f7fe fc63    	bl	0xb0b40 <_ZNK4jibo3asr6Hubmsg4saveERN6cereal17JSONOutputArchiveE> @ imm = #-0x173a\
+   b227a: 6862         	ldr	\cf4 \cb3 r2\cf2 \cb3 , \cf5 \cb3 [\cf4 r4\cf5 , \cf6 #0x4\cf5 ]\cf2 \cb3 \
+   b227c: f240 2324    	movw	\cf4 \cb3 r3\cf2 \cb3 , \cf6 \cb3 #0x224\cf2 \cb3 \
+   b2280: ad01         	add	\cf4 \cb3 r5\cf2 \cb3 , \cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0x4\cf2 \cb3 \
+   b2282: f2c0 0322    	movt	\cf4 \cb3 r3\cf2 \cb3 , \cf6 \cb3 #0x22\cf2 \cb3 \
+   b2286: 6852         	ldr	\cf4 \cb3 r2\cf2 \cb3 , \cf5 \cb3 [\cf4 r2\cf5 , \cf6 #0x4\cf5 ]\cf2 \cb3 \
+   b2288: 6852         	ldr	\cf4 \cb3 r2\cf2 \cb3 , \cf5 \cb3 [\cf4 r2\cf5 , \cf6 #0x4\cf5 ]\cf2 \cb3 \
+   b228a: 6857         	ldr	\cf4 \cb3 r7\cf2 \cb3 , \cf5 \cb3 [\cf4 r2\cf5 , \cf6 #0x4\cf5 ]\cf2 \cb3 \
+   b228c: f8c2 30a8    	str.w	\cf4 \cb3 r3\cf2 \cb3 , \cf5 \cb3 [\cf4 r2\cf5 , \cf6 #0xa8\cf5 ]\cf2 \cb3 \
+   b2290: 6878         	ldr	\cf4 \cb3 r0\cf2 \cb3 , \cf5 \cb3 [\cf4 r7\cf5 , \cf6 #0x4\cf5 ]\cf2 \cb3 \
+   b2292: f7d8 ffd9    	bl	0x8b248 <_ZN6cereal17JSONOutputArchive9startNodeEv> @ imm = #-0x2704e\
+   b2296: 6878         	ldr	\cf4 \cb3 r0\cf2 \cb3 , \cf5 \cb3 [\cf4 r7\cf5 , \cf6 #0x4\cf5 ]\cf2 \cb3 \
+   b2298: f245 33a0    	movw	\cf4 \cb3 r3\cf2 \cb3 , \cf6 \cb3 #0x53a0\cf2 \cb3 \
+   b229c: f106 0218    	add.w	\cf4 \cb3 r2\cf2 \cb3 , \cf4 \cb3 r6\cf2 \cb3 , \cf6 \cb3 #0x18\cf2 \cb3 \
+   b22a0: f2c0 031f    	movt	\cf4 \cb3 r3\cf2 \cb3 , \cf6 \cb3 #0x1f\cf2 \cb3 \
+   b22a4: 4629         	mov	\cf4 \cb3 r1\cf2 \cb3 , \cf4 \cb3 r5\cf2 \cb3 \
+   b22a6: 6844         	ldr	\cf4 \cb3 r4\cf2 \cb3 , \cf5 \cb3 [\cf4 r0\cf5 , \cf6 #0x4\cf5 ]\cf2 \cb3 \
+   b22a8: e9cd 3201    	strd	\cf4 \cb3 r3\cf2 \cb3 , \cf4 \cb3 r2\cf2 \cb3 , \cf5 \cb3 [\cf4 sp\cf5 , \cf6 #4\cf5 ]\cf2 \cb3 \
+   b22ac: 4620         	mov	\cf4 \cb3 r0\cf2 \cb3 , \cf4 \cb3 r4\cf2 \cb3 \
+   b22ae: f7f3 fa99    	bl	0xa57e4 <_ZN6cereal13OutputArchiveINS_17JSONOutputArchiveELj0EEclIJNS_13NameValuePairIRSsEEEEERS1_DpOT_> @ imm = #-0xcace\
+   b22b2: f245 33a8    	movw	\cf4 \cb3 r3\cf2 \cb3 , \cf6 \cb3 #0x53a8\cf2 \cb3 \
+   b22b6: f106 021c    	add.w	\cf4 \cb3 r2\cf2 \cb3 , \cf4 \cb3 r6\cf2 \cb3 , \cf6 \cb3 #0x1c\cf2 \cb3 \
+   b22ba: f2c0 031f    	movt	\cf4 \cb3 r3\cf2 \cb3 , \cf6 \cb3 #0x1f\cf2 \cb3 \
+   b22be: 4629         	mov	\cf4 \cb3 r1\cf2 \cb3 , \cf4 \cb3 r5\cf2 \cb3 \
+   b22c0: 4620         	mov	\cf4 \cb3 r0\cf2 \cb3 , \cf4 \cb3 r4\cf2 \cb3 \
+   b22c2: e9cd 3201    	strd	\cf4 \cb3 r3\cf2 \cb3 , \cf4 \cb3 r2\cf2 \cb3 , \cf5 \cb3 [\cf4 sp\cf5 , \cf6 #4\cf5 ]\cf2 \cb3 \
+   b22c6: f7fe ff2f    	bl	0xb1128 <_ZN6cereal13OutputArchiveINS_17JSONOutputArchiveELj0EEclIJNS_13NameValuePairIRbEEEEERS1_DpOT_> @ imm = #-0x11a2\
+   b22ca: 6862         	ldr	\cf4 \cb3 r2\cf2 \cb3 , \cf5 \cb3 [\cf4 r4\cf5 , \cf6 #0x4\cf5 ]\cf2 \cb3 \
+   b22cc: f240 636c    	movw	\cf4 \cb3 r3\cf2 \cb3 , \cf6 \cb3 #0x66c\cf2 \cb3 \
+   b22d0: f2c0 0322    	movt	\cf4 \cb3 r3\cf2 \cb3 , \cf6 \cb3 #0x22\cf2 \cb3 \
+   b22d4: 6852         	ldr	\cf4 \cb3 r2\cf2 \cb3 , \cf5 \cb3 [\cf4 r2\cf5 , \cf6 #0x4\cf5 ]\cf2 \cb3 \
+   b22d6: 6852         	ldr	\cf4 \cb3 r2\cf2 \cb3 , \cf5 \cb3 [\cf4 r2\cf5 , \cf6 #0x4\cf5 ]\cf2 \cb3 \
+   b22d8: f8d2 8004    	ldr.w	\cf4 \cb3 r8\cf2 \cb3 , \cf5 \cb3 [\cf4 r2\cf5 , \cf6 #0x4\cf5 ]\cf2 \cb3 \
+   b22dc: f8c2 30a8    	str.w	\cf4 \cb3 r3\cf2 \cb3 , \cf5 \cb3 [\cf4 r2\cf5 , \cf6 #0xa8\cf5 ]\cf2 \cb3 \
+   b22e0: f8d8 0004    	ldr.w	\cf4 \cb3 r0\cf2 \cb3 , \cf5 \cb3 [\cf4 r8\cf5 , \cf6 #0x4\cf5 ]\cf2 \cb3 \
+   b22e4: f7d8 ffb0    	bl	0x8b248 <_ZN6cereal17JSONOutputArchive9startNodeEv> @ imm = #-0x270a0\
+   b22e8: f8d8 3004    	ldr.w	\cf4 \cb3 r3\cf2 \cb3 , \cf5 \cb3 [\cf4 r8\cf5 , \cf6 #0x4\cf5 ]\cf2 \cb3 \
+   b22ec: f106 0120    	add.w	\cf4 \cb3 r1\cf2 \cb3 , \cf4 \cb3 r6\cf2 \cb3 , \cf6 \cb3 #0x20\cf2 \cb3 \
+   b22f0: 6858         	ldr	\cf4 \cb3 r0\cf2 \cb3 , \cf5 \cb3 [\cf4 r3\cf5 , \cf6 #0x4\cf5 ]\cf2 \cb3 \
+   b22f2: f7f4 fad5    	bl	0xa68a0 <_ZN6cereal4saveINS_17JSONOutputArchiveESsSaISsEEENSt9enable_ifIXoontsrNS_6traits22is_output_serializableINS_10BinaryDataIT0_EET_EE5valuentsrSt13is_arithmeticIS7_E5valueEvE4typeERS9_RKSt6vectorIS7_T1_E> @ imm = #-0xba56\
+   b22f6: f8d8 0004    	ldr.w	\cf4 \cb3 r0\cf2 \cb3 , \cf5 \cb3 [\cf4 r8\cf5 , \cf6 #0x4\cf5 ]\cf2 \cb3 \
+   b22fa: f7d6 f961    	bl	0x885c0 <_ZN6cereal17JSONOutputArchive10finishNodeEv> @ imm = #-0x29d3e\
+   b22fe: f643 1378    	movw	\cf4 \cb3 r3\cf2 \cb3 , \cf6 \cb3 #0x3978\cf2 \cb3 \
+   b2302: f106 022c    	add.w	\cf4 \cb3 r2\cf2 \cb3 , \cf4 \cb3 r6\cf2 \cb3 , \cf6 \cb3 #0x2c\cf2 \cb3 \
+   b2306: f2c0 031f    	movt	\cf4 \cb3 r3\cf2 \cb3 , \cf6 \cb3 #0x1f\cf2 \cb3 \
+   b230a: 4629         	mov	\cf4 \cb3 r1\cf2 \cb3 , \cf4 \cb3 r5\cf2 \cb3 \
+   b230c: 4620         	mov	\cf4 \cb3 r0\cf2 \cb3 , \cf4 \cb3 r4\cf2 \cb3 \
+   b230e: e9cd 3201    	strd	\cf4 \cb3 r3\cf2 \cb3 , \cf4 \cb3 r2\cf2 \cb3 , \cf5 \cb3 [\cf4 sp\cf5 , \cf6 #4\cf5 ]\cf2 \cb3 \
+   b2312: f7f3 fa67    	bl	0xa57e4 <_ZN6cereal13OutputArchiveINS_17JSONOutputArchiveELj0EEclIJNS_13NameValuePairIRSsEEEEERS1_DpOT_> @ imm = #-0xcb32\
+   b2316: 6862         	ldr	\cf4 \cb3 r2\cf2 \cb3 , \cf5 \cb3 [\cf4 r4\cf5 , \cf6 #0x4\cf5 ]\cf2 \cb3 \
+   b2318: f245 33b4    	movw	\cf4 \cb3 r3\cf2 \cb3 , \cf6 \cb3 #0x53b4\cf2 \cb3 \
+   b231c: f2c0 031f    	movt	\cf4 \cb3 r3\cf2 \cb3 , \cf6 \cb3 #0x1f\cf2 \cb3 \
+   b2320: 6852         	ldr	\cf4 \cb3 r2\cf2 \cb3 , \cf5 \cb3 [\cf4 r2\cf5 , \cf6 #0x4\cf5 ]\cf2 \cb3 \
+   b2322: 6852         	ldr	\cf4 \cb3 r2\cf2 \cb3 , \cf5 \cb3 [\cf4 r2\cf5 , \cf6 #0x4\cf5 ]\cf2 \cb3 \
+   b2324: f8d2 8004    	ldr.w	\cf4 \cb3 r8\cf2 \cb3 , \cf5 \cb3 [\cf4 r2\cf5 , \cf6 #0x4\cf5 ]\cf2 \cb3 \
+   b2328: f8c2 30a8    	str.w	\cf4 \cb3 r3\cf2 \cb3 , \cf5 \cb3 [\cf4 r2\cf5 , \cf6 #0xa8\cf5 ]\cf2 \cb3 \
+   b232c: f8d8 0004    	ldr.w	\cf4 \cb3 r0\cf2 \cb3 , \cf5 \cb3 [\cf4 r8\cf5 , \cf6 #0x4\cf5 ]\cf2 \cb3 \
+   b2330: f7d8 ff8a    	bl	0x8b248 <_ZN6cereal17JSONOutputArchive9startNodeEv> @ imm = #-0x270ec\
+   b2334: f8d8 2004    	ldr.w	\cf4 \cb3 r2\cf2 \cb3 , \cf5 \cb3 [\cf4 r8\cf5 , \cf6 #0x4\cf5 ]\cf2 \cb3 \
+   b2338: f245 33b8    	movw	\cf4 \cb3 r3\cf2 \cb3 , \cf6 \cb3 #0x53b8\cf2 \cb3 \
+   b233c: f2c0 031f    	movt	\cf4 \cb3 r3\cf2 \cb3 , \cf6 \cb3 #0x1f\cf2 \cb3 \
+   b2340: f8d2 9004    	ldr.w	\cf4 \cb3 r9\cf2 \cb3 , \cf5 \cb3 [\cf4 r2\cf5 , \cf6 #0x4\cf5 ]\cf2 \cb3 \
+   b2344: f8d9 2004    	ldr.w	\cf4 \cb3 r2\cf2 \cb3 , \cf5 \cb3 [\cf4 r9\cf5 , \cf6 #0x4\cf5 ]\cf2 \cb3 \
+   b2348: 6852         	ldr	\cf4 \cb3 r2\cf2 \cb3 , \cf5 \cb3 [\cf4 r2\cf5 , \cf6 #0x4\cf5 ]\cf2 \cb3 \
+   b234a: 6852         	ldr	\cf4 \cb3 r2\cf2 \cb3 , \cf5 \cb3 [\cf4 r2\cf5 , \cf6 #0x4\cf5 ]\cf2 \cb3 \
+   b234c: 6854         	ldr	\cf4 \cb3 r4\cf2 \cb3 , \cf5 \cb3 [\cf4 r2\cf5 , \cf6 #0x4\cf5 ]\cf2 \cb3 \
+   b234e: f8c2 30a8    	str.w	\cf4 \cb3 r3\cf2 \cb3 , \cf5 \cb3 [\cf4 r2\cf5 , \cf6 #0xa8\cf5 ]\cf2 \cb3 \
+   b2352: 6860         	ldr	\cf4 \cb3 r0\cf2 \cb3 , \cf5 \cb3 [\cf4 r4\cf5 , \cf6 #0x4\cf5 ]\cf2 \cb3 \
+   b2354: f7d8 ff78    	bl	0x8b248 <_ZN6cereal17JSONOutputArchive9startNodeEv> @ imm = #-0x27110\
+   b2358: 6863         	ldr	\cf4 \cb3 r3\cf2 \cb3 , \cf5 \cb3 [\cf4 r4\cf5 , \cf6 #0x4\cf5 ]\cf2 \cb3 \
+   b235a: f106 0130    	add.w	\cf4 \cb3 r1\cf2 \cb3 , \cf4 \cb3 r6\cf2 \cb3 , \cf6 \cb3 #0x30\cf2 \cb3 \
+   b235e: 6858         	ldr	\cf4 \cb3 r0\cf2 \cb3 , \cf5 \cb3 [\cf4 r3\cf5 , \cf6 #0x4\cf5 ]\cf2 \cb3 \
+   b2360: f7f4 fa9e    	bl	0xa68a0 <_ZN6cereal4saveINS_17JSONOutputArchiveESsSaISsEEENSt9enable_ifIXoontsrNS_6traits22is_output_serializableINS_10BinaryDataIT0_EET_EE5valuentsrSt13is_arithmeticIS7_E5valueEvE4typeERS9_RKSt6vectorIS7_T1_E> @ imm = #-0xbac4\
+   b2364: 6860         	ldr	\cf4 \cb3 r0\cf2 \cb3 , \cf5 \cb3 [\cf4 r4\cf5 , \cf6 #0x4\cf5 ]\cf2 \cb3 \
+   b2366: f7d6 f92b    	bl	0x885c0 <_ZN6cereal17JSONOutputArchive10finishNodeEv> @ imm = #-0x29daa\
+   b236a: f8d9 2004    	ldr.w	\cf4 \cb3 r2\cf2 \cb3 , \cf5 \cb3 [\cf4 r9\cf5 , \cf6 #0x4\cf5 ]\cf2 \cb3 \
+   b236e: f643 6300    	movw	\cf4 \cb3 r3\cf2 \cb3 , \cf6 \cb3 #0x3e00\cf2 \cb3 \
+   b2372: f2c0 031f    	movt	\cf4 \cb3 r3\cf2 \cb3 , \cf6 \cb3 #0x1f\cf2 \cb3 \
+   b2376: 6852         	ldr	\cf4 \cb3 r2\cf2 \cb3 , \cf5 \cb3 [\cf4 r2\cf5 , \cf6 #0x4\cf5 ]\cf2 \cb3 \
+   b2378: 6852         	ldr	\cf4 \cb3 r2\cf2 \cb3 , \cf5 \cb3 [\cf4 r2\cf5 , \cf6 #0x4\cf5 ]\cf2 \cb3 \
+   b237a: 6854         	ldr	\cf4 \cb3 r4\cf2 \cb3 , \cf5 \cb3 [\cf4 r2\cf5 , \cf6 #0x4\cf5 ]\cf2 \cb3 \
+   b237c: f8c2 30a8    	str.w	\cf4 \cb3 r3\cf2 \cb3 , \cf5 \cb3 [\cf4 r2\cf5 , \cf6 #0xa8\cf5 ]\cf2 \cb3 \
+   b2380: 6860         	ldr	\cf4 \cb3 r0\cf2 \cb3 , \cf5 \cb3 [\cf4 r4\cf5 , \cf6 #0x4\cf5 ]\cf2 \cb3 \
+   b2382: f7d8 ff61    	bl	0x8b248 <_ZN6cereal17JSONOutputArchive9startNodeEv> @ imm = #-0x2713e\
+   b2386: 6863         	ldr	\cf4 \cb3 r3\cf2 \cb3 , \cf5 \cb3 [\cf4 r4\cf5 , \cf6 #0x4\cf5 ]\cf2 \cb3 \
+   b2388: f106 013c    	add.w	\cf4 \cb3 r1\cf2 \cb3 , \cf4 \cb3 r6\cf2 \cb3 , \cf6 \cb3 #0x3c\cf2 \cb3 \
+   b238c: 6858         	ldr	\cf4 \cb3 r0\cf2 \cb3 , \cf5 \cb3 [\cf4 r3\cf5 , \cf6 #0x4\cf5 ]\cf2 \cb3 \
+   b238e: f7f4 fa87    	bl	0xa68a0 <_ZN6cereal4saveINS_17JSONOutputArchiveESsSaISsEEENSt9enable_ifIXoontsrNS_6traits22is_output_serializableINS_10BinaryDataIT0_EET_EE5valuentsrSt13is_arithmeticIS7_E5valueEvE4typeERS9_RKSt6vectorIS7_T1_E> @ imm = #-0xbaf2\
+   b2392: 6860         	ldr	\cf4 \cb3 r0\cf2 \cb3 , \cf5 \cb3 [\cf4 r4\cf5 , \cf6 #0x4\cf5 ]\cf2 \cb3 \
+   b2394: f7d6 f914    	bl	0x885c0 <_ZN6cereal17JSONOutputArchive10finishNodeEv> @ imm = #-0x29dd8\
+   b2398: f245 33c0    	movw	\cf4 \cb3 r3\cf2 \cb3 , \cf6 \cb3 #0x53c0\cf2 \cb3 \
+   b239c: f106 0248    	add.w	\cf4 \cb3 r2\cf2 \cb3 , \cf4 \cb3 r6\cf2 \cb3 , \cf6 \cb3 #0x48\cf2 \cb3 \
+   b23a0: f2c0 031f    	movt	\cf4 \cb3 r3\cf2 \cb3 , \cf6 \cb3 #0x1f\cf2 \cb3 \
+   b23a4: 4629         	mov	\cf4 \cb3 r1\cf2 \cb3 , \cf4 \cb3 r5\cf2 \cb3 \
+   b23a6: 4648         	mov	\cf4 \cb3 r0\cf2 \cb3 , \cf4 \cb3 r9\cf2 \cb3 \
+   b23a8: e9cd 3201    	strd	\cf4 \cb3 r3\cf2 \cb3 , \cf4 \cb3 r2\cf2 \cb3 , \cf5 \cb3 [\cf4 sp\cf5 , \cf6 #4\cf5 ]\cf2 \cb3 \
+   b23ac: f7f3 fa1a    	bl	0xa57e4 <_ZN6cereal13OutputArchiveINS_17JSONOutputArchiveELj0EEclIJNS_13NameValuePairIRSsEEEEERS1_DpOT_> @ imm = #-0xcbcc\
+   b23b0: f8d9 2004    	ldr.w	\cf4 \cb3 r2\cf2 \cb3 , \cf5 \cb3 [\cf4 r9\cf5 , \cf6 #0x4\cf5 ]\cf2 \cb3 \
+   b23b4: f245 33cc    	movw	\cf4 \cb3 r3\cf2 \cb3 , \cf6 \cb3 #0x53cc\cf2 \cb3 \
+   b23b8: f2c0 031f    	movt	\cf4 \cb3 r3\cf2 \cb3 , \cf6 \cb3 #0x1f\cf2 \cb3 \
+   b23bc: 6852         	ldr	\cf4 \cb3 r2\cf2 \cb3 , \cf5 \cb3 [\cf4 r2\cf5 , \cf6 #0x4\cf5 ]\cf2 \cb3 \
+   b23be: 6852         	ldr	\cf4 \cb3 r2\cf2 \cb3 , \cf5 \cb3 [\cf4 r2\cf5 , \cf6 #0x4\cf5 ]\cf2 \cb3 \
+   b23c0: 6854         	ldr	\cf4 \cb3 r4\cf2 \cb3 , \cf5 \cb3 [\cf4 r2\cf5 , \cf6 #0x4\cf5 ]\cf2 \cb3 \
+   b23c2: f8c2 30a8    	str.w	\cf4 \cb3 r3\cf2 \cb3 , \cf5 \cb3 [\cf4 r2\cf5 , \cf6 #0xa8\cf5 ]\cf2 \cb3 \
+   b23c6: 6860         	ldr	\cf4 \cb3 r0\cf2 \cb3 , \cf5 \cb3 [\cf4 r4\cf5 , \cf6 #0x4\cf5 ]\cf2 \cb3 \
+   b23c8: f7d5 fee8    	bl	0x8819c <_ZN6cereal17JSONOutputArchive9writeNameEv> @ imm = #-0x2a230\
+   b23cc: 6863         	ldr	\cf4 \cb3 r3\cf2 \cb3 , \cf5 \cb3 [\cf4 r4\cf5 , \cf6 #0x4\cf5 ]\cf2 \cb3 \
+   b23ce: 2106         	movs	\cf4 \cb3 r1\cf2 \cb3 , \cf6 \cb3 #0x6\cf2 \cb3 \
+   b23d0: 6cf4         	ldr	\cf4 \cb3 r4\cf2 \cb3 , \cf5 \cb3 [\cf4 r6\cf5 , \cf6 #0x4c\cf5 ]\cf2 \cb3 \
+   b23d2: f8d3 b004    	ldr.w	\cf4 \cb3 r11\cf2 \cb3 , \cf5 \cb3 [\cf4 r3\cf5 , \cf6 #0x4\cf5 ]\cf2 \cb3 \
+   b23d6: f10b 0084    	add.w	\cf4 \cb3 r0\cf2 \cb3 , \cf4 \cb3 r11\cf2 \cb3 , \cf6 \cb3 #0x84\cf2 \cb3 \
+   b23da: f7d5 fe03    	bl	0x87fe4 <_ZN9rapidjson6WriterINS_19BasicOStreamWrapperISoEENS_4UTF8IcEES4_NS_12CrtAllocatorELj2EE6PrefixENS_4TypeE> @ imm = #-0x2a3fa\
+   b23de: 1e20         	subs	\cf4 \cb3 r0\cf2 \cb3 , \cf4 \cb3 r4\cf2 \cb3 , \cf6 \cb3 #0x0\cf2 \cb3 \
+   b23e0: bfa8         	it	ge\
+   b23e2: 4629         	movge	\cf4 \cb3 r1\cf2 \cb3 , \cf4 \cb3 r5\cf2 \cb3 \
+   b23e4: f2c0 808b    	blt.w	0xb24fe <_ZNK4jibo3asr13Hubmsg_LISTEN4saveERN6cereal17JSONOutputArchiveE+0x2a2> @ imm = #0x116\
+   b23e8: f7d2 fdd0    	bl	0x84f8c <_ZN9rapidjson8internal6u32toaEjPc> @ imm = #-0x2d460\
+   b23ec: 42a8         	cmp	\cf4 \cb3 r0\cf2 \cb3 , \cf4 \cb3 r5\cf2 \cb3 \
+   b23ee: 4682         	mov	\cf4 \cb3 r10\cf2 \cb3 , \cf4 \cb3 r0\cf2 \cb3 \
+   b23f0: bf18         	it	ne\
+   b23f2: 462c         	movne	\cf4 \cb3 r4\cf2 \cb3 , \cf4 \cb3 r5\cf2 \cb3 \
+   b23f4: d008         	beq	0xb2408 <_ZNK4jibo3asr13Hubmsg_LISTEN4saveERN6cereal17JSONOutputArchiveE+0x1ac> @ imm = #0x10\
+   b23f6: f8db 3084    	ldr.w	\cf4 \cb3 r3\cf2 \cb3 , \cf5 \cb3 [\cf4 r11\cf5 , \cf6 #0x84\cf5 ]\cf2 \cb3 \
+   b23fa: f814 1b01    	ldrb	\cf4 \cb3 r1\cf2 \cb3 , \cf5 \cb3 [\cf4 r4\cf5 ]\cf2 \cb3 , \cf6 \cb3 #1\cf2 \cb3 \
+   b23fe: 6818         	ldr	\cf4 \cb3 r0\cf2 \cb3 , \cf5 \cb3 [\cf4 r3\cf5 ]\cf2 \cb3 \
+   b2400: f7c3 eed2    	blx	0x761a8 <_ZNSo3putEc@plt> @ imm = #-0x3c25c\
+   b2404: 45a2         	cmp	\cf4 \cb3 r10\cf2 \cb3 , \cf4 \cb3 r4\cf2 \cb3 \
+   b2406: d1f6         	bne	0xb23f6 <_ZNK4jibo3asr13Hubmsg_LISTEN4saveERN6cereal17JSONOutputArchiveE+0x19a> @ imm = #-0x14\
+   b2408: e9db 2324    	ldrd	\cf4 \cb3 r2\cf2 \cb3 , \cf4 \cb3 r3\cf2 \cb3 , \cf5 \cb3 [\cf4 r11\cf5 , \cf6 #144\cf5 ]\cf2 \cb3 \
+   b240c: 429a         	cmp	\cf4 \cb3 r2\cf2 \cb3 , \cf4 \cb3 r3\cf2 \cb3 \
+   b240e: f000 8098    	beq.w	0xb2542 <_ZNK4jibo3asr13Hubmsg_LISTEN4saveERN6cereal17JSONOutputArchiveE+0x2e6> @ imm = #0x130\
+   b2412: 6d33         	ldr	\cf4 \cb3 r3\cf2 \cb3 , \cf5 \cb3 [\cf4 r6\cf5 , \cf6 #0x50\cf5 ]\cf2 \cb3 \
+   b2414: 3301         	adds	\cf4 \cb3 r3\cf2 \cb3 , \cf6 \cb3 #0x1\cf2 \cb3 \
+   b2416: d02e         	beq	0xb2476 <_ZNK4jibo3asr13Hubmsg_LISTEN4saveERN6cereal17JSONOutputArchiveE+0x21a> @ imm = #0x5c\
+   b2418: f8d9 2004    	ldr.w	\cf4 \cb3 r2\cf2 \cb3 , \cf5 \cb3 [\cf4 r9\cf5 , \cf6 #0x4\cf5 ]\cf2 \cb3 \
+   b241c: f643 6318    	movw	\cf4 \cb3 r3\cf2 \cb3 , \cf6 \cb3 #0x3e18\cf2 \cb3 \
+   b2420: f2c0 031f    	movt	\cf4 \cb3 r3\cf2 \cb3 , \cf6 \cb3 #0x1f\cf2 \cb3 \
+   b2424: 6852         	ldr	\cf4 \cb3 r2\cf2 \cb3 , \cf5 \cb3 [\cf4 r2\cf5 , \cf6 #0x4\cf5 ]\cf2 \cb3 \
+   b2426: 6852         	ldr	\cf4 \cb3 r2\cf2 \cb3 , \cf5 \cb3 [\cf4 r2\cf5 , \cf6 #0x4\cf5 ]\cf2 \cb3 \
+   b2428: 6854         	ldr	\cf4 \cb3 r4\cf2 \cb3 , \cf5 \cb3 [\cf4 r2\cf5 , \cf6 #0x4\cf5 ]\cf2 \cb3 \
+   b242a: f8c2 30a8    	str.w	\cf4 \cb3 r3\cf2 \cb3 , \cf5 \cb3 [\cf4 r2\cf5 , \cf6 #0xa8\cf5 ]\cf2 \cb3 \
+   b242e: 6860         	ldr	\cf4 \cb3 r0\cf2 \cb3 , \cf5 \cb3 [\cf4 r4\cf5 , \cf6 #0x4\cf5 ]\cf2 \cb3 \
+   b2430: f7d5 feb4    	bl	0x8819c <_ZN6cereal17JSONOutputArchive9writeNameEv> @ imm = #-0x2a298\
+   b2434: 6863         	ldr	\cf4 \cb3 r3\cf2 \cb3 , \cf5 \cb3 [\cf4 r4\cf5 , \cf6 #0x4\cf5 ]\cf2 \cb3 \
+   b2436: 2106         	movs	\cf4 \cb3 r1\cf2 \cb3 , \cf6 \cb3 #0x6\cf2 \cb3 \
+   b2438: 6d34         	ldr	\cf4 \cb3 r4\cf2 \cb3 , \cf5 \cb3 [\cf4 r6\cf5 , \cf6 #0x50\cf5 ]\cf2 \cb3 \
+   b243a: f8d3 b004    	ldr.w	\cf4 \cb3 r11\cf2 \cb3 , \cf5 \cb3 [\cf4 r3\cf5 , \cf6 #0x4\cf5 ]\cf2 \cb3 \
+   b243e: f10b 0084    	add.w	\cf4 \cb3 r0\cf2 \cb3 , \cf4 \cb3 r11\cf2 \cb3 , \cf6 \cb3 #0x84\cf2 \cb3 \
+   b2442: f7d5 fdcf    	bl	0x87fe4 <_ZN9rapidjson6WriterINS_19BasicOStreamWrapperISoEENS_4UTF8IcEES4_NS_12CrtAllocatorELj2EE6PrefixENS_4TypeE> @ imm = #-0x2a462\
+   b2446: 1e20         	subs	\cf4 \cb3 r0\cf2 \cb3 , \cf4 \cb3 r4\cf2 \cb3 , \cf6 \cb3 #0x0\cf2 \cb3 \
+   b2448: bfa8         	it	ge\
+   b244a: 4629         	movge	\cf4 \cb3 r1\cf2 \cb3 , \cf4 \cb3 r5\cf2 \cb3 \
+   b244c: db65         	blt	0xb251a <_ZNK4jibo3asr13Hubmsg_LISTEN4saveERN6cereal17JSONOutputArchiveE+0x2be> @ imm = #0xca\
+   b244e: f7d2 fd9d    	bl	0x84f8c <_ZN9rapidjson8internal6u32toaEjPc> @ imm = #-0x2d4c6\
+   b2452: 42a8         	cmp	\cf4 \cb3 r0\cf2 \cb3 , \cf4 \cb3 r5\cf2 \cb3 \
+   b2454: 4682         	mov	\cf4 \cb3 r10\cf2 \cb3 , \cf4 \cb3 r0\cf2 \cb3 \
+   b2456: bf18         	it	ne\
+   b2458: 462c         	movne	\cf4 \cb3 r4\cf2 \cb3 , \cf4 \cb3 r5\cf2 \cb3 \
+   b245a: d008         	beq	0xb246e <_ZNK4jibo3asr13Hubmsg_LISTEN4saveERN6cereal17JSONOutputArchiveE+0x212> @ imm = #0x10\
+   b245c: f8db 3084    	ldr.w	\cf4 \cb3 r3\cf2 \cb3 , \cf5 \cb3 [\cf4 r11\cf5 , \cf6 #0x84\cf5 ]\cf2 \cb3 \
+   b2460: f814 1b01    	ldrb	\cf4 \cb3 r1\cf2 \cb3 , \cf5 \cb3 [\cf4 r4\cf5 ]\cf2 \cb3 , \cf6 \cb3 #1\cf2 \cb3 \
+   b2464: 6818         	ldr	\cf4 \cb3 r0\cf2 \cb3 , \cf5 \cb3 [\cf4 r3\cf5 ]\cf2 \cb3 \
+   b2466: f7c3 eea0    	blx	0x761a8 <_ZNSo3putEc@plt> @ imm = #-0x3c2c0\
+   b246a: 45a2         	cmp	\cf4 \cb3 r10\cf2 \cb3 , \cf4 \cb3 r4\cf2 \cb3 \
+   b246c: d1f6         	bne	0xb245c <_ZNK4jibo3asr13Hubmsg_LISTEN4saveERN6cereal17JSONOutputArchiveE+0x200> @ imm = #-0x14\
+   b246e: e9db 2324    	ldrd	\cf4 \cb3 r2\cf2 \cb3 , \cf4 \cb3 r3\cf2 \cb3 , \cf5 \cb3 [\cf4 r11\cf5 , \cf6 #144\cf5 ]\cf2 \cb3 \
+   b2472: 429a         	cmp	\cf4 \cb3 r2\cf2 \cb3 , \cf4 \cb3 r3\cf2 \cb3 \
+   b2474: d05f         	beq	0xb2536 <_ZNK4jibo3asr13Hubmsg_LISTEN4saveERN6cereal17JSONOutputArchiveE+0x2da> @ imm = #0xbe\
+   b2476: 6d73         	ldr	\cf4 \cb3 r3\cf2 \cb3 , \cf5 \cb3 [\cf4 r6\cf5 , \cf6 #0x54\cf5 ]\cf2 \cb3 \
+   b2478: 3301         	adds	\cf4 \cb3 r3\cf2 \cb3 , \cf6 \cb3 #0x1\cf2 \cb3 \
+   b247a: d02d         	beq	0xb24d8 <_ZNK4jibo3asr13Hubmsg_LISTEN4saveERN6cereal17JSONOutputArchiveE+0x27c> @ imm = #0x5a\
+   b247c: f8d9 2004    	ldr.w	\cf4 \cb3 r2\cf2 \cb3 , \cf5 \cb3 [\cf4 r9\cf5 , \cf6 #0x4\cf5 ]\cf2 \cb3 \
+   b2480: f643 6324    	movw	\cf4 \cb3 r3\cf2 \cb3 , \cf6 \cb3 #0x3e24\cf2 \cb3 \
+   b2484: f2c0 031f    	movt	\cf4 \cb3 r3\cf2 \cb3 , \cf6 \cb3 #0x1f\cf2 \cb3 \
+   b2488: 6852         	ldr	\cf4 \cb3 r2\cf2 \cb3 , \cf5 \cb3 [\cf4 r2\cf5 , \cf6 #0x4\cf5 ]\cf2 \cb3 \
+   b248a: 6852         	ldr	\cf4 \cb3 r2\cf2 \cb3 , \cf5 \cb3 [\cf4 r2\cf5 , \cf6 #0x4\cf5 ]\cf2 \cb3 \
+   b248c: 6854         	ldr	\cf4 \cb3 r4\cf2 \cb3 , \cf5 \cb3 [\cf4 r2\cf5 , \cf6 #0x4\cf5 ]\cf2 \cb3 \
+   b248e: f8c2 30a8    	str.w	\cf4 \cb3 r3\cf2 \cb3 , \cf5 \cb3 [\cf4 r2\cf5 , \cf6 #0xa8\cf5 ]\cf2 \cb3 \
+   b2492: 6860         	ldr	\cf4 \cb3 r0\cf2 \cb3 , \cf5 \cb3 [\cf4 r4\cf5 , \cf6 #0x4\cf5 ]\cf2 \cb3 \
+   b2494: f7d5 fe82    	bl	0x8819c <_ZN6cereal17JSONOutputArchive9writeNameEv> @ imm = #-0x2a2fc\
+   b2498: 6863         	ldr	\cf4 \cb3 r3\cf2 \cb3 , \cf5 \cb3 [\cf4 r4\cf5 , \cf6 #0x4\cf5 ]\cf2 \cb3 \
+   b249a: 2106         	movs	\cf4 \cb3 r1\cf2 \cb3 , \cf6 \cb3 #0x6\cf2 \cb3 \
+   b249c: 6d74         	ldr	\cf4 \cb3 r4\cf2 \cb3 , \cf5 \cb3 [\cf4 r6\cf5 , \cf6 #0x54\cf5 ]\cf2 \cb3 \
+   b249e: 685e         	ldr	\cf4 \cb3 r6\cf2 \cb3 , \cf5 \cb3 [\cf4 r3\cf5 , \cf6 #0x4\cf5 ]\cf2 \cb3 \
+   b24a0: f106 0084    	add.w	\cf4 \cb3 r0\cf2 \cb3 , \cf4 \cb3 r6\cf2 \cb3 , \cf6 \cb3 #0x84\cf2 \cb3 \
+   b24a4: f7d5 fd9e    	bl	0x87fe4 <_ZN9rapidjson6WriterINS_19BasicOStreamWrapperISoEENS_4UTF8IcEES4_NS_12CrtAllocatorELj2EE6PrefixENS_4TypeE> @ imm = #-0x2a4c4\
+   b24a8: 1e20         	subs	\cf4 \cb3 r0\cf2 \cb3 , \cf4 \cb3 r4\cf2 \cb3 , \cf6 \cb3 #0x0\cf2 \cb3 \
+   b24aa: bfa8         	it	ge\
+   b24ac: 4629         	movge	\cf4 \cb3 r1\cf2 \cb3 , \cf4 \cb3 r5\cf2 \cb3 \
+   b24ae: db2d         	blt	0xb250c <_ZNK4jibo3asr13Hubmsg_LISTEN4saveERN6cereal17JSONOutputArchiveE+0x2b0> @ imm = #0x5a\
+   b24b0: f7d2 fd6c    	bl	0x84f8c <_ZN9rapidjson8internal6u32toaEjPc> @ imm = #-0x2d528\
+   b24b4: 42a8         	cmp	\cf4 \cb3 r0\cf2 \cb3 , \cf4 \cb3 r5\cf2 \cb3 \
+   b24b6: 4681         	mov	\cf4 \cb3 r9\cf2 \cb3 , \cf4 \cb3 r0\cf2 \cb3 \
+   b24b8: bf18         	it	ne\
+   b24ba: 462c         	movne	\cf4 \cb3 r4\cf2 \cb3 , \cf4 \cb3 r5\cf2 \cb3 \
+   b24bc: d008         	beq	0xb24d0 <_ZNK4jibo3asr13Hubmsg_LISTEN4saveERN6cereal17JSONOutputArchiveE+0x274> @ imm = #0x10\
+   b24be: f8d6 3084    	ldr.w	\cf4 \cb3 r3\cf2 \cb3 , \cf5 \cb3 [\cf4 r6\cf5 , \cf6 #0x84\cf5 ]\cf2 \cb3 \
+   b24c2: f814 1b01    	ldrb	\cf4 \cb3 r1\cf2 \cb3 , \cf5 \cb3 [\cf4 r4\cf5 ]\cf2 \cb3 , \cf6 \cb3 #1\cf2 \cb3 \
+   b24c6: 6818         	ldr	\cf4 \cb3 r0\cf2 \cb3 , \cf5 \cb3 [\cf4 r3\cf5 ]\cf2 \cb3 \
+   b24c8: f7c3 ee6e    	blx	0x761a8 <_ZNSo3putEc@plt> @ imm = #-0x3c324\
+   b24cc: 45a1         	cmp	\cf4 \cb3 r9\cf2 \cb3 , \cf4 \cb3 r4\cf2 \cb3 \
+   b24ce: d1f6         	bne	0xb24be <_ZNK4jibo3asr13Hubmsg_LISTEN4saveERN6cereal17JSONOutputArchiveE+0x262> @ imm = #-0x14\
+   b24d0: e9d6 2324    	ldrd	\cf4 \cb3 r2\cf2 \cb3 , \cf4 \cb3 r3\cf2 \cb3 , \cf5 \cb3 [\cf4 r6\cf5 , \cf6 #144\cf5 ]\cf2 \cb3 \
+   b24d4: 429a         	cmp	\cf4 \cb3 r2\cf2 \cb3 , \cf4 \cb3 r3\cf2 \cb3 \
+   b24d6: d03a         	beq	0xb254e <_ZNK4jibo3asr13Hubmsg_LISTEN4saveERN6cereal17JSONOutputArchiveE+0x2f2> @ imm = #0x74\
+   b24d8: f8d8 0004    	ldr.w	\cf4 \cb3 r0\cf2 \cb3 , \cf5 \cb3 [\cf4 r8\cf5 , \cf6 #0x4\cf5 ]\cf2 \cb3 \
+   b24dc: f7d6 f870    	bl	0x885c0 <_ZN6cereal17JSONOutputArchive10finishNodeEv> @ imm = #-0x29f20\
+   b24e0: 6878         	ldr	\cf4 \cb3 r0\cf2 \cb3 , \cf5 \cb3 [\cf4 r7\cf5 , \cf6 #0x4\cf5 ]\cf2 \cb3 \
+   b24e2: f7d6 f86d    	bl	0x885c0 <_ZN6cereal17JSONOutputArchive10finishNodeEv> @ imm = #-0x29f26\
+   b24e6: b005         	add	\cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0x14\cf2 \cb3 \
+   b24e8: e9dd 4500    	ldrd	\cf4 \cb3 r4\cf2 \cb3 , \cf4 \cb3 r5\cf2 \cb3 , \cf5 \cb3 [\cf4 sp\cf5 ]\cf2 \cb3 \
+   b24ec: e9dd 6702    	ldrd	\cf4 \cb3 r6\cf2 \cb3 , \cf4 \cb3 r7\cf2 \cb3 , \cf5 \cb3 [\cf4 sp\cf5 , \cf6 #8\cf5 ]\cf2 \cb3 \
+   b24f0: e9dd 8904    	ldrd	\cf4 \cb3 r8\cf2 \cb3 , \cf4 \cb3 r9\cf2 \cb3 , \cf5 \cb3 [\cf4 sp\cf5 , \cf6 #16\cf5 ]\cf2 \cb3 \
+   b24f4: e9dd ab06    	ldrd	\cf4 \cb3 r10\cf2 \cb3 , \cf4 \cb3 r11\cf2 \cb3 , \cf5 \cb3 [\cf4 sp\cf5 , \cf6 #24\cf5 ]\cf2 \cb3 \
+   b24f8: b008         	add	\cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0x20\cf2 \cb3 \
+   b24fa: f85d fb04    	ldr	\cf4 \cb3 pc\cf2 \cb3 , \cf5 \cb3 [\cf4 sp\cf5 ]\cf2 \cb3 , \cf6 \cb3 #4\cf2 \cb3 \
+   b24fe: 232d         	movs	\cf4 \cb3 r3\cf2 \cb3 , \cf6 \cb3 #0x2d\cf2 \cb3 \
+   b2500: 4240         	rsbs	\cf4 \cb3 r0\cf2 \cb3 , \cf4 \cb3 r0\cf2 \cb3 , #0\
+   b2502: f10d 0105    	add.w	\cf4 \cb3 r1\cf2 \cb3 , \cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0x5\cf2 \cb3 \
+   b2506: f88d 3004    	strb.w	\cf4 \cb3 r3\cf2 \cb3 , \cf5 \cb3 [\cf4 sp\cf5 , \cf6 #0x4\cf5 ]\cf2 \cb3 \
+   b250a: e76d         	b	0xb23e8 <_ZNK4jibo3asr13Hubmsg_LISTEN4saveERN6cereal17JSONOutputArchiveE+0x18c> @ imm = #-0x126\
+   b250c: 232d         	movs	\cf4 \cb3 r3\cf2 \cb3 , \cf6 \cb3 #0x2d\cf2 \cb3 \
+   b250e: 4240         	rsbs	\cf4 \cb3 r0\cf2 \cb3 , \cf4 \cb3 r0\cf2 \cb3 , #0\
+   b2510: f10d 0105    	add.w	\cf4 \cb3 r1\cf2 \cb3 , \cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0x5\cf2 \cb3 \
+   b2514: f88d 3004    	strb.w	\cf4 \cb3 r3\cf2 \cb3 , \cf5 \cb3 [\cf4 sp\cf5 , \cf6 #0x4\cf5 ]\cf2 \cb3 \
+   b2518: e7ca         	b	0xb24b0 <_ZNK4jibo3asr13Hubmsg_LISTEN4saveERN6cereal17JSONOutputArchiveE+0x254> @ imm = #-0x6c\
+   b251a: 232d         	movs	\cf4 \cb3 r3\cf2 \cb3 , \cf6 \cb3 #0x2d\cf2 \cb3 \
+   b251c: 4240         	rsbs	\cf4 \cb3 r0\cf2 \cb3 , \cf4 \cb3 r0\cf2 \cb3 , #0\
+   b251e: f10d 0105    	add.w	\cf4 \cb3 r1\cf2 \cb3 , \cf4 \cb3 sp\cf2 \cb3 , \cf6 \cb3 #0x5\cf2 \cb3 \
+   b2522: f88d 3004    	strb.w	\cf4 \cb3 r3\cf2 \cb3 , \cf5 \cb3 [\cf4 sp\cf5 , \cf6 #0x4\cf5 ]\cf2 \cb3 \
+   b2526: f7d2 fd31    	bl	0x84f8c <_ZN9rapidjson8internal6u32toaEjPc> @ imm = #-0x2d59e\
+   b252a: 42a8         	cmp	\cf4 \cb3 r0\cf2 \cb3 , \cf4 \cb3 r5\cf2 \cb3 \
+   b252c: 4682         	mov	\cf4 \cb3 r10\cf2 \cb3 , \cf4 \cb3 r0\cf2 \cb3 \
+   b252e: bf18         	it	ne\
+   b2530: 462c         	movne	\cf4 \cb3 r4\cf2 \cb3 , \cf4 \cb3 r5\cf2 \cb3 \
+   b2532: d193         	bne	0xb245c <_ZNK4jibo3asr13Hubmsg_LISTEN4saveERN6cereal17JSONOutputArchiveE+0x200> @ imm = #-0xda\
+   b2534: e79b         	b	0xb246e <_ZNK4jibo3asr13Hubmsg_LISTEN4saveERN6cereal17JSONOutputArchiveE+0x212> @ imm = #-0xca\
+   b2536: f8db 3084    	ldr.w	\cf4 \cb3 r3\cf2 \cb3 , \cf5 \cb3 [\cf4 r11\cf5 , \cf6 #0x84\cf5 ]\cf2 \cb3 \
+   b253a: 6818         	ldr	\cf4 \cb3 r0\cf2 \cb3 , \cf5 \cb3 [\cf4 r3\cf5 ]\cf2 \cb3 \
+   b253c: f7c3 ed98    	blx	0x76070 <_ZNSo5flushEv@plt> @ imm = #-0x3c4d0\
+   b2540: e799         	b	0xb2476 <_ZNK4jibo3asr13Hubmsg_LISTEN4saveERN6cereal17JSONOutputArchiveE+0x21a> @ imm = #-0xce\
+   b2542: f8db 3084    	ldr.w	\cf4 \cb3 r3\cf2 \cb3 , \cf5 \cb3 [\cf4 r11\cf5 , \cf6 #0x84\cf5 ]\cf2 \cb3 \
+   b2546: 6818         	ldr	\cf4 \cb3 r0\cf2 \cb3 , \cf5 \cb3 [\cf4 r3\cf5 ]\cf2 \cb3 \
+   b2548: f7c3 ed92    	blx	0x76070 <_ZNSo5flushEv@plt> @ imm = #-0x3c4dc\
+   b254c: e761         	b	0xb2412 <_ZNK4jibo3asr13Hubmsg_LISTEN4saveERN6cereal17JSONOutputArchiveE+0x1b6> @ imm = #-0x13e\
+   b254e: f8d6 3084    	ldr.w	\cf4 \cb3 r3\cf2 \cb3 , \cf5 \cb3 [\cf4 r6\cf5 , \cf6 #0x84\cf5 ]\cf2 \cb3 \
+   b2552: 6818         	ldr	\cf4 \cb3 r0\cf2 \cb3 , \cf5 \cb3 [\cf4 r3\cf5 ]\cf2 \cb3 \
+   b2554: f7c3 ed8c    	blx	0x76070 <_ZNSo5flushEv@plt> @ imm = #-0x3c4e8\
+   b2558: e7be         	b	0xb24d8 <_ZNK4jibo3asr13Hubmsg_LISTEN4saveERN6cereal17JSONOutputArchiveE+0x27c> @ imm = #-0x84\
+   b255a: bf00         	nop\
+\
+000b255c <_ZN4jibo3asr10ListenLoop12onInitializeERN4Poco4Util11ApplicationE>:\
+   b255c: f8c0 12e0    	str.w	\cf4 \cb3 r1\cf2 \cb3 , \cf5 \cb3 [\cf4 r0\cf5 , \cf6 #0x2e0\cf5 ]\cf2 \cb3 \
+   b2560: 4770         	bx	\cf4 \cb3 lr\cf2 \cb3 \
+   b2562: bf00         	nop\
+\
+000b2564 <_ZN4jibo3asr10ListenLoop14hjw_jm_hub_sosERKN4Poco7AutoPtrINS0_10jm_hub_sosEEE>:\
+   b2564: 4770         	bx	\cf4 \cb3 lr\cf2 \cb3 \
+   b2566: bf00         	nop\
+\
+000b2568 <_ZN4jibo3asr10ListenLoop14hjw_jm_hub_eosERKN4Poco7AutoPtrINS0_10jm_hub_eosEEE>:\
+   b2568: 4770         	bx	\cf4 \cb3 lr\cf2 \cb3 \
+   b256a: bf00         	nop\
+\
+000b256c <_ZN4jibo3asr10ListenLoop22hjw_jm_hub_sos_timeoutERKN4Poco7AutoPtrINS0_18jm_hub_sos_timeoutEEE>:\
+   b256c: 4770         	bx	\cf4 \cb3 lr\cf2 \cb3 \
+   b256e: bf00         	nop\
+\
+000b2570 <_ZN4jibo3asr10ListenLoop29hjw_jm_hub_max_speech_timeoutERKN4Poco7AutoPtrINS0_25jm_hub_max_speech_timeoutEEE>:\
+   b2570: 4770         	bx	\cf4 \cb3 lr\cf2 \cb3 \
+   b2572: bf00         	nop\
+\
+000b2574 <_ZN4jibo3asr10ListenLoop17hjw_jm_hub_listenERKN4Poco7AutoPtrINS0_13jm_hub_listenEEE>:\
+   b2574: 4770         	bx	\cf4 \cb3 lr\cf2 \cb3 \
+   b2576: bf00         	nop\
+\
+000b2578 <_ZN4jibo3asr10ListenLoop16hjw_jm_hub_errorERKN4Poco7AutoPtrINS0_12jm_hub_errorEEE>:\
+   b2578: 4770         	bx	\cf4 \cb3 lr\cf2 \cb3 \
+   b257a: bf00         	nop\
+\
+000b257c <_ZN4jibo3asr10ListenLoop21hjw_jm_hub_skill_infoERKN4Poco7AutoPtrINS0_17jm_hub_skill_infoEEE>:\
+   b257c: 4770         	bx	\cf4 \cb3 lr\cf2 \cb3 \
+   b257e: bf00         	nop\
+\
+000b2580 <_ZN4jibo3asr10ListenLoop24hjw_jm_cancel_local_turnERKN4Poco7AutoPtrINS0_20jm_cancel_local_turnEEE>:\
+   b2580: 4770         	bx	\cf4 \cb3 lr\cf2 \cb3 \
+   b2582: bf00         	nop\
+\
+000b2584 <_ZN4jibo3asr10ListenLoop22hjw_jm_cancel_any_turnERKN4Poco7AutoPtrINS0_18jm_cancel_any_turnEEE>:\
+   b2584: 4770         	bx	\cf4 \cb3 lr\cf2 \cb3 \
+   b2586: bf00         	nop\
+\
+000b2588 <_ZN4jibo3asr10ListenLoop32hjw_jm_hub_client_connect_resultERKN4Poco7AutoPtrINS0_28jm_hub_client_connect_resultEEE>:\
+   b2588: 4770         	bx	\cf4 \cb3 lr\cf2 \cb3 \
+   b258a: bf00         	nop\
+\
+000b258c <_ZN4jibo3asr10ListenLoop34hjw_jm_hub_client_connection_errorERKN4Poco7AutoPtrINS0_30jm_hub_client_connection_errorEEE>:\
+   b258c: 4770         	bx	\cf4 \cb3 lr\cf2 \cb3 \
+   b258e: bf00         	nop\
+\
+000b2590 <_ZN4jibo3asr10ListenLoop31hjw_jm_speaker_enrollment_eventERKN4Poco7AutoPtrINS0_27jm_speaker_enrollment_eventEEE>:\
+   b2590: 4770         	bx	\cf4 \cb3 lr\cf2 \cb3 \
+   b2592: bf00         	nop\
+\
+000b2594 <_ZN4jibo3asr10ListenLoop33hjw_jm_speaker_enrollment_startedERKN4Poco7AutoPtrINS0_29jm_speaker_enrollment_startedEEE>:\
+   b2594: 4770         	bx	\cf4 \cb3 lr\cf2 \cb3 \
+   b2596: bf00         	nop\
+\
+000b2598 <_ZN4jibo3asr10ListenLoop35hjw_jm_pronunciation_learning_eventERKN4Poco7AutoPtrINS0_31jm_pronunciation_learning_eventEEE>:\
+   b2598: 4770         	bx	\cf4 \cb3 lr\cf2 \cb3 \
+   b259a: bf00         	nop\
+\
+000b259c <_ZN4jibo3asr10ListenLoop37hjw_jm_pronunciation_learning_startedERKN4Poco7AutoPtrINS0_33jm_pronunciation_learning_startedEEE>:\
+   b259c: 4770         	bx	\cf4 \cb3 lr\cf2 \cb3 \
+   b259e: bf00         	nop\
+\
+000b25a0 <_ZN4jibo3asr10ListenLoop24hjw_jm_update_local_turnERKN4Poco7AutoPtrINS0_20jm_update_local_turnEEE>:\
+   b25a0: 4770         	bx	\cf4 \cb3 lr\cf2 \cb3 \
+   b25a2: bf00         	nop\
+\
+000b25a4 <_ZN4jibo3asr10ListenLoop33phw_jm_speaker_enrollment_startedERKN4Poco7AutoPtrINS0_29jm_speaker_enrollment_startedEEE>:\
+   b25a4: 4770         	bx	\cf4 \cb3 lr\cf2 \cb3 \
+   b25a6: bf00         	nop\
+\
+000b25a8 <_ZN4jibo3asr10ListenLoop31phw_jm_speaker_enrollment_eventERKN4Poco7AutoPtrINS0_27jm_speaker_enrollment_eventEEE>:\
+   b25a8: 4770         	bx	\cf4 \cb3 lr\cf2 \cb3 \
+   b25aa: bf00         	nop\
+\
+000b25ac <_ZN4jibo3asr10ListenLoop37phw_jm_pronunciation_learning_startedERKN4Poco7AutoPtrINS0_33jm_pronunciation_learning_startedEEE>:\
+   b25ac: 4770         	bx	\cf4 \cb3 lr\cf2 \cb3 \
+   b25ae: bf00         	nop\
+\
+000b25b0 <_ZN4jibo3asr10ListenLoop35phw_jm_pronunciation_learning_eventERKN4Poco7AutoPtrINS0_31jm_pronunciation_learning_eventEEE>:\
+   b25b0: 4770         	bx	\cf4 \cb3 lr\cf2 \cb3 \
+   b25b2: bf00         	nop\
+\
+000b25b4 <_ZN4jibo3asr10ListenLoop37enw_jm_pronunciation_learning_startedERKN4Poco7AutoPtrINS0_33jm_pronunciation_learning_startedEEE>:\
+   b25b4: 4770         	bx	\cf4 \cb3 lr\cf2 \cb3 \
+   b25b6: bf00         	nop\
+\
+000b25b8 <_ZN4jibo3asr10ListenLoop35enw_jm_pronunciation_learning_eventERKN4Poco7AutoPtrINS0_31jm_pronunciation_learning_eventEEE>:\
+   b25b8: 4770         	bx	\cf4 \cb3 lr\cf2 \cb3 \
+   b25ba: bf00         	nop\
+\
+000b25bc <_ZN4jibo3asr10ListenLoop26enw_jm_recog_speaker_eventERKN4Poco7AutoPtrINS0_22jm_recog_speaker_eventEEE>:\
+   b25bc: 4770         	bx	\cf4 \cb3 lr\cf2 \cb3 \
+   b25be: bf00         	nop\
+\
+000b25c0 <_ZN4jibo3asr10ListenLoop21enw_jm_recog_hj_eventERKN4Poco7AutoPtrINS0_17jm_recog_hj_eventEEE>:\
+   b25c0: 4770         	bx	\cf4 \cb3 lr\cf2 \cb3 \
+   b25c2: bf00         	nop\
+\
+000b25c4 <_ZN4jibo3asr10ListenLoop24enw_jm_update_local_turnERKN4Poco7AutoPtrINS0_20jm_update_local_turnEEE>:\
+   b25c4: 4770         	bx	\cf4 \cb3 lr\cf2 \cb3 \
+   b25c6: bf00         	nop\
+\
+000b25c8 <_ZN4jibo3asr10ListenLoop14enw_jm_hub_sosERKN4Poco7AutoPtrINS0_10jm_hub_sosEEE>:\
+   b25c8: 4770         	bx	\cf4 \cb3 lr\cf2 \cb3 \
+   b25ca: bf00         	nop\
+\
+000b25cc <_ZN4jibo3asr10ListenLoop14enw_jm_hub_eosERKN4Poco7AutoPtrINS0_10jm_hub_eosEEE>:\
+   b25cc: 4770         	bx	\cf4 \cb3 lr\cf2 \cb3 \
+   b25ce: bf00         	nop\
+\
+000b25d0 <_ZN4jibo3asr10ListenLoop22enw_jm_hub_sos_timeoutERKN4Poco7AutoPtrINS0_18jm_hub_sos_timeoutEEE>:\
+   b25d0: 4770         	bx	\cf4 \cb3 lr\cf2 \cb3 \
+   b25d2: bf00         	nop\
+\
+000b25d4 <_ZN4jibo3asr10ListenLoop29enw_jm_hub_max_speech_timeoutERKN4Poco7AutoPtrINS0_25jm_hub_max_speech_timeoutEEE>:\
+   b25d4: 4770         	bx	\cf4 \cb3 lr\cf2 \cb3 \
+   b25d6: bf00         	nop\
+\
+000b25d8 <_ZN4jibo3asr10ListenLoop17enw_jm_hub_listenERKN4Poco7AutoPtrINS0_13jm_hub_listenEEE>:\
+   b25d8: 4770         	bx	\cf4 \cb3 lr\cf2 \cb3 \
+   b25da: bf00         	nop\
+\
+000b25dc <_ZN4jibo3asr10ListenLoop16enw_jm_hub_errorERKN4Poco7AutoPtrINS0_12jm_hub_errorEEE>:\
+   b25dc: 4770         	bx	\cf4 \cb3 lr\cf2 \cb3 \
+   b25de: bf00         	nop\
+victorchironachi@Victors-MacBook-Pro ~ % \
+}

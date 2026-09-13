@@ -1,0 +1,2824 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2870
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fnil\fcharset0 Menlo-Regular;}
+{\colortbl;\red255\green255\blue255;\red224\green224\blue224;\red25\green29\blue39;}
+{\*\expandedcolortbl;;\csgenericrgb\c87761\c87761\c87761;\csgenericrgb\c9839\c11388\c15260\c95000;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf2 \cb3 \CocoaLigature0 # node -e "const fs=require('fs'); const m=JSON.parse(fs.readFileSync('/usr/local/bin/jibo-ssm/lib/skills-service-manage\
+r.js.map','utf8')); for(let i=0;i<m.sources.length;i++)\{if(m.sourcesContent[i] && /launchRule|launch\\.rule|getActiveGlob\
+als|nluRules|skillID|rule-generator/i.test(m.sourcesContent[i])) console.log('\\\\n===== '+m.sources[i]+' =====\\\\n'+m.sour\
+cesContent[i])\}"\
+\
+===== src/services/error/ErrorService.ts =====\
+import \{\
+    HTTPWSService,\
+    JiboServerRequest,\
+    JiboServerResponse,\
+    RegistrationRecord,\
+    RegistryClient,\
+    ServiceOptions,\
+    WSClient,\
+\} from 'jibo-service-framework';\
+import WebSocket = require('ws');\
+import \{Node\} from 'jibo-kb';\
+import KBService from '../kb/KBService';\
+import kb from '../../clients/KBClient';\
+import Router = require('router');\
+import PriorityQueue from './PriorityQueue';\
+import \{ types \} from '@jibo/jetstream-client';\
+import JiboError from './JiboError';\
+import DebugErrorReporter from './DebugErrorReporter';\
+import ErrorServiceUtil from './ErrorServiceUtil';\
+import ErrorRescheduler from './ErrorRescheduler';\
+import ErrorLogger from './ErrorLogger';\
+import GlobalManagerService from "../global-manager/GlobalManagerService";\
+import \{PromiseUtils\} from 'jibo-cai-utils';\
+import RunMode from '../../utils/RunMode';\
+import \{EventEmitter\} from 'events';\
+import \{SSMService\} from '../../SSMService';\
+\
+import parentLog from '../log';\
+const log = parentLog.createChild('Error');\
+\
+const errorCodesJson = require('./ErrorCodes.json');\
+\
+const prify = PromiseUtils.promisify;\
+const prto = PromiseUtils.promisifyTo;\
+\
+class ErrorService extends HTTPWSService implements SSMService \{\
+\
+    public static Types = \{\
+        JiboError,\
+        DebugErrorReporter,\
+        PriorityQueue,\
+        ErrorServiceUtil,\
+        ErrorRescheduler,\
+        ErrorLogger\
+    \};\
+\
+    private static _instance: ErrorService = null;\
+\
+    //Emit events with error IDs when errors are added or removed:\
+    private _errorAddedEmitter:EventEmitter = new EventEmitter();\
+    private _errorRemovedEmitter:EventEmitter = new EventEmitter();\
+\
+    // the current "active" error which would be reporting to Be/Settings.\
+    // if this is not equal to what the priority queue thinks is the highest priority error, we need to update Be/Settings on\
+    // what the highest priority skill currently is\
+    private _currentError: JiboError = null;\
+    // stores a list of errors sorted by priority (and then error id as a secondary comparison field)\
+    private _errorPriorityQueue: PriorityQueue<JiboError> = null;\
+    private _errorRescheduler: ErrorRescheduler = null;\
+    private _errorLogger: ErrorLogger = null;\
+\
+    // connects to either the platform system monitoring service or the simulated version when running in the sim\
+    private _systemMonitoringServiceSocket: WSClient = null;\
+    private _errorCodesKBRootNode: Node = null;\
+    // a mapping of support error id -> error objects.\
+    private _errorCodeMap: \{ [key:string]:JiboError; \} = \{\};\
+    // a mapping of platform id -> support error code\
+    private _platformErrorCodeMap: \{ [key:string]:string; \} = \{\};\
+    // this data structure stores what the platform has reported for errors the previous time the reporting function was called\
+    private _lastErrors: \{ [key:string]:JiboError; \} = \{\};\
+\
+    // a registration record to store ip and port info about the system monitoring service\
+    private _systemMonitoringService: RegistrationRecord = null;\
+    private _debugErrorReporter: DebugErrorReporter = null;\
+    private _mockErrorsEnabled: boolean = false;\
+\
+    // by default when receiving errors, we want to switch into the settings skill\
+    // toggling this variable disables that switch\
+    private _disableSkillSwitch: boolean = false;\
+    private _errorSubscribeCallback: ()=>void = null;\
+\
+    private _subscribedErrorObject: JiboError = null;\
+\
+    public static get instance(): ErrorService \{\
+        return ErrorService._instance;\
+    \}\
+\
+    constructor(options:ServiceOptions, rootDir: string) \{\
+        super('error-service', options, rootDir);\
+        if (ErrorService._instance) \{\
+            throw new Error('Cannot instantiate ErrorService more than once');\
+        \}\
+        ErrorService._instance = this;\
+\
+        this._errorPriorityQueue = new PriorityQueue<JiboError>(JiboError.Comparer, false);\
+        this._errorRescheduler = new ErrorRescheduler();\
+        this._errorLogger = new ErrorLogger(log.createChild('Logger'));\
+\
+        // always enable the debug errors when running on the simulator\
+        if(RunMode.runMode === RunMode.RunMode.SIMULATOR) \{\
+            this._mockErrorsEnabled = true;\
+        \}\
+\
+        // set up the mapping for the error codes and platform codes\
+        Object.keys(errorCodesJson.errorCodes).forEach((errorCodeId)=>\{\
+            let errorCode = errorCodesJson.errorCodes[errorCodeId];\
+            let jiboError = new JiboError(errorCodeId, errorCode);\
+            this._errorCodeMap[jiboError.id] = jiboError;\
+            if(jiboError.platformCode) \{\
+                this._platformErrorCodeMap[jiboError.platformCode] = jiboError.id;\
+            \}\
+        \});\
+\
+        log.info("Instantiated");\
+    \}\
+\
+    // seed the KB with all the errors, find the system monitoring service, and start the connection\
+    public init(callback: (err?:Error)=>void) \{\
+        super.init((err:Error) => \{\
+            RegistryClient.instance.getRecords((err:Error, records:Array<RegistrationRecord>)=>\{\
+                if(err) \{\
+                    return callback(err);\
+                \}\
+                // store all the errors into the KB\
+                let url = "http://" + RegistryClient.instance.host + ":" + KBService.instance.port;\
+                let model = kb.createModel('/error-codes', url);\
+                model.loadRoot((err, rootNode)=>\{\
+                    if (err) \{\
+                        return callback(err);\
+                    \}\
+                    this._errorCodesKBRootNode = rootNode;\
+                    this._errorCodesKBRootNode.data.errorCodes = errorCodesJson.errorCodes;\
+                    this._errorCodesKBRootNode.save(err => \{\
+                        if (err) \{\
+                            return callback(err);\
+                        \}\
+                        this._systemMonitoringService = records.find(record => record.name === 'system-monitoring-service');\
+                        this._connectToSystemMonitor();\
+                        // Continue along with SSM startup, even if the system\
+                        // monitor isn't yet available\
+                        log.info('Initialized');\
+                        callback();\
+                    \});\
+                \});\
+            \});\
+        \});\
+    \}\
+\
+    public routes(url:Router):void \{\
+        super.routes(url);\
+\
+        // handle requests for mocking errors from the error service debug page\
+        url.post('/mockErrorCodes', (req:JiboServerRequest, res:JiboServerResponse) => \{\
+            this._mockErrorCodes(req, res);\
+        \});\
+\
+        // handle requests for getting data about the errors\
+        url.post('/errorCodeData', (req:JiboServerRequest, res:JiboServerResponse) => \{\
+            this._sendErrorCodeData(req, res);\
+        \});\
+\
+        url.post('/getErrorCount', (req:JiboServerRequest, res:JiboServerResponse) => \{\
+            this._getErrorCount(req, res);\
+        \});\
+\
+        url.post('/subscribeError', (req:JiboServerRequest, res:JiboServerResponse) => \{\
+            this._subscribeError(req, res);\
+        \});\
+\
+        url.post('/processedError', (req:JiboServerRequest, res:JiboServerResponse) => \{\
+            this._processedError(req, res);\
+        \});\
+\
+        url.post('/disableSkillSwitching', (req:JiboServerRequest, res:JiboServerResponse) => \{\
+            this._disableSkillSwitching(req, res);\
+        \});\
+\
+        url.post('/getCurrentErrorId', (req:JiboServerRequest, res:JiboServerResponse) => \{\
+            this._getCurrentErrorId(req, res);\
+        \});\
+\
+        url.post('/getContents', (req:JiboServerRequest, res:JiboServerResponse) => \{\
+            this._getContents(req, res);\
+        \});\
+    \}\
+\
+    public addError(supportErrorId:string): boolean \{\
+        if(this._errorCodeMap.hasOwnProperty(supportErrorId) &&\
+            // don't add the error if it is lurking in the error rescheduler.  it will re-add itself to the priority queue when it's timer is up\
+            !this._errorRescheduler.contains(supportErrorId)) \{\
+\
+            let error = this._errorCodeMap[supportErrorId];\
+            this._errorLogger.addError(error);\
+            this._errorAddedEmitter.emit(error.id);\
+            if(error.priority !== -1) \{\
+                return this._errorPriorityQueue.add(error);\
+            \}\
+        \}\
+        return false;\
+    \}\
+\
+    public removeError(supportErrorId:string): boolean \{\
+        if(this._errorCodeMap.hasOwnProperty(supportErrorId)) \{\
+            // remove it from the rescheduler in case it's waiting to be rescheduled\
+            this._errorRescheduler.remove(supportErrorId);\
+\
+            let error = this._errorCodeMap[supportErrorId];\
+            this._errorLogger.removeError(error);\
+            this._errorRemovedEmitter.emit(error.id);\
+            return this._errorPriorityQueue.delete(error);\
+        \}\
+        return false;\
+    \}\
+\
+    public addErrorAddedListener(errorId:string, callback:()=>void)\{\
+        this._errorAddedEmitter.on(errorId, callback);\
+    \}\
+    public removeErrorAddedListener(errorId:string, callback:()=>void)\{\
+        this._errorAddedEmitter.removeListener(errorId, callback);\
+    \}\
+    public addErrorRemovedListener(errorId:string, callback:()=>void)\{\
+        this._errorRemovedEmitter.on(errorId, callback);\
+    \}\
+    public removeErrorRemovedListener(errorId:string, callback:()=>void)\{\
+        this._errorRemovedEmitter.removeListener(errorId, callback);\
+    \}\
+\
+    /*\
+     * @description returns whether or not an error of given ID exists in ErrorCodes data\
+     * @method WifiService#onHealth\
+     * @param errorId \{String\} error ID to check\
+     * @public\
+     * @returns \{Boolean\} whether or not errorId exists in _errorCodeMap\
+     */\
+    public errorExists(errorId):boolean\{\
+        return this._errorCodeMap.hasOwnProperty(errorId);\
+    \}\
+\
+    protected onMessage(message: any, client: WebSocket): void \{\
+        return;\
+    \}\
+\
+    private async _connectToSystemMonitor() \{\
+        let attempt = 1;\
+        while (!this._systemMonitoringService) \{\
+            attempt++;\
+            const [err, record] = await prto<RegistrationRecord>(cb => RegistryClient.instance.getRecordByName('system-monitoring-service', cb));\
+            if (err) \{\
+                log.warn(`Couldn't connect to system monitoring service on attempt $\{attempt\}`, err);\
+                await prify(cb => setTimeout(cb, 1000));\
+            \} else \{\
+                this._systemMonitoringService = record;\
+            \}\
+        \}\
+        const uri = "ws://" + this._systemMonitoringService.host + ":" + this._systemMonitoringService.port + "/errors/codes";\
+        this._systemMonitoringServiceSocket = new WSClient(uri);\
+        this._systemMonitoringServiceSocket.once('open', () => \{\
+            this._systemMonitoringServiceSocket.on('message', this._receivedSystemMonitoringServiceErrors.bind(this));\
+            this._systemMonitoringServiceSocket.on('error', this._onSocketError.bind(this));\
+            const message = `connected to the system-monitoring/error/codes after $\{attempt\} attempt$\{attempt > 1 ? 's' : ''\}`;\
+            if(attempt > 1) \{\
+                log.info(message);\
+            \} else \{\
+                log.debug(message);\
+            \}\
+        \});\
+        // set up the DebugErrorReporter at the point where we're connected to the system monitoring service\
+        this._debugErrorReporter = new DebugErrorReporter(this._errorCodeMap, this.addError.bind(this), this.removeError.bind(this), this._receivedMockErrors.bind(this));\
+        this._errorPriorityQueue.onItemAdded = this._errorsAdded.bind(this);\
+        this._errorPriorityQueue.onItemRemoved = this._errorsRemoved.bind(this);\
+    \}\
+\
+    private _disableSkillSwitching(req:JiboServerRequest, res:JiboServerResponse): void \{\
+        this.parseBody(req, (err, disableSkillSwitchingJson) => \{\
+            if (err) \{\
+                return this.sendJson(res, \{ status: 'error', message: typeof err === 'string' ? err : err.message \}, 500);\
+            \}\
+            if(disableSkillSwitchingJson.hasOwnProperty('disabled')) \{\
+                this._disableSkillSwitch = disableSkillSwitchingJson.disabled;\
+\
+                if(!this._disableSkillSwitch && this._errorPriorityQueue.peek() !== null) \{\
+                    this._launchErrorSkill();\
+                \}\
+\
+                this.sendJson(res, \{ status: 'OK' \});\
+            \} else \{\
+                this.sendJson(res, \{ status: 'error', message: 'disabled property does not exist on json object' \}, 500);\
+            \}\
+        \});\
+    \}\
+\
+    private _getCurrentErrorId(req:JiboServerRequest, res:JiboServerResponse): void \{\
+        this._currentError = this._errorPriorityQueue.peek();\
+        let currentErrorId = ((this._currentError !== null) ? this._currentError.id : null);\
+        this.sendJson(res, \{ status: 'OK', currentErrorId: currentErrorId \});\
+    \}\
+\
+    // reply to routes endpoint with all active priority queue errors and rescheduler errors\
+    private _getContents(req:JiboServerRequest, res:JiboServerResponse): void \{\
+        let array = [];\
+        for(let i = 0; i < this._errorPriorityQueue.length; ++i) \{\
+            array.push(this._errorPriorityQueue.getIndex(i));\
+        \}\
+        let priorityQueueArrayJSON = JSON.stringify(array);\
+        let reschedulerArrayJSON = JSON.stringify(this._errorRescheduler.toArray());\
+        this.sendJson(res, \{\
+            status: 'OK',\
+            priorityQueueErrors: priorityQueueArrayJSON,\
+            reschedulerErrors: reschedulerArrayJSON\
+        \});\
+    \}\
+\
+    private _processedError(req:JiboServerRequest, res:JiboServerResponse): void \{\
+        this.parseBody(req, (err, processedErrorJson) => \{\
+            if (err) \{\
+                return this.sendJson(res, \{ status: 'error', message: typeof err === 'string' ? err : err.message \}, 500);\
+            \}\
+            if(processedErrorJson.hasOwnProperty('errorCode')) \{\
+                const processedErrorCode = processedErrorJson.errorCode;\
+                let successfullyProcessedError = false;\
+                if(this._currentError &&\
+                    this._currentError.id === processedErrorCode &&\
+                    this._currentError.dismissible\
+                ) \{\
+                    successfullyProcessedError = true;\
+                    const processedError = this._errorPriorityQueue.peek();\
+                    // all processed errors automatically get added to the rescheduler\
+                    // we should add the error to the rescheduler before removing from the priority queue\
+                    // in order for reporting accurately whether the error is resolved.  if we remove the error from the priority queue\
+                    // first then we fire the subscription callback and the error is marked as resolved because\
+                    // the error neither exists in the rescheduler or in the priority queue\
+                    this._errorRescheduler.add(processedError, (error)=>\{\
+                        this.addError(error.id);\
+                    \});\
+                    // only remove the most relevant error if we've processed the correct error\
+                    this._errorPriorityQueue.shift();\
+                \}\
+                this.sendJson(res, \{ status: 'OK', processedError: successfullyProcessedError \});\
+            \} else \{\
+                this.sendJson(res, \{ status: 'error', message: 'Client did not send errorCode' \}, 500);\
+            \}\
+        \});\
+    \}\
+\
+    private _subscribeError(req:JiboServerRequest, res:JiboServerResponse): void \{\
+        // this disables the timeout for subsribing to an error. this is necessary in the case where it takes\
+        // the user a long time to resolve an error. we don't want to force a failed request and trigger a faulty callback firing\
+        req.socket.setTimeout(0);\
+        this.parseBody(req, (err, subscribeErrorJson) => \{\
+            if (err) \{\
+                return this.sendJson(res, \{ status: 'error', message: typeof err === 'string' ? err : err.message \}, 500);\
+            \}\
+            if(subscribeErrorJson.hasOwnProperty('errorCode')) \{\
+                const subscribedErrorCode = subscribeErrorJson.errorCode;\
+                if(this._errorCodeMap.hasOwnProperty(subscribedErrorCode)) \{\
+                    this._subscribedErrorObject = this._errorCodeMap[subscribedErrorCode];\
+                    this._errorSubscribeCallback = ()=>\{\
+                        // if the error we subscribed to is not in the priority queue AND it's not in the rescheduler\
+                        // that means it has already been resolved\
+                        const resolved = (!this._errorPriorityQueue.contains(this._subscribedErrorObject) &&\
+                                        !this._errorRescheduler.contains(this._subscribedErrorObject.id));\
+                        const subscribedErrorId = this._subscribedErrorObject.id;\
+\
+                        const nextErrorId = ((this._currentError !== null) ? this._currentError.id : null);\
+                        this._errorSubscribeCallback = null;\
+                        this._subscribedErrorObject = null;\
+                        this.sendJson(res, \{\
+                            status: 'OK',\
+                            nextErrorId: nextErrorId,\
+                            subscribedErrorId: subscribedErrorId,\
+                            resolved: resolved\
+                        \});\
+                    \};\
+                    // if the error we subscribe to is not the current error we should fire the callback immediately\
+                    if(!this._currentError ||\
+                        JiboError.Comparer(this._currentError, this._subscribedErrorObject) !== 0) \{\
+                        this._errorSubscribeCallback();\
+                    \}\
+                \} else \{\
+                    this.sendJson(res, \{ status: 'error', message: `Error code $\{subscribedErrorCode\} is not a valid error code` \}, 500);\
+                \}\
+            \} else \{\
+                this.sendJson(res, \{ status: 'error', message: 'Client did not send errorCode' \}, 500);\
+            \}\
+        \});\
+    \}\
+\
+    private _getErrorCount(req:JiboServerRequest, res:JiboServerResponse): void \{\
+        this.sendJson(res,\
+            \{\
+                status: 'OK',\
+                errorCount: this._errorPriorityQueue.length\
+            \}\
+        );\
+    \}\
+\
+    // a method to handle mock errors from the error service debug page\
+    // this routes the errors to the debugErrorReporter\
+    private _mockErrorCodes(req:JiboServerRequest, res:JiboServerResponse):void \{\
+        this.parseBody(req, (err, mockErrorsJson) => \{\
+            if (err) \{\
+                return this.sendJson(res, \{ status: 'error', message: typeof err === 'string' ? err : err.message \}, 500);\
+            \}\
+            // always enable the debug errors when running on the simulator\
+            if(RunMode.runMode === RunMode.RunMode.SIMULATOR) \{\
+                this._mockErrorsEnabled = true;\
+            \} else \{\
+                this._mockErrorsEnabled = mockErrorsJson.enabled;\
+            \}\
+            this._debugErrorReporter.mockErrorRequest(mockErrorsJson);\
+            this.sendJson(res, \{ status: 'OK' \});\
+        \});\
+    \}\
+\
+    // send the full data json structure for all errors\
+    private _sendErrorCodeData(req:JiboServerRequest, res:JiboServerResponse): void \{\
+        if(this._errorCodeMap) \{\
+            this.sendJson(res,\
+                \{\
+                    status: 'OK',\
+                    errorList: this._errorCodeMap\
+                \}\
+            );\
+        \} else \{\
+            this.sendJson(res, \{ status: 'error', message: 'error codes in KB not found' \}, 500);\
+        \}\
+    \}\
+\
+    private _onSocketError(error:Error):void \{\
+        log.error("system-monitoring/error/codes socket error", error);\
+    \}\
+\
+    // the callback which we receive errors from the error service debug page\
+    private _receivedMockErrors(message:any) \{\
+        // only send errors if we've enabled debug errors on the error service page\
+        if(this._mockErrorsEnabled) \{\
+            this._receivedPlatformErrors(message);\
+        \}\
+    \}\
+\
+    // the callback which we receive errors from the system monitoring service\
+    private _receivedSystemMonitoringServiceErrors(message:any) \{\
+        // only send errors if we've disabled debug errors from coming through on the error service page\
+        if(!this._mockErrorsEnabled) \{\
+            this._receivedPlatformErrors(message);\
+        \}\
+    \}\
+\
+    // receive errors from the platform layer\
+    private _receivedPlatformErrors(message:any) \{\
+        let newPlatformIdToError:\{ [key:string]:JiboError; \} = \{\};\
+\
+        if(message.codes && this._platformErrorCodeMap && this._errorCodeMap) \{\
+            // log.debug("error status", message.codes);\
+            // translate the incoming errors into objects to add\
+            // at the point where this class has a public API to add errors, we should keep a separate list of active errors reported internally from the SSM\
+            // then merge that list with the current list of errors here.  otherwise calling the updateElements method will delete errors being reported from the SSM\
+            for(let i = 0; i < message.codes.length; ++i) \{\
+                let platformErrorCode = message.codes[i];\
+                if(this._platformErrorCodeMap.hasOwnProperty(platformErrorCode))\{\
+                    let supportErrorCode = this._platformErrorCodeMap[platformErrorCode];\
+                    if(this._errorCodeMap.hasOwnProperty(supportErrorCode))\{\
+                        let errorCodeObject = this._errorCodeMap[supportErrorCode];\
+                        if(errorCodeObject && errorCodeObject.platformCode) \{\
+                            newPlatformIdToError[message.codes[i]] = errorCodeObject;\
+                        \}\
+                    \}\
+                \}\
+            \}\
+\
+            // if there are no message.codes, nothing can be added. only do the operation if there is content in the messsage.codes\
+            let addedErrors = ErrorServiceUtil.getNonOccurringElements(newPlatformIdToError, this._lastErrors);\
+            this._errorLogger.addErrors(addedErrors);\
+            for(let error of addedErrors) \{\
+                this._errorAddedEmitter.emit(error.id);\
+            \}\
+\
+            // remove any added errors which are present in the rescheduler.  these will re-add themselves to the priority queue when their time is up\
+            addedErrors = addedErrors.filter((addedError: JiboError)=>\{\
+                return !this._errorRescheduler.contains(addedError.id) && addedError.priority !== -1;\
+            \});\
+            this._errorPriorityQueue.add(addedErrors);\
+        \}\
+\
+        // if there are no keys, nothing can be removed. only do the operation if there is content in the last frame errors\
+        if(Object.keys(this._lastErrors)) \{\
+            // remove error codes from the priority queue if they are no longer being reported by the platform service\
+            let removedErrors = ErrorServiceUtil.getNonOccurringElements(this._lastErrors, newPlatformIdToError);\
+            this._errorPriorityQueue.delete(removedErrors);\
+\
+            this._errorLogger.removeErrors(removedErrors);\
+            for(let error of removedErrors) \{\
+                this._errorRemovedEmitter.emit(error.id);\
+            \}\
+\
+            // remove it from the rescheduler in case any errors are waiting to be rescheduled\
+            this._errorRescheduler.remove(removedErrors);\
+        \}\
+\
+        this._lastErrors = newPlatformIdToError;\
+    \}\
+\
+    // a callback which is called when an error(s) is successfully added to the error priority queue\
+    private _errorsAdded(errors: Array<JiboError>): void \{\
+        let lastCurrentError = this._currentError;\
+        this._currentError = this._errorPriorityQueue.peek();\
+\
+        // resolve any already subscribed error if it is not the current error with the new error information\
+        if(this._subscribedErrorObject && this._errorSubscribeCallback &&\
+            (!this._currentError || JiboError.Comparer(this._currentError, this._subscribedErrorObject) !== 0)) \{\
+                this._errorSubscribeCallback();\
+        \}\
+        // otherwise, if there is a new current error, we should launch into the error skill\
+        else if(this._currentError && this._currentError !== lastCurrentError)\{\
+            this._launchErrorSkill();\
+        \}\
+    \}\
+\
+    // a callback which is called when an error(s) is successfully removed from the error priority queue\
+    private _errorsRemoved(errors: Array<JiboError>): void \{\
+        this._currentError = this._errorPriorityQueue.peek();\
+\
+        // if we've removed (resolved) an error that someone has subscribed to, fire the callback\
+        if(this._subscribedErrorObject && this._errorSubscribeCallback) \{\
+            // search to see if the error we've subscribed to is present in the array of removed errors\
+            let didRemoveSubscribedError = errors.find((error)=>\{ return JiboError.Comparer(error, this._subscribedErrorObject) === 0; \});\
+            if(didRemoveSubscribedError) \{\
+                this._errorSubscribeCallback();\
+            \}\
+        \}\
+    \}\
+\
+    // construct an object to trigger a skill relaunch into the Be/Settings error skill with a payload\
+    // of the highest priority error id\
+    private _launchErrorSkill(): void \{\
+        const parseResults = new types.ListenResult(\{\
+            text: '',\
+            confidence: 1\
+        \}, \{\
+            intent: 'launch',\
+            entities: \{\
+                skill: '@be/settings',\
+                errorId: this._currentError.id\
+            \},\
+            rules: null\
+        \});\
+        parseResults.match = \{\
+            skillID: '@be/settings',\
+            onRobot: true\
+        \};\
+        if(!this._disableSkillSwitch) \{\
+            // send to GMS to handle skill launching with parse results.\
+            GlobalManagerService.instance.handleSkillLaunch(parseResults);\
+        \}\
+    \}\
+\}\
+\
+export default ErrorService;\
+\
+\
+===== src/services/global-manager/GlobalManagerService.ts =====\
+import Router = require('router');\
+import \{\
+    HTTPWSService,\
+    JiboServerRequest,\
+    JiboServerResponse,\
+    ServiceOptions,\
+    WebSocket,\
+\} from 'jibo-service-framework';\
+import http = require('http');\
+import \{GlobalCommand, GlobalCommandMap\} from 'jibo-common-types';\
+import SkillsService from '../skills/SkillsService';\
+import SkillsServiceSim from '../../sim-services/skills/SkillsServiceSim';\
+import \{SSMService\} from '../../SSMService';\
+import \{Event as TypedEvent\} from 'jibo-typed-events';\
+import \{api as jetstream, types, HotwordModeToken\} from '@jibo/jetstream-client';\
+\
+import rootLog from '../log';\
+export const log:typeof rootLog = rootLog.createChild('GlobalService');\
+\
+const GLOBAL_RULES = ['globals/global_commands_launch'];\
+\
+/**\
+ * @description\
+ * This class handles incoming requests to subscribe to global commands and manages\
+ * the state of those commands by accepting not only the command to which a skill\
+ * wants to subscribe and keeping track of all of the different global event stacks,\
+ * but also maintains knowledge of which skill subscribed to that global.\
+ * Because this service also handles relaunching and launching skills, at each skill\
+ * launch (or relaunch) it automatically unsubscribes that skill from the global event\
+ * stacks, so state is maintained across skill instances.\
+ * @class GlobalManagerService\
+ */\
+class GlobalManagerService extends HTTPWSService implements SSMService \{\
+\
+    private static _instance: GlobalManagerService;\
+\
+    /**\
+     * Map from global command to whether jibo can handle it\
+     * @type \{Map<GlobalCommand, boolean>\}\
+     * @readonly\
+     */\
+    public globalHandlers: Map<GlobalCommand, boolean>;\
+    /**\
+     * Event to let other parts of SSM know we have fired a skillRelaunch\
+     * @type \{TypedEvent<jibo.jetstream.types.ListenResult>\}\
+     * @readonly\
+     */\
+    public skillRelaunch: TypedEvent<types.ListenResult>;\
+    /**\
+     * Event to let other parts of SSM know we have gotten a global event\
+     * @type \{TypedEvent<jibo.jetstream.types.ListenResult>\}\
+     * @readonly\
+     */\
+    public globalEvent: TypedEvent<types.ListenResult>;\
+    private globalSocket: WebSocket;\
+    private globalRuleToken: HotwordModeToken;\
+\
+    public static get instance(): GlobalManagerService \{\
+        return GlobalManagerService._instance;\
+    \}\
+\
+    constructor(options: ServiceOptions, rootDir: string) \{\
+        super('global-manager', options, rootDir);\
+        if (GlobalManagerService._instance) \{\
+            throw new Error('Cannot instantiate GlobalManagerService more than once');\
+        \}\
+        GlobalManagerService._instance = this;\
+        this.onSetGlobal = this.onSetGlobal.bind(this);\
+        this.handleSkillLaunch = this.handleSkillLaunch.bind(this);\
+        this.skillRelaunch = new TypedEvent<types.ListenResult>('Skill relaunch sent through socket.');\
+        this.globalEvent = new TypedEvent<types.ListenResult>('Global event sent through socket.');\
+\
+        // initialize map of global handlers\
+        this.globalHandlers = new Map<GlobalCommand, boolean>();\
+        Object.keys(GlobalCommand).forEach((command) => \{\
+            log.debug('handling', command);\
+            this.globalHandlers.set(GlobalCommand[command], false);\
+        \});\
+        log.info('Instantiated');\
+    \}\
+\
+    public init(callback: (err?: Error) => void) \{\
+        super.init((err: Error) => \{\
+            //clear any globals hanging around from previous SSMs/Be\
+            jetstream.unsubscribeAllGlobals()\
+            .catch((err) => \{\
+                log.info('Unable to unsubscribe globals when starting up', err);\
+            \})\
+            .then(() => \{\
+                jetstream.events.skillSwitch.on(this.handleSkillLaunch);\
+                this.globalRuleToken = jetstream.setHotwordMode(jetstream.types.HotwordListenMode.Custom_NLU_Added, GLOBAL_RULES);\
+                this.globalRuleToken.match.on((result) => \{\
+                    this.onGlobalParse(result);\
+                \});\
+                log.info("Initialized");\
+                callback(err);\
+            \});\
+        \});\
+    \}\
+\
+    public routes(url: Router) \{\
+        super.routes(url);\
+        url.post('/global', (req: JiboServerRequest, res: JiboServerResponse) => \{\
+            this.onSetGlobal(req, res);\
+        \});\
+        url.post('/clean_relaunch', (req: JiboServerRequest, res: JiboServerResponse) => \{\
+            this.onCleanRelaunch(req, res);\
+        \});\
+    \}\
+\
+    public onConnection(client: WebSocket, request:http.IncomingMessage): void \{\
+        super.onConnection(client, request);\
+        if (client.url === '/globals') \{\
+            this.globalSocket = client;\
+        \}\
+    \}\
+\
+    public sendWsJson(client: WebSocket, json: Object | string): Promise<boolean> \{\
+        if (client) \{\
+            return super.sendWsJson(client, json);\
+        \} else \{\
+            return Promise.resolve(false);\
+        \}\
+    \}\
+\
+    protected onMessage(command: any, client: WebSocket) \{\
+        return;\
+    \}\
+\
+    protected onClose(): void \{\
+        // Happens on skill crash!\
+        this.globalSocket = undefined;\
+    \}\
+\
+    /**\
+     * Launch or relaunch a skill\
+     * Send out actual event for which skills will listen.\
+     * Alert Skills Service to switch skills.\
+     * @intdocs\
+     */\
+    public handleSkillLaunch(result: types.SkillSwitchResult|types.ListenResult) \{\
+        log.debug('handling skill launch', result);\
+\
+        const instance = SkillsService.instance || SkillsServiceSim.instance;\
+\
+        let skillName:string;\
+        let parse:types.ListenResult;\
+        if (result instanceof types.ListenResult) \{\
+            skillName = result.match.skillID;\
+            parse = result;\
+        \} else \{\
+            skillName = result.onRobot ? result.skillID : '@be/nimbus';\
+            let matchPayload: types.GlobalAndCloudMatchResponseData = \{\
+                skillID: skillName,\
+                onRobot: result.onRobot,\
+                isProactive: result.isProactive,\
+                skipSurprises: result.skipSurprises,\
+            \};\
+            // If it's a Nimbus/cloud-skill, attach the cloud-skill name onto the match payload\
+            if (!result.onRobot) \{\
+                matchPayload.cloudSkill = result.skillID;\
+            \}\
+            const data:types.ListenResult = result.data || \{asr: null, nlu: null\} as any;\
+            parse = new types.ListenResult(data.asr, data.nlu, matchPayload);\
+            parse.transID = result.transID;\
+        \}\
+        // relaunch\
+        if (instance &&\
+            instance.currentSkill && (\
+                instance.currentSkill.name === skillName ||\
+                instance.currentSkill.name.startsWith('@be/'))) \{\
+            log.debug('Emitting skillRelaunch');\
+            this.skillRelaunch.emit(parse);\
+            let body = this.returnType('OK', 'skill-relaunch', '', parse);\
+            this.sendWsJson(this.globalSocket, body);\
+        \}\
+        // launch\
+        else \{\
+            log.debug('Emitting launch');\
+            let body: any = this.returnType('OK', 'skill-launch', '', parse);\
+            this.sendWsJson(this.globalSocket, body);\
+        \}\
+        return;\
+    \}\
+\
+    private onGlobalParse(data:types.SuccessTurnResult):void \{\
+        log.debug("onGlobalParse");\
+        let intent:string = data.result.nlu.intent;\
+        //special case volume because it has a few intents that all start with 'volume'\
+        if (intent.match(/^volume/)) \{\
+            intent = 'volume';\
+        \}\
+\
+        const result = new types.ListenResult(data.result.asr, data.result.nlu);\
+\
+        // The global grammar parsed this, but we're not expecting it!\
+        const command = GlobalCommandMap.get(intent);\
+\
+        if(!command) \{\
+            //Disable old behavior of complaining, because how we detect global commands will\
+            //change in some way in the near future. Currently skill launches will hit this block\
+\
+            //log.error("unrecognized global command", intent);\
+            //this.sendNonInterrupting();\
+            return;\
+        \}\
+        // Jibo module has said it can handle global event\
+        else if(this.canHandleGlobal(command)) \{\
+            log.debug("Letting skill handle global", intent);\
+            this.emitGlobal(command, result);\
+        \}\
+        else \{\
+            log.debug("default global behavior for ", intent);\
+            switch(command) \{\
+                case GlobalCommand.STOP:\
+                    // no one in jibo can handle stop, handle launch with @be/idle\
+                    result.match = \{\
+                        skillID: '@be/idle',\
+                        onRobot: true\
+                    \};\
+                    this.handleSkillLaunch(result);\
+                    break;\
+                case GlobalCommand.HELP:\
+                    result.match = \{\
+                        skillID: '@be/friendly-tips',\
+                        onRobot: true\
+                    \};\
+                    this.handleSkillLaunch(result);\
+                    break;\
+                case GlobalCommand.SLEEP:\
+                    result.match = \{\
+                        skillID: '@be/idle',\
+                        onRobot: true\
+                    \};\
+                    this.handleSkillLaunch(result);\
+                    break;\
+                case GlobalCommand.PAUSE:\
+                    result.match = \{\
+                        skillID: '@be/idle',\
+                        onRobot: true\
+                    \};\
+                    this.handleSkillLaunch(result);\
+                    break;\
+                case GlobalCommand.HOLDON:\
+                    result.match = \{\
+                        skillID: '@be/idle',\
+                        onRobot: true\
+                    \};\
+                    this.handleSkillLaunch(result);\
+                    break;\
+                case GlobalCommand.WHATCANIDO:\
+                    result.match = \{\
+                        skillID: '@be/friendly-tips',\
+                        onRobot: true\
+                    \};\
+                    this.handleSkillLaunch(result);\
+                    break;\
+                case GlobalCommand.VOLUME:\
+                    log.info("not yet setting volume in SSM");\
+                    // inform anything listening in the skill that we aren't interrupting state\
+                    // and it is okay to continue\
+                    this.sendNonInterrupting();\
+                    break;\
+                case GlobalCommand.OVERHERE:\
+                    this.sendNonInterrupting();\
+                    break;\
+                case GlobalCommand.TURNAROUND:\
+                // intentionally let this fall to TURNAWAY until we differentiate between TurnAround and TurnAway\
+                case GlobalCommand.TURNAWAY:\
+                    result.match = \{\
+                        skillID: '@be/idle',\
+                        onRobot: true\
+                    \};\
+                    this.handleSkillLaunch(result);\
+                    break;\
+                default:\
+                    log.error('Unrecognized global command: ', command);\
+                    this.sendNonInterrupting();\
+                    break;\
+            \}\
+        \}\
+    \}\
+\
+    /**\
+     * Given a global command, returns whether or not the jibo module has registered to handle it.\
+     * @param \{GlobalCommand\} command to query if jibo module has said it can handle\
+     * @returns \{Boolean\} returns whether or not the jibo module can handle the global command.\
+     * @private\
+     */\
+    private canHandleGlobal(command: GlobalCommand) \{\
+        log.debug(`getting canHandle $\{command\} which is $\{this.globalHandlers.get(command)\}`);\
+        return this.globalHandlers.get(command);\
+    \}\
+\
+    private emitGlobal(command: GlobalCommand, globalResults: types.ListenResult) \{\
+        log.debug('emitting global', globalResults);\
+        this.globalEvent.emit(globalResults);\
+        let body: any = this.returnType('OK', 'global', '', globalResults);\
+        this.sendWsJson(this.globalSocket, body);\
+    \}\
+\
+    private sendNonInterrupting():void \{\
+        let body = this.returnType('OK', 'non-interrupting-global', '', \{\});\
+        this.sendWsJson(this.globalSocket, body);\
+    \}\
+\
+    /**\
+     * Parse out global command subscribers\
+     * @param req \{JiboServerRequest\} the request data to be processed.\
+     * @param res \{JiboServerResponse\} the response to send through WS.\
+     * @private\
+     */\
+    private onSetGlobal(req: JiboServerRequest, res: JiboServerResponse) \{\
+        let rawData = '';\
+        req.on('data', (chunk) => \{\
+            rawData += chunk;\
+        \});\
+        req.on('end', () => \{\
+            let data:any;\
+            try \{\
+                data = JSON.parse(rawData);\
+            \} catch (e) \{\
+                log.warn('Unable to parse set global JSON:', rawData);\
+                let body = this.returnType('ERROR', 'Unable to parse request', '', \{\});\
+                this.sendJson(res, JSON.stringify(body), 400);\
+                return;\
+            \}\
+            this.globalHandlers.set(data.action, data.canHandle);\
+            let body = this.returnType('OK', JSON.stringify(data.action + ':' + data.canHandle), '', \{\});\
+            this.sendJson(res, JSON.stringify(body), 200);\
+        \});\
+    \}\
+\
+    /**\
+     * Cleanly shut down listeners and kill the current skill and relaunch\
+     * @param req \{JiboServerRequest\} the request data to be processed.\
+     * @param res \{JiboServerResponse\} the response to send through WS.\
+     * @private\
+     */\
+    private onCleanRelaunch(req: JiboServerRequest, res: JiboServerResponse): void \{\
+        req.on('data', (chunk) => \{\
+            // req doesn't like it when you have an `end` but no data handler.\
+        \});\
+        req.on('end', () => \{\
+            //fake a types.SkillMatchResult\
+            const data = \{\
+                onRobot: true,\
+                skillID: '@be/idle',\
+                data: new types.ListenResult(\
+                    \{\
+                        text: 'stop',\
+                        confidence: 1\
+                    \},\
+                    \{\
+                        intent: 'stop',\
+                        rules: null,\
+                        entities: \{\}\
+                    \}\
+                )\
+            \};\
+            this.handleSkillLaunch(data);\
+            let body = this.returnType('OK', null, '', \{\});\
+            this.sendJson(res, JSON.stringify(body), 200);\
+        \});\
+    \}\
+\
+    /**\
+     * Wrapper to create a return type\
+     * @param status \{string\} status of response\
+     * @param message \{string\} accompanying message of response\
+     * @param id \{string\} listener id if applicable\
+     * @param data \{data\} result of web request\
+     * @private\
+     */\
+    private returnType(status: string, message: string, id: string, data: any) \{\
+        let body = \{\
+            status: status,\
+            message: message,\
+            id: id,\
+            result: data || \{\},\
+            moreinfo: ''\
+        \};\
+        return body;\
+    \}\
+\}\
+\
+export default GlobalManagerService;\
+\
+\
+===== src/services/scheduler/SchedulerService.ts =====\
+import \{ServiceOptions, HTTPService, JiboServerRequest, JiboServerResponse\} from 'jibo-service-framework';\
+import OTAUpdater from "../../utils/OTAUpdater";\
+import \{OTARecord\} from "../../utils/OTAUpdater";\
+import \{types\} from "@jibo/jetstream-client";\
+import GlobalManagerService from "../global-manager/GlobalManagerService";\
+import Router = require('router');\
+import Scheduler = require('node-schedule');\
+import uuid = require('uuid');\
+import parentLog from '../log';\
+import \{systemManager\} from 'jibo-service-clients';\
+import \{SSMService\} from '../../SSMService';\
+\
+const log:typeof parentLog = parentLog.createChild('Scheduler');\
+\
+\
+\
+declare type SkillData = \{\
+    skill:string;\
+    domain:string;\
+    intent:string;\
+\};\
+\
+interface SchedulerOptions extends ServiceOptions \{\
+    otaFilter:string;\
+\}\
+\
+//\
+// SchedulerService class that can arbitrarily start cron jobs with crontab-syntax redirect and intent once fired.\
+//\
+class SchedulerService extends HTTPService implements SSMService \{\
+    private static _instance:SchedulerService;\
+\
+    public static get instance():SchedulerService \{\
+        return SchedulerService._instance;\
+    \}\
+\
+    constructor(public options:SchedulerOptions, rootDir:string) \{\
+        super('scheduler', options, rootDir);\
+        if (SchedulerService._instance) \{\
+            throw new Error('Cannot instantiate SchedulerService more than once');\
+        \}\
+        SchedulerService._instance = this;\
+\
+        // initialize the OTAUpdater\
+        OTAUpdater.createInstance(log, options.otaFilter);\
+\
+        log.info("Instantiated");\
+    \}\
+\
+    public init(callback:(error?:Error) => void):void \{\
+        super.init((error:Error) => \{\
+            if(error) \{\
+                return callback(error);\
+            \}\
+\
+            // initialize some stuff in ota updater\
+            OTAUpdater.instance.init(() => \{\
+                log.info('Initialized');\
+                callback();\
+            \});\
+\
+            //setup shutdown handler:\
+            systemManager.onShutdown.once(this._launchShutdownAnimation.bind(this));\
+        \});\
+    \}\
+\
+    public routes(url:Router):void \{\
+        super.routes(url);\
+\
+         url.post('/ota-update', (req:JiboServerRequest, res:JiboServerResponse) => \{\
+             let chunk = "";\
+             req.on('data', data => chunk += data);\
+             req.on('end', () => \{\
+                 OTAUpdater.instance.downloadAndInstall((error?:Error) => \{\
+                    if (error) \{\
+                        return this.sendJson(res, \{status: 'Error', message: error.message\}, 500);\
+                    \}\
+\
+                    return this.sendJson(res, \{status: 'OK'\});\
+                \});\
+             \});\
+         \});\
+\
+        url.post('/download-status', (req:JiboServerRequest, res:JiboServerResponse) => \{\
+            let chunk = "";\
+            req.on('data', data => chunk += data);\
+            req.on('end', () => \{\
+                OTAUpdater.instance.downloadStatus((error:Error, data?:any) => \{\
+                    if (error) \{\
+                        return this.sendJson(res, \{status: 'Error', message: error.message\}, 500);\
+                    \}\
+\
+                    return this.sendJson(res, \{status: 'OK', data\});\
+                \});\
+            \});\
+        \});\
+\
+        url.post('/backup-status', (req:JiboServerRequest, res:JiboServerResponse) => \{\
+            let chunk = "";\
+            req.on('data', data => chunk += data);\
+            req.on('end', () => \{\
+                OTAUpdater.instance.backupStatus((error:Error, data?:any) => \{\
+                    if (error) \{\
+                        return this.sendJson(res, \{status: 'Error', message: error.message\}, 500);\
+                    \}\
+\
+                    return this.sendJson(res, \{status: 'OK', data\});\
+                \});\
+            \});\
+        \});\
+\
+        url.post('/backup-robot', (req:JiboServerRequest, res:JiboServerResponse) => \{\
+            let chunk = "";\
+            req.on('data', data => chunk += data);\
+            req.on('end', () => \{\
+                // true === immediate return (i.e. don't wait for backup to finish)\
+                OTAUpdater.instance.backupRobot(true, (error?:Error) => \{\
+                    if (error) \{\
+                        return this.sendJson(res, \{status: 'Error', message: error.message\}, 500);\
+                    \}\
+\
+                    return this.sendJson(res, \{status: 'OK'\});\
+                \});\
+            \});\
+        \});\
+\
+        url.post('/check-updates', (req:JiboServerRequest, res:JiboServerResponse) => \{\
+            let chunk = "";\
+            req.on('data', data => chunk += data);\
+            req.on('end', () => \{\
+                OTAUpdater.instance.checkForUpdates((error:Error, data?:Array<OTARecord>) => \{\
+                    if (error) \{\
+                        return this.sendJson(res, \{status: 'Error', message: error.message\}, 500);\
+                    \}\
+\
+                    return this.sendJson(res, \{status: 'OK', data\});\
+                \});\
+            \});\
+        \});\
+\
+        url.post('/add', (req:JiboServerRequest, res:JiboServerResponse) => \{\
+            this._addJob(req, res);\
+        \});\
+\
+        url.post('/remove', (req:JiboServerRequest, res:JiboServerResponse) => \{\
+            this._removeJob(req, res);\
+        \});\
+\
+        url.post('/list', (req:JiboServerRequest, res:JiboServerResponse) => \{\
+            this._listJobs(req, res);\
+        \});\
+\
+        url.post('/has-job', (req:JiboServerRequest, res:JiboServerResponse) => \{\
+            this._hasJob(req, res);\
+        \});\
+    \}\
+\
+    // Add a job specifying a crontab string and any function that lives in the current process.\
+    // Returns a jobiId if successful; null otherwise.\
+    public addJob(schedule:string, func:any):string \{\
+        let jobId = uuid.v4();\
+        let job = Scheduler.scheduleJob(jobId, schedule, func);\
+\
+        let msg = 'Successfully scheduled job';\
+        if (!job) \{\
+            msg = 'Could not schedule job';\
+            jobId = null;\
+        \}\
+\
+        log.info(msg, schedule, jobId);\
+\
+        return jobId;\
+    \}\
+\
+    // Removes a job specified by ID.\
+    // Returns true if successful; false otherwise\
+    public removeJob(jobId:string):boolean \{\
+        let success = Scheduler.cancelJob(jobId);\
+\
+        let msg = 'Successfully removed job';\
+\
+        if (!success) \{\
+            msg = 'Could not cancel job';\
+        \}\
+\
+        log.info(msg, jobId);\
+\
+        return success;\
+    \}\
+\
+    // Removes all jobs that are currently scheduled.\
+    // Returns callback with any errors.\
+    public removeAllJobs(callback:(err?:Error) => void):void \{\
+        let list = this.listJobs();\
+\
+        // remove all jobs\
+        let errList = null;\
+        for (let jobId in list) \{\
+            let success = this.removeJob(jobId);\
+            if (!success) \{\
+                let temp = " " + jobId;\
+                errList += temp;\
+            \}\
+        \}\
+\
+        callback(errList ? Error("Error removing jobs: " + errList) : null);\
+    \}\
+\
+    // Get the current list of scheduled jobs.\
+    // Returns an object with jobIds as keys and job objects as values. NOTE: this is a reference\
+    // to currently scheduled objects and can be volatile (change under the hood).\
+    public listJobs():typeof Scheduler.scheduledJobs\{\
+        return Scheduler.scheduledJobs;  // this holds references!\
+    \}\
+\
+    // Check if a specific jobId is currently scheduled.\
+    // Returns true if found; false otherwise.\
+    public hasJob(jobId:string):boolean \{\
+        return this.listJobs().hasOwnProperty(jobId);\
+    \}\
+\
+\
+    private _addJob(req:JiboServerRequest,  res:JiboServerResponse) \{\
+        let chunk = "";\
+        req.on('data', data => chunk += data);\
+        req.on('end', () => \{\
+            try \{\
+                let data = JSON.parse(chunk);\
+                if (!data.schedule || !data.skillData) \{\
+                    return this.sendJson(res, \{status: 'error', message: 'could not schedule job because did not specify schedule and/or skill launch data'\}, 500);\
+                \}\
+\
+                //var func = this._trigger.bind(null, data.skillData);\
+                let jobId = this.addJob(data.schedule, this._trigger.bind(this, data.skillData));\
+\
+                if (jobId !== null) \{\
+                    return this.sendJson(res, \{status: 'OK', job: jobId\});\
+                \}\
+                else \{\
+                    return this.sendJson(res, \{status: 'error', message: 'could not schedule job'\}, 500);\
+                \}\
+            \}\
+            catch(e) \{\
+                log.warn('Scheduler._addJob cannot parse ', chunk);\
+                this.sendJson(res, \{status: 'error', message: 'could not parse json', json: chunk\}, 400);\
+            \}\
+        \});\
+    \}\
+\
+    // construct an object to trigger a skill relaunch\
+    private _trigger(skillData:SkillData): void \{\
+\
+        let parseResults = new types.ListenResult(\{\
+            text: '',\
+            confidence: 1\
+        \}, \{\
+            intent: skillData.intent,\
+            entities: \{\
+                skill: skillData.skill,\
+                domain: skillData.domain\
+            \},\
+            rules: null\
+        \});\
+        parseResults.match = \{\
+            skillID: skillData.skill,\
+            onRobot: true\
+        \};\
+\
+        log.info('Trigger job', skillData);\
+\
+        // send to GMS to handle skill launching with parse results.\
+        GlobalManagerService.instance.handleSkillLaunch(parseResults);\
+    \}\
+\
+    private _removeJob(req:JiboServerRequest,  res:JiboServerResponse) \{\
+        let chunk = "";\
+        req.on('data', data => chunk += data);\
+        req.on('end', () => \{\
+            try \{\
+                let data = JSON.parse(chunk);\
+                let success = this.removeJob(data.jobId);\
+                if (success) \{\
+                    return this.sendJson(res, \{status: 'OK'\});\
+                \}\
+\
+                this.sendJson(res, \{error: 'Error removing job'\}, 500);\
+            \}\
+            catch(e) \{\
+                log.warn('Scheduler._removeJob cannot parse ', chunk);\
+                this.sendJson(res, \{status: 'error', message: 'could not parse json', json: chunk\}, 400);\
+            \}\
+        \});\
+    \}\
+\
+    private _listJobs(req:JiboServerRequest,  res:JiboServerResponse) \{\
+        let chunk = "";\
+        req.on('data', data => chunk += data);\
+        req.on('end', () => \{\
+            const jobs = this.listJobs();\
+            this.sendJson(res, \{status: 'OK', jobs\});\
+        \});\
+    \}\
+\
+    private _hasJob(req:JiboServerRequest, res:JiboServerResponse) \{\
+        let chunk = "";\
+        req.on('data', data => chunk += data);\
+        req.on('end', () => \{\
+            try \{\
+                let data = JSON.parse(chunk);\
+                if (this.hasJob(data.jobId)) \{\
+                    let list = this.listJobs();\
+                    return this.sendJson(res, \{status: 'OK', jobData: list[data.jobId]\});\
+                \}\
+                else \{\
+                    return this.sendJson(res, \{status: 'OK', jobData: null\});\
+                \}\
+\
+            \}\
+            catch(e) \{\
+                console.warn('Scheduler._hasJob cannot parse ', chunk);\
+                this.sendJson(res, \{status: 'error', message: 'could not parse json', json: chunk\}, 400);\
+            \}\
+        \});\
+    \}\
+\
+    private _launchShutdownAnimation()\{\
+        this._trigger(\{\
+            skill: '@be/settings',\
+            domain: 'settings',\
+            intent: 'shutdownAnimation'\
+        \});\
+    \}\
+\}\
+\
+export default SchedulerService;\
+\
+\
+===== src/services/skills/SkillsService.ts =====\
+import DevToolsClient from '../../clients/DevToolsClient';\
+import DevShellClient from '../../clients/DevShellClient';\
+import GlobalManagerService from '../global-manager/GlobalManagerService';\
+import parentLog from '../log';\
+import PerformanceService from '../performance/PerformanceService';\
+import \{PromiseUtils\} from 'jibo-cai-utils';\
+import ScreenScheduler from '../../background/screen/ScreenScheduler';\
+import \{\
+    ServiceOptions, HTTPWSService,\
+    JiboServerRequest, JiboServerResponse\
+\} from 'jibo-service-framework';\
+import \{SkillRecord\} from 'jibo-client-framework';\
+import \{SSMService\} from '../../SSMService';\
+import \{SystemManagerClient\} from 'jibo-client-framework';\
+import async = require('async');\
+import findRoot = require('find-root');\
+import fs = require('fs');\
+import parallel = require('async-parallel');\
+import path = require('path');\
+import rimraf = require('rimraf');\
+import Router = require('router');\
+import WebSocket = require('ws');\
+import \{types\} from "@jibo/jetstream-client";\
+\
+const log = parentLog.createChild('Skills');\
+const prfyTo = PromiseUtils.promisifyTo;\
+\
+export interface SkillsServiceOptions extends ServiceOptions \{\
+    singleSkill:boolean;\
+    startSkill?:string;\
+\}\
+\
+ /**\
+  * @class SkillsService\
+  * @extends HTTPWSService\
+  */\
+class SkillsService extends HTTPWSService implements SSMService \{\
+\
+    private static _instance:SkillsService;\
+\
+    public currentSkill:SkillRecord;\
+\
+    public static get instance():SkillsService \{\
+        return SkillsService._instance;\
+    \}\
+    \
+    constructor(public options:SkillsServiceOptions, rootDir:string) \{\
+        super('skills-service', options, rootDir);\
+        if (SkillsService._instance) \{\
+            throw new Error('Cannot instantiate SkillsService more than once');\
+        \}\
+        SkillsService._instance = this;\
+\
+        log.info("Instantiated");\
+    \}\
+\
+    public init(callback:(error?:Error) => void) \{\
+        super.init((error:Error) => \{\
+            if (error) \{\
+                return callback(error);\
+            \}\
+            ScreenScheduler.stopTimerAndTurnOn().then(() => \{\
+                // Per JIBO-4384, kill any running skill on SSM startup\
+                this.terminate((error?:Error) => \{\
+                    // If there's an issue, log a warning, but continue anyway\
+                    if (error) \{\
+                        log.warn(`Could not terminate running skill`, error);\
+                    \}\
+                    //if there is no start skill set no launch rules\
+                    if (!this.options.startSkill) \{\
+                        log.info('initialized');\
+                        return callback();\
+                    \}\
+                    //If the SSM is in single skill mode\
+                    if (this.options.singleSkill) \{\
+                        log.warn("SSM operating in single skill mode");\
+                        //get the single skill record\
+                        SystemManagerClient.instance.getSkillRecordByName(this.options.startSkill, (error:Error, skillRecord:SkillRecord) => \{\
+                            if (error) \{\
+                                return callback(error);\
+                            \}\
+                            if (!skillRecord) \{\
+                                return callback(new Error(`Skill $\{this.options.startSkill\} not found`));\
+                            \}\
+                            this.launch(this.options.startSkill, \{\}, callback);\
+                        \});\
+                    \}\
+                \});\
+            \});\
+        \});\
+    \}\
+\
+    /**\
+     * @method SkillsService#routes\
+     * @param \{Router\} url\
+     */\
+    public routes(url:Router):void \{\
+        super.routes(url);\
+\
+        url.get('/skill/list', (req:JiboServerRequest, res:JiboServerResponse) => \{\
+            SystemManagerClient.instance.list((error:Error, skills:Array<SkillRecord>) => \{\
+                if(error) \{\
+                    return this.sendJson(res, \{error: error.message\}, 500);\
+                \}\
+                this.sendJson(res, \{skills: skills\});\
+            \});\
+        \});\
+\
+        url.get('/devtools', (req:JiboServerRequest, res:JiboServerResponse) => \{\
+            DevToolsClient.createInstance('127.0.0.1', 9191).getJson((err:any, json:any) => \{\
+                this.sendJson(res, json);\
+            \});\
+        \});\
+\
+        url.get('/ssm-devtools', (req:JiboServerRequest, res:JiboServerResponse) => \{\
+            // Only allow this endpoint when the robot is in int-developer mode\
+            SystemManagerClient.instance.getMode((error:Error, mode?:string) => \{\
+                if(error) \{\
+                    this.sendJson(res, \{error: error.message\}, 500);\
+                    log.error('Error getting mode to determine if we should enable the SSM dev-tools proxy', error);\
+                    return;\
+                \}\
+                if(mode === 'int-developer') \{\
+                    DevToolsClient.createInstance('127.0.0.1', 12345).getJson((err:any, json:any) => \{\
+                        this.sendJson(res, json);\
+                    \});\
+                \}\
+                else \{\
+                    this.sendJson(res, \{error: 'Not found'\}, 404);\
+                    return;\
+                \}\
+            \});\
+        \});\
+\
+        url.get('/version', (req:JiboServerRequest, res:JiboServerResponse) => \{\
+            const root:string = findRoot(__dirname);\
+            const packageInfo:any = require(path.join(root, 'package.json'));\
+            this.sendJson(res, \{version: packageInfo.version\});\
+        \});\
+\
+        url.post('/launch-dev', (req:JiboServerRequest, res:JiboServerResponse) => \{\
+            let chunk = "";\
+            req.on('data', (data) => \{\
+                chunk += (data);\
+            \});\
+\
+            req.on('end', () => \{\
+                let data;\
+                try \{\
+                    data = JSON.parse(chunk);\
+                \}\
+                catch (e) \{\
+                    this.sendJson(res, \{\
+                        Status: 'ERROR',\
+                        Message: 'Invalid request from launch. Request body is not valid JSON'\
+                    \}, 200);\
+                    return;\
+                \}\
+                log.info('attempting to run skill', data.command);\
+                this.launch(data.command, \{\}, (error?:Error) => \{\
+                    if (error) \{\
+                        log.error('error running skill', data.command, error);\
+                        this.sendJson(res, \{\
+                            Status: 'ERROR',\
+                            Message: 'Skill "' + data.command + '" does not exist or could not be launched. Make sure to run `jibo sync`'\
+                        \}, 200);\
+                    \}\
+                    else \{\
+                        log.info('System Manager launched skill', data.command);\
+                        this.sendJson(res, \{\
+                            Status: 'OK',\
+                            Message: 'Skill "' + data.command + '" started successfully'\
+                        \}, 200);\
+                    \}\
+                \});\
+\
+            \});\
+\
+        \});\
+\
+        // Used by static/skills/index.tsx page (:8779) to determine\
+        // whether or not to show the SSM Debug button\
+        url.get('/mode', (req:JiboServerRequest, res:JiboServerResponse) => \{\
+            SystemManagerClient.instance.getMode((error:Error, mode?: string) => \{\
+                if(error) \{\
+                    return this.sendJson(res, \{error: error.message\}, 500);\
+                \}\
+                this.sendJson(res, \{mode, electron: !!global['window']\});\
+            \});\
+        \});\
+\
+        url.post('/terminate', (req:JiboServerRequest, res:JiboServerResponse) => \{\
+            let chunk = "";\
+            req.on('data', (data) => \{\
+                chunk += (data);\
+            \});\
+\
+            req.on('end', () => \{\
+                let data;\
+                try \{\
+                    data = JSON.parse(chunk);\
+                \}\
+                catch (e) \{\
+                    this.sendJson(res, \{\
+                        Status: 'ERROR',\
+                        Message: 'Invalid request from launch. Request body is not valid JSON'\
+                    \}, 200);\
+                    return;\
+                \}\
+                SystemManagerClient.instance.terminate(data.command, (error:Error) => \{\
+                    log.info('screen scheduler timer: skills service post terminate');\
+                    this.emit('show');\
+                    ScreenScheduler.start();\
+                    this.currentSkill = null;\
+                    this.finishNoContent(res);\
+                \});\
+            \});\
+        \});\
+\
+        url.post('/reset-proxy/:serverPort',  (req:JiboServerRequest, res:JiboServerResponse) => \{\
+            let serverPort = req.params.serverPort;\
+            DevShellClient.createInstance('127.0.0.1', 8686).resetProxy(serverPort, (err) => \{\
+                this.finishNoContent(res);\
+            \});\
+        \});\
+    \}\
+\
+    /**\
+     * @method SkillsService#launch\
+     * @param skillName \{string\}\
+     * @param parse \{any\}\
+     * @param callback \{function\}\
+     */\
+    public launch(skillName:string, parse:any, callback:(error?:Error|string) => void):void \{\
+        PerformanceService.instance.log(Date.now(), 'JiboLaunch');\
+\
+\
+        const launch = (skill:SkillRecord) => \{\
+            this.currentSkill = skill;\
+            SystemManagerClient.instance.launch(skill.name, (error: Error) => \{\
+                if (error) \{\
+                    log.error('Unable to reset NLU memory', error);\
+                    return callback(error);\
+                \}\
+                ScreenScheduler.stopTimerAndTurnOn().then(() => \{\
+                    callback();\
+                \}).catch((error) => \{\
+                    callback(error);\
+                \});\
+            \});\
+        \};\
+\
+        log.info(`Launching skill, getting skill record from SystemManager`);\
+        SystemManagerClient.instance.getSkillRecordByName(skillName, (error:Error, skill:SkillRecord) => \{\
+            PerformanceService.instance.log(Date.now(), 'JiboLaunchGetSkillRecordByName');\
+            if (error) \{\
+                log.error(`During launch(), failed to get skill record`, error);\
+                return callback(error);\
+            \}\
+            log.info(`During launch(), got skill record for $\{skillName\}`);\
+            if (this.currentSkill) \{\
+                log.info(`Going to launch $\{skillName\} but need to terminate $\{this.currentSkill.name\} first`);\
+                SystemManagerClient.instance.terminate(this.currentSkill.name, (error:Error) => \{\
+                    PerformanceService.instance.log(Date.now(), 'JiboLaunchTerminateCurrentSkill');\
+                    if (error) \{\
+                        // current skill may have crashed or been killed, so just warn and proceed (SDK-1052)\
+                        log.warn('error terminating current skill', this.currentSkill, error);\
+                    \}\
+                    launch(skill);\
+                \});\
+            \}\
+            else \{\
+                launch(skill);\
+            \}\
+        \});\
+    \}\
+\
+    /**\
+     * Terminate currently running skill\
+     * @method SkillsService#terminate\
+     * @param [error] \{Error\}\
+     * @return string\
+     */\
+    public terminate(callback: (err?: Error) => void): void \{\
+        if (this.currentSkill) \{\
+            return SystemManagerClient.instance.terminate(this.currentSkill.name, (err?: Error) => \{\
+                if (err) \{\
+                    log.warn('Error terminating skills', err);\
+                \}\
+                this.currentSkill = null;\
+                this._doneTerminate(err, callback);\
+            \});\
+        \}\
+        // Don't trust that this SSM instance actually started the skill and\
+        // kept track of it; check SystemManager for a running skill, in case\
+        // this is a restart after an SSM crash (we close skills on startup)\
+        SystemManagerClient.instance.list((err: Error, skills: Array<SkillRecord>) => \{\
+            if (err) \{\
+                return callback(err);\
+            \}\
+            // Sure, we're only running one skill at a time in V1, but since\
+            // the service returns a list with a bool, an async.each seems\
+            // appropriate. Effectively, this is the same as a find and operate\
+            // on the one, if it exists\
+            const runningSkills = skills.filter(skill => skill.running);\
+            async.each<SkillRecord, Error>(runningSkills, (skill, done) => \{\
+                log.info(`Terminating unknown, running skill $\{skill.name\}`);\
+                SystemManagerClient.instance.terminate(skill.name, done);\
+            \}, err => \{\
+                if (err) \{\
+                    log.warn('Error terminating skills', err);\
+                \}\
+                this._doneTerminate(err, callback);\
+            \});\
+        \});\
+    \}\
+\
+    /**\
+     * Called when a client sends a message over WebSocket\
+     * @param command \{any\}\
+     * @param client \{WebSocket\}\
+     * @method SkillsService#onMessage\
+     */\
+    protected onMessage(command:any, client:WebSocket):void \{\
+\
+        if (command.command === 'initDone') \{\
+            log.info(this.currentSkill.name, 'launched and initialized');\
+            this.emit('hide');\
+            this.sendWsJson(client, \{\
+                command: 'show'\
+            \});\
+        \}\
+        else if (command.command === 'finished') \{\
+            if(this.currentSkill.name === '@be/be') \{\
+                const relaunchResults = new types.ListenResult(null, null, \{\
+                    skillID: '@be/idle',\
+                    onRobot: true\
+                \});\
+                GlobalManagerService.instance.handleSkillLaunch(relaunchResults);\
+            \}\
+        \}\
+    \}\
+\
+    /**\
+     * Overrides onWipeRequest() method in HTTPService. Wipes the data in the\
+     * skill users' home directories.\
+     *\
+     * @method SkillsService#onWipeRequest\
+     * @param req \{JiboServerRequest\} request to service\
+     * @param res \{JiboServerResponse\} response to send from service.\
+     * @protected\
+     */\
+    protected async onWipeRequest(req:JiboServerRequest, res:JiboServerResponse) \{\
+        let errors = false;\
+        // Get list of full pathnames of files and directories in /opt/home\
+        const [homeDirErr, homeFileNames] =\
+            await prfyTo<string[]>(cb => fs.readdir('/opt/home', cb));\
+        const homeFiles =\
+            homeFileNames.map(file => path.join('/opt/home', file));\
+        if (homeDirErr) \{\
+            res.statusCode = 500;\
+            const message = 'Error reading list of home directories';\
+            log.error(message, homeDirErr);\
+            return res.end(message);\
+        \}\
+        // Filter those to ensure we have a list of only directories\
+        const homeDirs = await parallel.filter(homeFiles, async file => \{\
+            // Get stats for the file\
+            const [statsErr, stats] =\
+                await prfyTo<fs.Stats>(cb => fs.stat(file, cb));\
+            // Skip anything we can't stat, but log a warning\
+            if (statsErr) \{\
+                log.warn(`Error getting stats for $\{file\}`, statsErr);\
+                errors = true;\
+                return false;\
+            \}\
+            // Return only directories that we could stat\
+            return stats.isDirectory();\
+        \});\
+        // Loop over the home directories asynchronously\
+        await parallel.each(homeDirs, async homeDir => \{\
+            // Get a list of the contents of the directory\
+            const [filesErr, fileNames] =\
+                await prfyTo<string[]>(cb => fs.readdir(homeDir, cb));\
+            const files = fileNames.map(file => path.join(homeDir, file));\
+            if (filesErr) \{\
+                res.statusCode = 500;\
+                const message = `Error reading list of files in $\{homeDir\}`;\
+                log.warn(message, filesErr);\
+                errors = true;\
+                return;\
+            \}\
+            // Delete each file or directory with rimraf (recursive)\
+            await parallel.each(files, async file => \{\
+                const [rmErr] = await prfyTo<void>(cb => rimraf(file, cb));\
+                if (rmErr) \{\
+                    log.warn(`Error removing $\{file\}`, rmErr);\
+                    errors = true;\
+                \}\
+            // Limit to deleting two files or directories at a time\
+            \}, 2);\
+        // Limit to one home directory at a time\
+        \}, 1);\
+        log.info(`Wiped contents of home directories, with$\{errors ? '' : 'out'\} errors.`);\
+        res.writeHead(204, null, \{'Content-Length': '0'\});\
+        res.end();\
+    \}\
+\
+    private _doneTerminate(err: Error, callback: (err?: Error) => void) \{\
+        log.info('screen scheduler timer: skills service class api');\
+        ScreenScheduler.start();\
+        this.emit('show');\
+        callback(err);\
+    \}\
+\}\
+\
+export default SkillsService;\
+\
+\
+===== src/sim-services/jetstream/JetstreamServiceSim.ts =====\
+import Router = require('router');\
+import http = require('http');\
+import \{ Client as HubClient, session as hub_session, CloudRequestOptions \} from '@jibo/hub-client';\
+import \{ service \} from '@jibo/interfaces';\
+import \{ types \} from '@jibo/jetstream-client';\
+import RegistryService from '../registry/RegistryService';\
+import \{\
+    JiboServerRequest, JiboServerResponse,\
+    ServiceOptions, HTTPWSService, WebSocket\
+\} from 'jibo-service-framework';\
+import \{ HTTPClient \} from 'jibo-client-framework';\
+import \{ SSMService \} from "../../SSMService";\
+import \{ Event, EventContainer \} from 'jibo-typed-events';\
+import \{ Turn, HubListenTurn, EnrollmentTurn, PronunciationTurn \} from './Turns';\
+import \{ PromiseQueue \} from 'jibo-cai-utils';\
+import log from './log';\
+\
+type Callback = (error?: Error, data?: any) => void;\
+\
+interface SimulatedSpeech \{\
+    words: string;\
+    speaker: string;\
+    speakerId: string;\
+    incremental?: boolean;\
+    final?: boolean;\
+\}\
+\
+export enum State \{\
+    CONNECTING_TO_CONTEXT = 'CONNECTING_TO_CONTEXT',\
+    IDLE = 'IDLE',\
+    GLOBAL_TURN = 'GLOBAL_TURN',\
+    LOCAL_TURN = 'LOCAL_TURN',\
+    VOICE_ENROLLMENT_TURN = 'VOICE_ENROLLMENT_TURN',\
+    PRONUNCIATION_TURN = 'PRONUNCIATION_TURN',\
+    WAITING_FOR_HUB = 'WAITING_FOR_HUB',\
+    ERROR = 'ERROR',\
+\}\
+\
+enum HJMode \{\
+    NORMAL_HJ = 'NORMAL_HJ',\
+    IGNORE_HJ = 'IGNORE_HJ',\
+    ONLY_HJ = 'ONLY_HJ'\
+\}\
+\
+export interface SpeechOptions \{\
+    speech?: SimulatedSpeech;\
+    nlu?: types.NLUResult;\
+    global?: boolean;\
+    turnOptions?: types.LocalTurnOptions;\
+    mimicGlobalOptions?: types.MimicGlobalTurnOptions;\
+    requestID?: string;\
+\}\
+\
+export interface TimeoutOptions \{\
+    earlyEOS?: string[];\
+    sosTimeout: number;\
+    maxSpeechTimeout: number;\
+\}\
+\
+interface GlobalRuleSubscription \{\
+    requestID: string;\
+    rules: string[];\
+\}\
+\
+//timeouts in seconds\
+const DEFAULT_LOCAL_TURN_TIMEOUTS = \{\
+    sosTimeout: 6,\
+    maxSpeechTimeout: 15\
+\};\
+//timeouts in seconds\
+const GLOBAL_TURN_TIMEOUTS = \{\
+    sosTimeout: 4,//on robot, probably 2, but we'll be nice to devs using the simulator\
+    maxSpeechTimeout: 15\
+\};\
+\
+//words to use in place of the $YESNO token for EOS\
+const YES_NO_EOS = [\
+    'yes',\
+    'yep',\
+    'yeppers',\
+    'yeah',\
+    'sure',\
+    'no',\
+    'nah',\
+    'nope',\
+];\
+\
+// Generic Hub options\
+const HUB_OPTIONS: CloudRequestOptions = \{\
+    hostname: 'localhost',\
+    path: null,\
+    port: 9000,\
+    auth: \{\
+        // Same webtoken secret as is deployed to the dev environment\
+        // https://github.com/jiborobot/devops-ecs/blob/master/config/ace.development/blue/Environment.json\
+        secret: 'dev-hub-token-secret',\
+        credentials: \{\
+            id: 'foo',\
+            accessKeyId: 'foo',\
+            secretAccessKey: 'foo',\
+            friendlyId: 'foo'\
+        \}\
+    \}\
+\};\
+\
+// Generic context message\
+const CONTEXT_MSG: service.BaseData = \{\
+    runtime: \{\
+        location: null,\
+        loop: null,\
+        character: null,\
+        perception: null,\
+        dialog: null\
+    \},\
+    skill: null,\
+    general: \{\
+        lang: undefined,\
+        remoteAddress: undefined,\
+        release: 'RELEASE_NOT_FOUND',  // Will be viewed as 1.9.0 (Hashbrown) in Hub. Change to higher version in future if necessary.\
+        accountID: undefined,\
+        robotID: undefined\
+    \}\
+\};\
+\
+interface JetstreamOptions extends ServiceOptions \{\
+    hubHost?: string;\
+    hubPort?: number;\
+    secret?: string;\
+\}\
+\
+\
+export class Events extends EventContainer \{\
+    localTurnStarted = new Event<void>(`Starting local turn`);\
+    hjHeard = new Event<void>('Heard Hey Jibo');\
+\}\
+\
+/**\
+ * @class TTSService\
+ */\
+export default class JetstreamServiceSim extends HTTPWSService implements SSMService \{\
+\
+    private static _instance: JetstreamServiceSim;\
+\
+    public events = new Events();\
+\
+    private eventsClientSockets: WebSocket[] = [];\
+    private vadClientSockets: WebSocket[] = [];\
+    private paused: boolean;\
+    private contextClient: HTTPClient;\
+\
+    private state = State.IDLE;\
+    private hjMode: HJMode = HJMode.NORMAL_HJ;\
+    private activeGlobalRules: GlobalRuleSubscription[] = [];\
+    private activeExclusiveGlobalRules: GlobalRuleSubscription[] = [];\
+\
+    private activeTurn: Turn;\
+    private activeProactiveSession: hub_session.ProactiveClientSession;\
+    private timedOutWatingForContext = false;\
+    private requestIDCounter = 0;\
+    private jsOptions: JetstreamOptions;\
+    //for pronunciation learning\
+    private currentWordToLearn: string;\
+\
+    private wordsRecievedQueue: PromiseQueue = new PromiseQueue(); // keep a queue to serialize `onWordsReceived` calls.\
+\
+    public static get instance(): JetstreamServiceSim \{\
+        return JetstreamServiceSim._instance;\
+    \}\
+\
+    constructor(options: JetstreamOptions, rootDir: string) \{\
+        super('jetstream', options, rootDir);\
+        this.jsOptions = options;\
+        JetstreamServiceSim._instance = this;\
+    \}\
+\
+    public init(callback: Callback) \{\
+        super.init((err) => \{\
+            if (err) \{\
+                callback(err);\
+            \} else \{\
+                this.connectToContextService();\
+                callback();\
+            \}\
+        \});\
+    \}\
+\
+    public onConnection(client: WebSocket, request: http.IncomingMessage): void \{\
+        super.onConnection(client, request);\
+        if (client.url === '/events') \{\
+            this.eventsClientSockets.push(client);\
+        \} else if (client.url === '/vad') \{\
+            this.vadClientSockets.push(client);\
+        \}\
+    \}\
+\
+    public routes(url: Router) \{\
+        super.routes(url);\
+\
+        url.post('/proactive/trigger', (req: JiboServerRequest, res: JiboServerResponse) => \{\
+            this.prepareResponse(res);\
+            this.onProactiveTrigger(req, res);\
+        \});\
+\
+        url.post('/listen/mimic_global_turn', (req:JiboServerRequest, res:JiboServerResponse) => \{\
+            this.prepareResponse(res);\
+            this.onMimicGlobalTurn(req, res);\
+        \});\
+\
+        url.post('/listen/start_local_turn', (req: JiboServerRequest, res: JiboServerResponse) => \{\
+            this.prepareResponse(res);\
+            this.onStartLocalTurn(req, res);\
+        \});\
+\
+        url.post('/listen/cancel_local_turn', (req: JiboServerRequest, res: JiboServerResponse) => \{\
+            this.prepareResponse(res);\
+            this.onCancelLocalTurn(req, res);\
+        \});\
+\
+        url.post('/listen/update_local_turn', (req: JiboServerRequest, res: JiboServerResponse) => \{\
+            this.prepareResponse(res);\
+            this.onUpdateLocalTurn(req, res);\
+        \});\
+\
+        url.post('/listen/subscribe_global', (req: JiboServerRequest, res: JiboServerResponse) => \{\
+            this.prepareResponse(res);\
+            this.onSubscribeGlobal(req, res);\
+        \});\
+\
+        url.post('/listen/unsubscribe_global', (req: JiboServerRequest, res: JiboServerResponse) => \{\
+            this.prepareResponse(res);\
+            this.onUnsubscribeGlobal(req, res);\
+        \});\
+\
+        url.post('/listen/set_hj_mode', (req: JiboServerRequest, res: JiboServerResponse) => \{\
+            this.prepareResponse(res);\
+            this.onSetHJMode(req, res);\
+        \});\
+\
+        url.post('/listen/get_hj_mode', (req: JiboServerRequest, res: JiboServerResponse) => \{\
+            this.prepareResponse(res);\
+            this.onGetHJMode(req, res);\
+        \});\
+\
+        url.post('/listen/cancel_any_turn', (req: JiboServerRequest, res: JiboServerResponse) => \{\
+            this.prepareResponse(res);\
+            this.onCancelAnyTurn(req, res);\
+        \});\
+\
+        url.post('/listen/unsubscribe_all_globals', (req: JiboServerRequest, res: JiboServerResponse) => \{\
+            this.prepareResponse(res);\
+            this.onUnsubscribeAllGlobals(req, res);\
+        \});\
+\
+        url.post('/listen/start_enrollment_turn', (req: JiboServerRequest, res: JiboServerResponse) => \{\
+            this.prepareResponse(res);\
+            this.onStartEnrollmentTurn(req, res);\
+        \});\
+\
+        url.post('/enroll/create_speaker_model', (req: JiboServerRequest, res: JiboServerResponse) => \{\
+            this.prepareResponse(res);\
+            this.onCreateSpeakerModel(req, res);\
+        \});\
+\
+        url.post('/enroll/remove_speaker_model', (req: JiboServerRequest, res: JiboServerResponse) => \{\
+            this.prepareResponse(res);\
+            this.onRemoveSpeakerModel(req, res);\
+        \});\
+\
+        url.post('/enroll/get_utterance_count', (req: JiboServerRequest, res: JiboServerResponse) => \{\
+            this.prepareResponse(res);\
+            this.onGetUtteranceCount(req, res);\
+        \});\
+\
+        url.post('/enroll/get_enrolled_speakers', (req: JiboServerRequest, res: JiboServerResponse) => \{\
+            this.prepareResponse(res);\
+            this.onGetEnrolledSpeakers(req, res);\
+        \});\
+\
+        url.post('/pronunciation/init_pronunciation_learning', (req: JiboServerRequest, res: JiboServerResponse) => \{\
+            this.prepareResponse(res);\
+            this.onInitPronunciationLearning(req, res);\
+        \});\
+\
+        url.post('/listen/start_pronunciation_learning_turn', (req: JiboServerRequest, res: JiboServerResponse) => \{\
+            this.prepareResponse(res);\
+            this.onStartPronunciationTurn(req, res);\
+        \});\
+    \}\
+\
+    /**\
+     * Gets called whenever the simulator has words for us\
+     * @param words\
+     */\
+    public async onWordsReceived(speech: SimulatedSpeech): Promise<void> \{\
+        this.wordsRecievedQueue.add(async () => \{ // Queue up words received for cases where multiple parts of the same request are passed in serially. NOTE TO REVIEWERS: this can also be solved in the tests by .then-chaining the calls to together\
+            const text = speech.words.trim().toLowerCase();\
+            const containsHJ = (text.indexOf('hey jibo') >= 0);\
+\
+            switch(this.state) \{\
+                case State.IDLE:\
+                    if (containsHJ && this.hjMode !== HJMode.IGNORE_HJ) \{\
+                        await this.startSpeechTurn(\{ speech, global: true \});\
+                        await this.updateSpeechTurn(\{ speech, global: true \});\
+                    \} else if (text !== 'hey') \{ // Partial hey jibo\
+                        log.warn(`Ignoring simulator text since no local listen session is active: `, speech.words);\
+                    \}\
+                    break;\
+                case State.LOCAL_TURN:\
+                    // If we're in a local turn and someone said HJ then we switch to a global turn\
+                    if (containsHJ) \{\
+                        await this.cancelSpeechTurn();\
+                        this.state = State.GLOBAL_TURN;\
+                        await this.startSpeechTurn(\{ speech, global: true \});\
+                    \}\
+                case State.GLOBAL_TURN:\
+                    // If we're in a global turn we simply update it, it's fine if user removed HJ from phrase\
+                    case State.VOICE_ENROLLMENT_TURN:\
+                    case State.PRONUNCIATION_TURN:\
+                        //update turn for any turn type here\
+                        await this.updateSpeechTurn(\{ speech, global: this.state === State.GLOBAL_TURN \});\
+                        break;\
+                    default:\
+                        log.warn(`Ignoring simulator text since we are not in a valid state '$\{this.state\}': `, speech.words);\
+                \}\
+        \});\
+    \}\
+\
+    public pause() \{\
+        this.paused = true;\
+    \}\
+\
+    public resume() \{\
+        this.paused = false;\
+    \}\
+\
+    /**\
+     * Writes a message to the jetstream client\
+     * @param event\
+     */\
+    public writeToJetStreamClient(event: types.ServiceEvent, suppressedEvents: types.ServiceEventType[] = []) \{\
+        //swallow suppressed events\
+        if (suppressedEvents.indexOf(event.type) >= 0) \{\
+            return;\
+        \}\
+        if (!this.paused) \{\
+            const msg = JSON.stringify(event);\
+            this.eventsClientSockets.forEach(socket => socket.send(msg));\
+        \}\
+    \}\
+\
+    protected onClose(client: WebSocket): void \{\
+        super.onClose(client);\
+        const eventsIndex = this.eventsClientSockets.indexOf(client);\
+        if (eventsIndex > -1) \{\
+            this.eventsClientSockets.splice(eventsIndex, 1);\
+        \}\
+        const vadIndex = this.vadClientSockets.indexOf(client);\
+        if (vadIndex > -1) \{\
+            this.vadClientSockets.splice(vadIndex, 1);\
+        \}\
+    \}\
+\
+    protected onMessage(command: any, client: WebSocket): void \{\
+        return;\
+    \}\
+\
+    /**\
+     * This cancels the selected turn session\
+     * @param \{SimulatedSpeech\} speech\
+     */\
+    public async cancelSpeechTurn(): Promise<void> \{\
+        if (this.activeTurn) \{\
+            this.activeTurn.close();\
+            this.activeTurn = null;\
+            this.state = State.IDLE;\
+        \}\
+    \}\
+\
+    private getActiveGlobals(launchToAppend: string | string[] = []): string[] \{\
+        const reducer = (arr, item) => \{\
+            //reduce rules into one flat list\
+            arr.push(...item.rules);\
+            return arr;\
+        \};\
+        //determine the list of rules we should use\
+        if (this.activeExclusiveGlobalRules.length) \{\
+            //return exclusive globals\
+            return this.activeExclusiveGlobalRules.reduce(reducer, []);\
+        \}\
+        //return general globals AND the launch rule(s) to append\
+        return this.activeGlobalRules.reduce(reducer, []).concat(launchToAppend);\
+    \}\
+\
+    /**\
+     * This updates the selected turn session\
+     * @param \{SimulatedSpeech\} speech\
+     * @param \{boolean\} global Whether to use global turn or local\
+     */\
+    private async startSpeechTurn(options: SpeechOptions = \{\}): Promise<void> \{\
+        log.info(`startSpeechTurn `, options);\
+        let turn = this.activeTurn;\
+        const targetState = options.global ? State.GLOBAL_TURN : State.LOCAL_TURN;\
+        this.state = targetState;\
+\
+        if (turn) \{\
+            log.warn(`Hub session was already open when starting '$\{targetState\}', stopping`);\
+            turn.close();\
+            turn = null;\
+        \}\
+\
+        log.info(`Starting '$\{this.state\}'`);\
+        const requestID = options.global ? types.GLOBAL_REQUEST : options.requestID;\
+\
+        let suppressed: types.ServiceEventType[] = [];\
+        if (options.mimicGlobalOptions) \{\
+            suppressed = options.mimicGlobalOptions.suppressedEvents;\
+        \} else if (options.turnOptions) \{\
+            suppressed = options.turnOptions.suppressedEvents;\
+        \}\
+\
+        if (options.global) \{\
+            this.writeToJetStreamClient(\{\
+                type: types.ServiceEventType.HJ_HEARD,\
+                requestID: requestID,\
+                transID: '',\
+                ts: Date.now(),\
+                data: undefined\
+            \}, suppressed);\
+            this.events.hjHeard.emit();\
+            if (this.hjMode === HJMode.ONLY_HJ && !options.mimicGlobalOptions) \{\
+                this.state = State.IDLE;\
+                return;\
+            \}\
+        \}\
+\
+        // Create a new session\
+        const listenOptions: types.ListenMessageData = \{\
+            hotphrase: !!options.global,\
+            rules: options.global ? this.getActiveGlobals('launch') : this.getActiveGlobals(),\
+            mode: types.ListenMessageMode.CLIENT_ASR,\
+            lang: 'en-US'\
+        \};\
+        let earlyEOS: string[];\
+        if (options.turnOptions) \{\
+            if (options.turnOptions.ignoreGlobalRules) \{\
+                listenOptions.rules = [];\
+            \}\
+            if (options.turnOptions.nluRules) \{\
+                listenOptions.rules = listenOptions.rules.concat(options.turnOptions.nluRules);\
+            \}\
+            if (options.turnOptions.earlyEOS && options.turnOptions.earlyEOS.length) \{\
+                earlyEOS = options.turnOptions.earlyEOS;\
+                //replace the yes/no token\
+                if (earlyEOS.includes('$YESNO')) \{\
+                    earlyEOS.splice(earlyEOS.indexOf('$YESNO'), 1, ...YES_NO_EOS);\
+                \}\
+            \}\
+            if (options.turnOptions.clientNLU) \{\
+                options.nlu = options.turnOptions.clientNLU;\
+                listenOptions.mode = types.ListenMessageMode.CLIENT_NLU;\
+            \} else if (options.turnOptions.clientASR) \{\
+                options.speech = \{\
+                    words: options.turnOptions.clientASR,\
+                    final: true,\
+                    speaker: null,\
+                    speakerId: null,\
+                \};\
+            \}\
+        \} else if (options.mimicGlobalOptions) \{\
+            if (options.mimicGlobalOptions.clientNLU) \{\
+                options.nlu = options.mimicGlobalOptions.clientNLU;\
+                listenOptions.mode = types.ListenMessageMode.CLIENT_NLU;\
+            \} else if (options.mimicGlobalOptions.clientASR) \{\
+                options.speech = \{\
+                    words: options.mimicGlobalOptions.clientASR,\
+                    final: true,\
+                    speaker: null,\
+                    speakerId: null,\
+                \};\
+            \}\
+        \}\
+        log.info(`Starting Hub session with options: `, listenOptions);\
+\
+\
+        const hubOptions = this.createHubOptions('/listen');\
+        const session = await HubClient.startListenSession(hubOptions, listenOptions);\
+        this.subscribeToCommonEvents(session, requestID, suppressed);\
+        //set up sos & eos timeout options, using defaults and if local, the local options as well\
+        const timeoutOpts = Object.assign(\{earlyEOS\}, options.global ? GLOBAL_TURN_TIMEOUTS : DEFAULT_LOCAL_TURN_TIMEOUTS, options.global ? \{\} : options.turnOptions);\
+        turn = this.activeTurn = new HubListenTurn(options.global ? State.GLOBAL_TURN : State.LOCAL_TURN, requestID, session, timeoutOpts, this);\
+\
+        session.events.on('SOS', () => \{\
+            log.info(`Received from hub 'SOS'`);\
+            this.writeToJetStreamClient(\{\
+                type: types.ServiceEventType.SOS,\
+                requestID: requestID,\
+                transID: session.transactionID,\
+                ts: Date.now(),\
+                data: undefined\
+            \}, suppressed);\
+        \});\
+        session.events.on('EOS', () => \{\
+            log.info(`Received from hub 'EOS'`);\
+            this.writeToJetStreamClient(\{\
+                type: types.ServiceEventType.EOS,\
+                requestID: requestID,\
+                transID: session.transactionID,\
+                ts: Date.now(),\
+                data: undefined\
+            \}, suppressed);\
+        \});\
+        session.events.on('LISTEN', (data) => \{\
+            log.info(`Received from hub 'LISTEN': `, data);\
+            let globalOverride = false;\
+            //if this is a local turn, then we need to make sure we didn't get a global result\
+            if (this.activeTurn && this.activeTurn.type === State.LOCAL_TURN && data.nlu && data.nlu.rules && data.nlu.rules.length) \{\
+                if (!this.ruleListContainsARule(options.turnOptions.nluRules, data.nlu.rules)) \{\
+                    log.info('Local turn did not match a global rule, overriding as a global listen');\
+                    globalOverride = true;\
+                \}\
+            \}\
+            if (globalOverride) \{\
+                //interrupt local turn\
+                this.writeToJetStreamClient(\{\
+                    type: types.ServiceEventType.TURN_RESULT,\
+                    requestID: requestID,\
+                    transID: session.transactionID,\
+                    ts: Date.now(),\
+                    data: \{\
+                        global: false,\
+                        status: types.TurnResultType.INTERRUPTED\
+                    \}\
+                \}, suppressed);\
+                //now write a global turn request response\
+                this.writeToJetStreamClient(\{\
+                    type: types.ServiceEventType.TURN_RESULT,\
+                    requestID: types.GLOBAL_REQUEST,\
+                    transID: session.transactionID,\
+                    ts: Date.now(),\
+                    data: \{\
+                        global: true,\
+                        status: types.TurnResultType.SUCCEEDED,\
+                        result: \{\
+                            asr: data.asr,\
+                            nlu: data.nlu,\
+                            match: data.match\
+                        \}\
+                    \}\
+                \});\
+            \} else \{\
+                //normal local or global turn ending\
+                this.writeToJetStreamClient(\{\
+                    type: types.ServiceEventType.TURN_RESULT,\
+                    requestID: requestID,\
+                    transID: session.transactionID,\
+                    ts: Date.now(),\
+                    data: \{\
+                        global: !!options.global,\
+                        status: types.TurnResultType.SUCCEEDED,\
+                        result: \{\
+                            asr: data.asr,\
+                            nlu: data.nlu,\
+                            match: data.match\
+                        \}\
+                    \}\
+                \}, suppressed);\
+            \}\
+        \});\
+\
+        this.writeToJetStreamClient(\{\
+            type: types.ServiceEventType.TURN_STARTED,\
+            transID: session.transactionID,\
+            requestID: requestID,\
+            ts: Date.now(),\
+            data: undefined,\
+        \}, suppressed);\
+\
+        const speakers: types.HubSpeakerRecogResults = (options.speech && options.speech.speakerId) ? \{\
+            accepted: [\{\
+                id: options.speech.speakerId,\
+                high_confidence: true,\
+                score: 1\
+            \}]\
+        \} : undefined;\
+\
+        if (speakers) \{\
+            // Write speakerID event to Jetstream Client for identity servie\
+            this.writeToJetStreamClient(\{\
+                type: types.ServiceEventType.SPEAKER_ID,\
+                transID: session.transactionID,\
+                requestID: requestID,\
+                ts: Date.now(),\
+                data: \{\
+                    snr: 1,\
+                    speakers: speakers.accepted.map(accepted => \{\
+                        return \{\
+                            speaker: accepted.id,\
+                            score: accepted.score,\
+                            accepted: true,\
+                            high_confidence: accepted.high_confidence\
+                        \};\
+                    \})\
+                \}\
+            \});\
+        \}\
+\
+        // Send context message to Hub\
+        const context = Object.assign(\{\}, CONTEXT_MSG, await this.getContext(speakers));\
+        //if the turn was cancelled or otherwise is no longer active, bail\
+        if (turn !== this.activeTurn) \{\
+            return;\
+        \}\
+        log.debug('Sending context message to hub', context);\
+        session.writeContext(context);\
+\
+        //send any clientASR or clientNLU data to the turn now, and return to idle if it is complete\
+        await this.updateSpeechTurn(options);\
+    \}\
+\
+    /**\
+     * This updates the selected turn session\
+     * @param \{SimulatedSpeech\} speech\
+     * @param \{boolean\} global Whether to use global turn or local\
+     */\
+    private async updateSpeechTurn(options: SpeechOptions = \{\}): Promise<void> \{\
+        log.info(`updateSpeechTurn `, options);\
+        let turn = this.activeTurn;\
+        if (turn) \{\
+            try \{\
+                const complete = await turn.update(options, this);\
+                if (complete) \{\
+                    // Clear all session data\
+                    this.activeTurn = null;\
+                    this.state = State.IDLE;\
+                \}\
+            \} catch (error) \{\
+                log.error(error);\
+                this.writeToJetStreamClient(\{\
+                    type: types.ServiceEventType.ERROR,\
+                    transID: turn.transactionID,\
+                    requestID: turn.requestID,\
+                    ts: Date.now(),\
+                    data: \{\
+                        message: error.message\
+                    \}\
+                \});\
+\
+                // Clear all session data\
+                this.activeTurn = null;\
+                this.state = State.IDLE;\
+            \}\
+        \} else \{\
+            log.error(`No active session`);\
+        \}\
+    \}\
+\
+    private async connectToContextService(): Promise<void> \{\
+        if (this.timedOutWatingForContext) \{\
+            return Promise.reject(`Timed out earlier when searching for Context Service`);\
+        \}\
+\
+        const oldState = this.state;\
+        this.state = State.CONNECTING_TO_CONTEXT;\
+        log.info(`Starting to look for the context service`);\
+        return new Promise<void>((resolve, reject) => \{\
+            // Here is where we wait for the context service to announce itself\
+            let startTime = Date.now();\
+            let contextSrvCheckInterval = setInterval(() => \{\
+                const record = RegistryService.instance.registry.records.find(r => (r.name === 'context'));\
+                if (record) \{\
+                    log.info(`Found Context service at port $\{record.port\} after $\{Date.now() - startTime\} ms`);\
+                    clearInterval(contextSrvCheckInterval);\
+                    this.state = oldState;\
+                    this.contextClient = new HTTPClient('127.0.0.1', record.port);\
+                    resolve();\
+                \} else if (Date.now() - startTime > 20000) \{\
+                    clearInterval(contextSrvCheckInterval);\
+                    this.state = State.ERROR;\
+                    this.timedOutWatingForContext = true;\
+                    reject(new Error(`Timeout in Jetstream sim waiting for context service`));\
+                \}\
+            \}, 100);\
+        \});\
+    \}\
+\
+    /**\
+     * Retrieves context data from the Context service (hosted in Be)\
+     */\
+    private async getContext(speakers?: types.HubSpeakerRecogResults, omitLoop = false): Promise<any> \{\
+        return new Promise((resolve, reject) => \{\
+            if (!this.contextClient) \{\
+                reject(new Error(`Context client not ready`));\
+            \} else \{\
+                this.contextClient.sendRequest('POST', '/context', JSON.stringify(\{ speakers, omitLoop \}), (error, response) => \{\
+                    // If the context service isn't there, then we attempt reconnecting\
+                    if (error) \{\
+                        if (error.message.indexOf('ECONNREFUSED') >= 0) \{\
+                            log.warn(`Context service down, trying to reconnect`);\
+                            this.connectToContextService()\
+                                .then(() => this.getContext(speakers, omitLoop))\
+                                .then(resolve)\
+                                .catch(reject);\
+                        \} else \{\
+                            reject(new Error(`Error retrieving context: $\{error.message\}`));\
+                        \}\
+                    \} else \{\
+                        resolve(response);\
+                    \}\
+                \});\
+            \}\
+        \});\
+    \}\
+\
+    private createRequestID(): string \{\
+        return `rid:$\{this.requestIDCounter++\}`;\
+    \}\
+\
+    private prepareResponse(res: JiboServerResponse) \{\
+        res.setHeader('Content-Type', 'application/json');\
+    \}\
+\
+    private async onProactiveTrigger(req: JiboServerRequest, res: JiboServerResponse) \{\
+        log.info(`Got proactive trigger request`);\
+\
+        // Send back Jetstream response of request received\
+        const requestID = this.createRequestID();\
+        res.end(JSON.stringify(\{\
+            requestID,\
+        \}));\
+\
+        // Hub options for proactive\
+        const hubOptions = this.createHubOptions('/proactive');\
+        try \{\
+            // Send proactive request to Hub\
+            this.activeProactiveSession = await HubClient.startProactiveSession(hubOptions, req.body);\
+            this.subscribeToCommonEvents(this.activeProactiveSession, requestID);\
+            // On response\
+            this.activeProactiveSession.events.on('PROACTIVE', (data) => \{\
+                log.info(`Received from hub 'PROACTIVE': `, data);\
+                this.writeToJetStreamClient(\{\
+                    type: types.ServiceEventType.PROACTIVE,\
+                    requestID: requestID,\
+                    transID: this.activeProactiveSession.transactionID,\
+                    ts: Date.now(),\
+                    data: data as any\
+                \});\
+            \});\
+\
+            // Send context message to Hub\
+            const context = Object.assign(\{\}, CONTEXT_MSG, await this.getContext());\
+            log.debug('Sending context message to hub', context);\
+            this.activeProactiveSession.writeContext(context);\
+        \}\
+        catch (error) \{\
+            const transID = this.activeProactiveSession ? this.activeProactiveSession.transactionID : null;\
+            this.emitError(error, transID, requestID);\
+        \}\
+    \}\
+\
+    private subscribeToCommonEvents(\
+        session: hub_session.ClientSession,\
+        requestID: string,\
+        suppressed?: types.ServiceEventType[]\
+    ) \{\
+        session.events.on('SKILL_ACTION', (data) => \{\
+            log.info(`Received from hub 'SKILL_ACTION': `, data);\
+            this.writeToJetStreamClient(\{\
+                type: types.ServiceEventType.SKILL_ACTION,\
+                requestID: requestID,\
+                transID: session.transactionID,\
+                ts: Date.now(),\
+                data\
+            \}, suppressed);\
+        \});\
+        session.events.on('SKILL_REDIRECT', (data) => \{\
+            log.info(`Received from hub 'SKILL_REDIRECT': `, data);\
+            this.writeToJetStreamClient(\{\
+                type: types.ServiceEventType.SKILL_REDIRECT,\
+                requestID: requestID,\
+                transID: session.transactionID,\
+                ts: Date.now(),\
+                data\
+            \}, suppressed);\
+        \});\
+        session.events.on('ERROR', error => log.error(error));\
+    \}\
+\
+    private createHubOptions(path: string): CloudRequestOptions \{\
+        const options = Object.assign(\{\}, HUB_OPTIONS, \{ path \});\
+\
+        // Override with config file value if available and environment variable if available\
+        if (process.env.JetstreamSim_hubHost) \{\
+            options.hostname = process.env.JetstreamSim_hubHost;\
+        \} else if (this.jsOptions.hubHost) \{\
+            options.hostname = this.jsOptions.hubHost;\
+        \}\
+\
+        const envHubPort = Number.parseInt(process.env.JetstreamSim_hubPort);\
+        if (Number.isFinite(envHubPort)) \{\
+            options.port = envHubPort;\
+        \} else if (typeof this.jsOptions.hubPort === 'number') \{\
+            options.port = this.jsOptions.hubPort;\
+        \}\
+\
+        const secretToUse = process.env.ETCO_server_hubTokenSecret || this.jsOptions.secret;\
+        if (secretToUse && (typeof options.auth !== 'string')) \{\
+            options.auth.secret = secretToUse;\
+        \}\
+\
+        return options;\
+    \}\
+\
+    private emitError(error: Error, transID: string, requestID: string) \{\
+        log.error(error);\
+        this.writeToJetStreamClient(\{\
+            type: types.ServiceEventType.ERROR,\
+            transID: transID,\
+            requestID: requestID,\
+            ts: Date.now(),\
+            data: JSON.stringify(\{\
+                message: error.message\
+            \}) as any\
+        \});\
+    \}\
+\
+    private async onMimicGlobalTurn(req: JiboServerRequest, res: JiboServerResponse) \{\
+        log.info(`onMimicGlobalTurn: `, req.body);\
+        const requestID = this.createRequestID();\
+\
+        res.end(JSON.stringify(\{\
+            requestID\
+        \}));\
+\
+        await this.cancelSpeechTurn();\
+        this.state = State.GLOBAL_TURN;\
+        await this.startSpeechTurn(\{ turnOptions: req.body, global: true, requestID \});\
+    \}\
+\
+    private async onStartLocalTurn(req: JiboServerRequest, res: JiboServerResponse) \{\
+        log.info(`onStartLocalTurn: `, req.body);\
+        if (this.state === State.IDLE) \{\
+            const requestID = this.createRequestID();\
+            res.end(JSON.stringify(\{\
+                requestID\
+            \}));\
+            await this.startSpeechTurn(\{ turnOptions: req.body, requestID \});\
+            this.events.localTurnStarted.emit();\
+        \} else \{\
+            log.info(`Skipping since state is not Idle: '$\{this.state\}'`);\
+            res.statusCode = 503;\
+            res.statusMessage = 'BUSY';\
+            res.end(JSON.stringify(\{\}));\
+        \}\
+    \}\
+\
+    private onCancelLocalTurn(req: JiboServerRequest, res: JiboServerResponse) \{\
+        log.info(`onCancelLocalTurn: `, req.body);\
+        //cancel local turn API is used to cancel local, enrollment, and pronunciation turns\
+        if (this.activeTurn && this.state !== State.GLOBAL_TURN) \{\
+            const activeRequestID = this.activeTurn.requestID;\
+            if (!req.body.requestID) \{\
+                log.warn(`Missing requestID`);\
+            \}\
+            else if (req.body.requestID !== activeRequestID) \{\
+                log.warn(`Supplied requestID '$\{req.body.requestID\}' not equal to active requestID '$\{activeRequestID\}'`);\
+            \}\
+            else \{\
+                this.activeTurn.close();\
+                this.activeTurn = null;\
+                this.state = State.IDLE;\
+            \}\
+        \} else if (!this.activeTurn) \{\
+            log.warn(`No active local session to cancel`);\
+        \} else \{\
+            log.warn(`Can't cancel local turn in state '$\{this.state\}'`);\
+        \}\
+        res.statusCode = 200;\
+        res.statusMessage = 'OK';\
+        res.end(JSON.stringify(\{\}));\
+    \}\
+\
+    private onUpdateLocalTurn(req: JiboServerRequest, res: JiboServerResponse) \{\
+        log.info(`onUpdateLocalTurn: `, req.body);\
+        if (this.activeTurn && this.state === State.LOCAL_TURN) \{\
+            const activeRequestID = this.activeTurn.requestID;\
+            if (!req.body.requestID) \{\
+                log.warn(`Missing requestID`);\
+            \}\
+            else if (req.body.requestID !== activeRequestID) \{\
+                log.warn(`Supplied requestID '$\{req.body.requestID\}' not equal to active requestID '$\{activeRequestID\}'`);\
+            \}\
+            else if (!req.body.clientNLU && !req.body.clientASR) \{\
+                log.warn(`Request did not contain clientNLU or clientASR`, req.body);\
+            \}\
+            else \{\
+                const body: types.LocalTurnUpdate = req.body;\
+                const speech: SpeechOptions = \{\};\
+                if (body.clientNLU) \{\
+                    speech.nlu = body.clientNLU;\
+                \} else \{\
+                    speech.speech = \{\
+                        words: body.clientASR,\
+                        final: true,\
+                        speaker: null,\
+                        speakerId: null,\
+                    \};\
+                \}\
+                this.updateSpeechTurn(speech);\
+            \}\
+        \} if (!this.activeTurn) \{\
+            log.warn(`No active local session to update`);\
+        \} else \{\
+            log.warn(`Can't update local turn in state '$\{this.state\}'`);\
+        \}\
+        res.statusCode = 200;\
+        res.statusMessage = 'OK';\
+        res.end(JSON.stringify(\{\}));\
+    \}\
+\
+    private onSubscribeGlobal(req: JiboServerRequest, res: JiboServerResponse) \{\
+        log.info(`onSubscribeGlobal: `, req.body);\
+        const requestID = String(this.requestIDCounter++);\
+        const body: types.SubscribeGlobalOptions = req.body;\
+        const sub: GlobalRuleSubscription = \{\
+            rules: body.nluRules,\
+            requestID\
+        \};\
+        if (body.exclusive) \{\
+            this.activeExclusiveGlobalRules.push(sub);\
+        \} else \{\
+            this.activeGlobalRules.push(sub);\
+        \}\
+\
+        res.statusCode = 200;\
+        res.statusMessage = 'OK';\
+        res.end(JSON.stringify(\{ requestID \}));\
+    \}\
+\
+    private onUnsubscribeGlobal(req: JiboServerRequest, res: JiboServerResponse) \{\
+        log.info(`onUnsubscribeGlobal: `, req.body);\
+\
+        const requestID = req.body.requestID;\
+        //remove rules from our lists\
+        let index = this.activeGlobalRules.findIndex(item => item.requestID === requestID);\
+        if (index > -1) \{\
+            this.activeGlobalRules.splice(index, 1);\
+        \}\
+        index = this.activeExclusiveGlobalRules.findIndex(item => item.requestID === requestID);\
+        if (index > -1) \{\
+            this.activeExclusiveGlobalRules.splice(index, 1);\
+        \}\
+\
+        res.statusCode = 200;\
+        res.statusMessage = 'OK';\
+        res.end(JSON.stringify(\{\}));\
+    \}\
+\
+    private onUnsubscribeAllGlobals(req: JiboServerRequest, res: JiboServerResponse) \{\
+        log.info(`onUnsubscribeAllGlobals: `, req.body);\
+\
+        this.activeGlobalRules.length = 0;\
+        this.activeExclusiveGlobalRules.length = 0;\
+\
+        res.statusCode = 200;\
+        res.statusMessage = 'OK';\
+        res.end(JSON.stringify(\{\}));\
+    \}\
+\
+    private onSetHJMode(req: JiboServerRequest, res: JiboServerResponse) \{\
+        const mode: HJMode = req.body.mode;\
+        if (mode === HJMode.IGNORE_HJ || mode === HJMode.NORMAL_HJ || mode === HJMode.ONLY_HJ) \{\
+            this.hjMode = mode;\
+            res.statusCode = 200;\
+            res.statusMessage = 'OK';\
+            res.end(JSON.stringify(\{\}));\
+        \} else \{\
+            const message = `Invalid HJ mode`;\
+            log.warn(message, mode);\
+            res.statusCode = 400;\
+            res.statusMessage = message;\
+            res.end(JSON.stringify(\{\
+                status: 'Failure'\
+            \}));\
+        \}\
+    \}\
+\
+    private onGetHJMode(req: JiboServerRequest, res: JiboServerResponse) \{\
+        res.statusCode = 200;\
+        res.statusMessage = 'OK';\
+        res.end(JSON.stringify(\{\
+            mode: this.hjMode\
+        \}));\
+    \}\
+\
+    private onCancelAnyTurn(req: JiboServerRequest, res: JiboServerResponse) \{\
+        if (this.activeTurn) \{\
+            this.activeTurn.close();\
+            this.activeTurn = null;\
+        \}\
+        this.state = State.IDLE;\
+\
+        const message = 'OK';\
+        res.statusCode = 200;\
+        res.statusMessage = message;\
+        res.end(JSON.stringify(\{\
+            status: message\
+        \}));\
+    \}\
+\
+    private ruleListContainsARule(list: string[], comparison: string[]): boolean \{\
+        if (!list || !list.length || !comparison || !comparison.length) \{\
+            return false;\
+        \}\
+        //comparison will be the NLU match list, so will probably be just one item, but just in case\
+        for (let i = 0; i < comparison.length; ++i) \{\
+            if (list.includes(comparison[i])) \{\
+                return true;\
+            \}\
+        \}\
+        return false;\
+    \}\
+\
+    private async onStartEnrollmentTurn(req: JiboServerRequest, res: JiboServerResponse) \{\
+        log.info(`onStartEnrollmentTurn: `, req.body);\
+        if (this.state === State.IDLE) \{\
+            const requestID = this.createRequestID();\
+            res.end(JSON.stringify(\{\
+                requestID\
+            \}));\
+            this.state = State.VOICE_ENROLLMENT_TURN;\
+            this.activeTurn = new EnrollmentTurn(requestID, req.body);\
+        \} else \{\
+            log.info(`Skipping since state is not Idle: '$\{this.state\}'`);\
+            res.statusCode = 503;\
+            res.statusMessage = 'BUSY';\
+            res.end(JSON.stringify(\{\}));\
+        \}\
+    \}\
+\
+    private onCreateSpeakerModel(req: JiboServerRequest, res: JiboServerResponse) \{\
+        log.info(`onCreateSpeakerModel: `, req.body);\
+\
+        res.statusCode = 200;\
+        res.statusMessage = 'OK';\
+        res.end(JSON.stringify(\{\}));\
+    \}\
+\
+    private onRemoveSpeakerModel(req: JiboServerRequest, res: JiboServerResponse) \{\
+        log.info(`onRemoveSpeakerModel: `, req.body);\
+\
+        res.statusCode = 200;\
+        res.statusMessage = 'OK';\
+        res.end(JSON.stringify(\{\}));\
+    \}\
+\
+    private onGetUtteranceCount(req: JiboServerRequest, res: JiboServerResponse) \{\
+        log.info(`onGetUtteranceCount: `, req.body);\
+\
+        res.statusCode = 200;\
+        res.statusMessage = 'OK';\
+        res.end(JSON.stringify(\{ utterance_count: 0 \}));\
+    \}\
+\
+    private onGetEnrolledSpeakers(req: JiboServerRequest, res: JiboServerResponse) \{\
+        log.info(`onGetEnrolledSpeakers: `, req.body);\
+\
+        res.statusCode = 200;\
+        res.statusMessage = 'OK';\
+        res.end(JSON.stringify(\{ speakers: [] \}));\
+    \}\
+\
+    private onInitPronunciationLearning(req: JiboServerRequest, res: JiboServerResponse) \{\
+        log.info(`onInitPronunciationLearning: `, req.body);\
+\
+        this.currentWordToLearn = req.body.word_to_learn;\
+\
+        res.statusCode = 200;\
+        res.statusMessage = 'OK';\
+        res.end(JSON.stringify(\{\}));\
+    \}\
+\
+    private onStartPronunciationTurn(req: JiboServerRequest, res: JiboServerResponse) \{\
+        log.info(`onStartPronunciationTurn: `, req.body);\
+\
+        if (this.state === State.IDLE && this.currentWordToLearn === req.body.word_to_learn) \{\
+            const requestID = this.createRequestID();\
+            res.end(JSON.stringify(\{\
+                requestID\
+            \}));\
+            this.state = State.PRONUNCIATION_TURN;\
+            this.activeTurn = new PronunciationTurn(requestID, req.body);\
+        \} else \{\
+            log.info(`Skipping since state is not Idle: '$\{this.state\}'`);\
+            res.statusCode = 503;\
+            res.statusMessage = 'BUSY';\
+            res.end(JSON.stringify(\{\}));\
+        \}\
+    \}\
+\}\
+\
+# \
+}
